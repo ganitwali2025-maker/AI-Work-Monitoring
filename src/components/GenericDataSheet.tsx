@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, Plus, CheckCircle, Clock, XCircle, FileText, Activity, User, UserCheck, ClipboardCheck, X } from 'lucide-react';
+import { Search, ChevronDown, Plus, CheckCircle, Clock, XCircle, FileText, Activity, User, UserCheck, ClipboardCheck, X, RefreshCw } from 'lucide-react';
 
 interface Props {
   moduleName: string;
@@ -216,6 +216,8 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
 
       {/* Overlapping Tabs */}
       <div className="px-8 -mt-6 relative z-10 flex gap-2 overflow-x-auto pb-4 shrink-0 scrollbar-none">
+        
+        {/* Left Side: Tabs */}
         {tabs.map((tab) => {
           const isActive = activeTab === tab.name;
           return (
@@ -224,8 +226,8 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
               onClick={() => setActiveTab(tab.name)}
               className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm ${
                 isActive 
-                  ? 'bg-white text-gray-800 border-t border-x border-gray-200' 
-                  : 'bg-[#F4F5F9] text-gray-500 hover:bg-gray-100 hover:text-gray-700 border border-transparent'
+                  ? 'bg-white text-gray-800 border-t border-x border-gray-200 relative z-20' 
+                  : 'bg-[#F4F5F9] text-gray-500 hover:bg-gray-100 hover:text-gray-700 border border-transparent relative z-20'
               }`}
             >
               {tab.icon} {tab.name}
@@ -233,25 +235,43 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
           );
         })}
         
-        {/* Add New Button next to tabs */}
+        {/* Refresh Button - Styled like a tab */}
+        <button 
+          onClick={() => {
+            if (variant === 'marketing' && cleanModuleName === 'Lead Pipeline') {
+              fetchSheetData();
+            } else {
+              setIsLoading(true);
+              setTimeout(() => setIsLoading(false), 600);
+            }
+          }}
+          disabled={isLoading}
+          className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-white ${theme.text} border-t border-x border-gray-200 hover:bg-gray-50 disabled:opacity-50 relative z-20 ml-4`}
+        >
+          <RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} /> 
+          {isLoading ? 'Refreshing...' : 'Refresh'}
+        </button>
+        
+        {/* Add New Button - Styled like a tab */}
         <button 
           onClick={() => setIsFormOpen(true)}
-          className="flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-emerald-500 hover:bg-emerald-600 text-white ml-2 border border-emerald-600"
+          className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm text-white ${theme.tableHead} hover:opacity-90 relative z-20`}
         >
           <Plus size={16} /> Add New {singularName}
         </button>
         
-        {/* Audit Button */}
+        {/* Audit Button - Styled like a tab */}
         <button 
           onClick={() => alert('Opening Audit Sheet...')}
-          className="flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-amber-500 hover:bg-amber-600 text-white ml-2 border border-amber-600"
+          className="flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-[#F4F5F9] text-gray-600 border-t border-x border-gray-200 hover:bg-gray-100 relative z-20 ml-2"
         >
           <ClipboardCheck size={16} /> Audit
         </button>
+
       </div>
 
       {/* Content Area */}
-      <div className="bg-white flex-1 flex flex-col -mt-[1px] border-t border-gray-200 min-h-0">
+      <div className="bg-white flex-1 flex flex-col -mt-[1px] border-t border-gray-200 min-h-0 relative z-10">
         
         {/* Search Bar */}
         <div className="px-8 py-5 border-b border-gray-100 shrink-0">
