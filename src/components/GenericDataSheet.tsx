@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search, ChevronDown, Plus, CheckCircle, Clock, XCircle, FileText, Activity, User, UserCheck, ClipboardCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, ChevronDown, Plus, CheckCircle, Clock, XCircle, FileText, Activity, User, UserCheck, ClipboardCheck, X } from 'lucide-react';
 
 interface Props {
   moduleName: string;
@@ -24,10 +24,83 @@ const themeColors: Record<string, { header: string, tableHead: string, text: str
 
 export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props) {
   const [activeTab, setActiveTab] = useState('All Records');
+  const [liveData, setLiveData] = useState<any[][] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const theme = themeColors[variant] || themeColors.crm;
   
   // Clean module name by removing numbering (e.g. "1. Customer Purchase Orders" -> "Customer Purchase Orders")
   const cleanModuleName = moduleName.replace(/^\d+\.\s*/, '');
+  
+  const fetchSheetData = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Replace this URL with your actual Google Apps Script Web App URL
+      const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM4JeKRXE8RpVRpynoDjbMigxgy3CXY3rXB9V380omJ4jLcUfF_Du84bKTFQUHlL9/exec'; 
+      
+      // Adding a timestamp parameter to bypass browser caching of the Apps Script response
+      const response = await fetch(`${APP_SCRIPT_URL}?t=${new Date().getTime()}`);
+      if (!response.ok) throw new Error('Failed to fetch data');
+      
+      const result = await response.json();
+      if (Array.isArray(result)) {
+        setLiveData(result); // Apps Script now sends exactly the data rows
+      } else {
+        setLiveData([]);
+      }
+    } catch (err) {
+      console.error('Error fetching sheet data:', err);
+      setError('Failed to load live data from Sheet.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (variant === 'marketing' && cleanModuleName === 'Lead Pipeline') {
+      fetchSheetData();
+    } else {
+      setLiveData(null);
+      setIsLoading(false);
+      setError(null);
+    }
+  }, [variant, cleanModuleName]);
+
+  const handleSaveForm = async () => {
+    if (!hasSpecificData) return;
+    
+    setIsSubmitting(true);
+    try {
+      const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM4JeKRXE8RpVRpynoDjbMigxgy3CXY3rXB9V380omJ4jLcUfF_Du84bKTFQUHlL9/exec';
+      
+      const response = await fetch(APP_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        // Using text/plain prevents CORS preflight issues with Google Apps Script
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      });
+      
+      const result = await response.json();
+      if (result.status === 'success') {
+        alert('Record saved to Google Sheet successfully!');
+        setIsFormOpen(false);
+        setFormData({});
+        // Re-fetch data automatically so it shows up instantly in the web app
+        fetchSheetData();
+      } else {
+        alert('Failed to save: ' + result.message);
+      }
+    } catch (err) {
+      console.error('Error saving data:', err);
+      alert('Error saving data. Make sure Apps Script URL is correct and doPost is deployed.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   
   // Create singular version for the add button (e.g. "Orders" -> "Order")
   let singularName = cleanModuleName;
@@ -52,12 +125,12 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
 
   if (variant === 'marketing') {
     if (cleanModuleName === 'Lead Pipeline') {
-      specificColumns = ['Lead ID', 'Lead Name', 'Source', 'Date Generated', 'Assigned Exec', 'Status', 'Contact No'];
-      specificData = [
-        ['LD-1001', 'Rajesh Kumar', 'Google Ads', '20-Jun-2026', 'Rahul Sharma', 'New', '+91 9876543210'],
-        ['LD-1002', 'Priya Singh', 'Facebook', '20-Jun-2026', 'Amit Patel', 'Contacted', '+91 8765432109'],
-        ['LD-1003', 'TechVision Inc', 'LinkedIn', '19-Jun-2026', 'Sneha Gupta', 'Qualified', '+91 7654321098'],
-        ['LD-1004', 'Manoj Desai', 'Organic Search', '19-Jun-2026', 'Rahul Sharma', 'New', '+91 6543210987'],
+      specificColumns = ['Lead ID', 'Lead Date', 'Company Name', 'Contact Person', 'Mobile Number', 'Email', 'City', 'State', 'Industry Type', 'Product Requirement', 'Lead Source', 'Executive Name', 'Remarks', 'Lead Status'];
+      specificData = liveData || [
+        ['LD-1001', '20-Jun-2026', 'TechVision Inc', 'Rajesh Kumar', '+91 9876543210', 'rajesh@techvision.com', 'Mumbai', 'Maharashtra', 'IT', 'ERP Software', 'Google Ads', 'Rahul Sharma', 'Hot lead, needs demo', 'New'],
+        ['LD-1002', '20-Jun-2026', 'DesignStudio', 'Priya Singh', '+91 8765432109', 'priya@designstudio.in', 'Pune', 'Maharashtra', 'Media', 'CRM Module', 'Facebook', 'Amit Patel', 'Follow up on Friday', 'Contacted'],
+        ['LD-1003', '19-Jun-2026', 'BuildIt', 'Sneha Gupta', '+91 7654321098', 'sneha@buildit.co', 'Delhi', 'Delhi', 'Construction', 'Inventory Mgt', 'LinkedIn', 'Sneha Gupta', 'Requested quotation', 'Qualified'],
+        ['LD-1004', '19-Jun-2026', 'AgroTech', 'Manoj Desai', '+91 6543210987', 'manoj@agrotech.com', 'Ahmedabad', 'Gujarat', 'Agriculture', 'Full ERP', 'Organic Search', 'Rahul Sharma', 'New inquiry from website', 'New'],
       ];
     } else if (cleanModuleName === 'Approval Center') {
       specificColumns = ['Approval ID', 'Request Type', 'Requested By', 'Amount/Budget', 'Date', 'Priority', 'Status'];
@@ -162,7 +235,7 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
         
         {/* Add New Button next to tabs */}
         <button 
-          onClick={() => alert(`Add New ${singularName} form coming soon!`)}
+          onClick={() => setIsFormOpen(true)}
           className="flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-emerald-500 hover:bg-emerald-600 text-white ml-2 border border-emerald-600"
         >
           <Plus size={16} /> Add New {singularName}
@@ -194,8 +267,8 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
 
         {/* Dynamic Table Structure */}
         <div className="flex-1 overflow-auto scrollbar-none">
-          <table className="w-max min-w-full text-left text-sm whitespace-nowrap border-separate border-spacing-0">
-            <thead className={`text-white font-bold text-[11px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
+          <table className="w-max min-w-full text-center text-sm whitespace-nowrap border-separate border-spacing-0">
+            <thead className={`text-white font-extrabold text-[13px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
               <tr>
                 {hasSpecificData ? (
                   specificColumns.map((col, i) => (
@@ -212,8 +285,26 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
                 )}
               </tr>
             </thead>
-            <tbody className="text-gray-700">
-              {hasSpecificData ? (
+            <tbody className="text-gray-900 font-semibold font-sans tracking-normal">
+              {isLoading ? (
+                <tr>
+                  <td colSpan={hasSpecificData ? specificColumns.length : 15} className="px-6 py-12 text-center text-gray-500 font-medium">
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <div className="w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+                      Fetching live data from Google Sheet...
+                    </div>
+                  </td>
+                </tr>
+              ) : error ? (
+                <tr>
+                  <td colSpan={hasSpecificData ? specificColumns.length : 15} className="px-6 py-12 text-center text-red-500 font-medium">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <XCircle size={32} className="text-red-400" />
+                      {error}
+                    </div>
+                  </td>
+                </tr>
+              ) : hasSpecificData ? (
                 specificData.map((row, rowIndex) => {
                   const isEven = rowIndex % 2 === 0;
                   const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
@@ -248,6 +339,59 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
         </div>
         
       </div>
+
+      {/* Centered Modal Form */}
+      <div className={`fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100] transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6 ${isFormOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`w-full max-w-4xl bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-out flex flex-col max-h-[90vh] overflow-hidden ${isFormOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-8'}`}>
+          <div className={`bg-gradient-to-r ${theme.header} px-6 py-4 flex items-center justify-between text-white shrink-0 shadow-sm`}>
+            <h3 className="font-bold text-lg font-serif tracking-wide uppercase">Add New {singularName}</h3>
+            <button onClick={() => setIsFormOpen(false)} className="p-1.5 hover:bg-white/20 rounded-full transition-colors cursor-pointer">
+              <X size={20} />
+            </button>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto p-6 scrollbar-none bg-gray-50/50">
+            {hasSpecificData ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                {specificColumns.map((col, idx) => {
+                  const isDate = col.toLowerCase().includes('date') || col.toLowerCase().includes('time') || col.toLowerCase().includes('until');
+                  const isNumber = col.toLowerCase().includes('amount') || col.toLowerCase().includes('budget') || col.toLowerCase().includes('revenue');
+                  const type = isDate ? 'date' : isNumber ? 'number' : 'text';
+                  
+                  return (
+                    <div key={idx} className="flex flex-col gap-1.5">
+                      <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">{col}</label>
+                      <input 
+                        type={type}
+                        placeholder={`Enter ${col}...`}
+                        value={formData[col] || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, [col]: e.target.value }))}
+                        className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4A3B69]/20 focus:border-[#4A3B69] transition-all text-gray-900 shadow-sm"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-gray-500 text-sm text-center py-20 flex flex-col items-center gap-3">
+                <Activity size={32} className="text-gray-300" />
+                Form fields will dynamically appear here.
+              </div>
+            )}
+          </div>
+          
+          <div className="p-6 border-t border-gray-100 bg-white shrink-0 flex justify-end gap-3">
+            <button onClick={() => setIsFormOpen(false)} disabled={isSubmitting} className="px-6 py-2.5 border border-gray-300 bg-white rounded-xl text-gray-700 font-bold hover:bg-gray-100 transition-colors shadow-sm cursor-pointer disabled:opacity-50">
+              Cancel
+            </button>
+            <button onClick={handleSaveForm} disabled={isSubmitting} className={`px-8 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer ${theme.tableHead} hover:opacity-90 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2`}>
+              {isSubmitting ? <Activity size={16} className="animate-spin" /> : null}
+              {isSubmitting ? 'Saving...' : `Save ${singularName}`}
+            </button>
+          </div>
+        </div>
+      </div>
+      
     </div>
   );
 }
