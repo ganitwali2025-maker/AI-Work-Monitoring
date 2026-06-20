@@ -46,6 +46,88 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
   // Create empty columns (e.g. 15 columns)
   const emptyColumns = Array.from({ length: 15 });
 
+  // Define marketing specific data
+  let specificColumns: string[] = [];
+  let specificData: any[][] = [];
+
+  if (variant === 'marketing') {
+    if (cleanModuleName === 'Lead Pipeline') {
+      specificColumns = ['Lead ID', 'Lead Name', 'Source', 'Date Generated', 'Assigned Exec', 'Status', 'Contact No'];
+      specificData = [
+        ['LD-1001', 'Rajesh Kumar', 'Google Ads', '20-Jun-2026', 'Rahul Sharma', 'New', '+91 9876543210'],
+        ['LD-1002', 'Priya Singh', 'Facebook', '20-Jun-2026', 'Amit Patel', 'Contacted', '+91 8765432109'],
+        ['LD-1003', 'TechVision Inc', 'LinkedIn', '19-Jun-2026', 'Sneha Gupta', 'Qualified', '+91 7654321098'],
+        ['LD-1004', 'Manoj Desai', 'Organic Search', '19-Jun-2026', 'Rahul Sharma', 'New', '+91 6543210987'],
+      ];
+    } else if (cleanModuleName === 'Approval Center') {
+      specificColumns = ['Approval ID', 'Request Type', 'Requested By', 'Amount/Budget', 'Date', 'Priority', 'Status'];
+      specificData = [
+        ['AP-801', 'Campaign Budget', 'Rahul Sharma', '₹50,000', '20-Jun-2026', 'High', 'Pending'],
+        ['AP-802', 'Ad Creative', 'Sneha Gupta', '-', '19-Jun-2026', 'Medium', 'Approved'],
+        ['AP-803', 'Vendor Payment', 'Amit Patel', '₹15,000', '18-Jun-2026', 'Low', 'Pending'],
+      ];
+    } else if (cleanModuleName === 'Customer CRM') {
+      specificColumns = ['Customer ID', 'Name', 'Company', 'Industry', 'Last Contact', 'Status', 'LTV'];
+      specificData = [
+        ['CUS-001', 'Ankit Verma', 'TechCorp', 'IT', '19-Jun-2026', 'Active', '₹1,50,000'],
+        ['CUS-002', 'Meera Reddy', 'DesignStudio', 'Media', '18-Jun-2026', 'Inactive', '₹45,000'],
+        ['CUS-003', 'Vikram Singh', 'BuildIt', 'Construction', '15-Jun-2026', 'Active', '₹2,10,000'],
+      ];
+    } else if (cleanModuleName === 'Quotation Hub') {
+      specificColumns = ['Quote ID', 'Vendor/Client', 'Service', 'Amount', 'Valid Until', 'Created By', 'Status'];
+      specificData = [
+        ['QT-501', 'AdSense Media', 'Billboards', '₹1,20,000', '30-Jun-2026', 'Amit Patel', 'Sent'],
+        ['QT-502', 'PrintWorks', 'Brochures', '₹35,000', '25-Jun-2026', 'Sneha Gupta', 'Approved'],
+        ['QT-503', 'DigitalBoost', 'SEO Services', '₹80,000', '28-Jun-2026', 'Rahul Sharma', 'Pending'],
+      ];
+    } else if (cleanModuleName === 'Workflow Approval') {
+      specificColumns = ['Workflow ID', 'Process Name', 'Current Step', 'Pending With', 'Time Elapsed', 'Priority', 'Status'];
+      specificData = [
+        ['WF-101', 'New Product Launch', 'Budget Review', 'Director', '2 Days', 'High', 'In Progress'],
+        ['WF-102', 'Q3 Social Media Plan', 'Content Approval', 'Marketing Head', '4 Hours', 'Medium', 'In Progress'],
+        ['WF-103', 'Event Sponsorship', 'Legal Review', 'Legal Dept', '1 Day', 'High', 'In Progress'],
+      ];
+    } else if (cleanModuleName === 'Response Center') {
+      specificColumns = ['Ticket ID', 'Channel', 'Customer Name', 'Query Type', 'Received Time', 'SLA Status', 'Assigned To'];
+      specificData = [
+        ['RC-201', 'Email', 'Rajesh Kumar', 'Pricing Inquiry', '10:30 AM', 'Within SLA', 'Rahul Sharma'],
+        ['RC-202', 'WhatsApp', 'Priya Singh', 'Demo Request', '11:15 AM', 'Breached', 'Amit Patel'],
+        ['RC-203', 'Website Chat', 'Manoj Desai', 'Support', '01:45 PM', 'Within SLA', 'Sneha Gupta'],
+      ];
+    } else if (cleanModuleName === 'PO Management') {
+      specificColumns = ['PO Number', 'Vendor', 'Description', 'Total Amount', 'PO Date', 'Expected Delivery', 'Status'];
+      specificData = [
+        ['PO-9001', 'AdSense Media', 'Q3 Billboard Ads', '₹1,20,000', '15-Jun-2026', '01-Jul-2026', 'Approved'],
+        ['PO-9002', 'PrintWorks', 'Marketing Collaterals', '₹35,000', '18-Jun-2026', '25-Jun-2026', 'Pending'],
+        ['PO-9003', 'EventPro', 'Trade Show Booth', '₹2,50,000', '10-Jun-2026', '20-Jul-2026', 'Approved'],
+      ];
+    } else if (cleanModuleName === 'Performance Dashboard') {
+      specificColumns = ['Metric', 'Current Value', 'Target', 'Variance', 'MoM Growth', 'Status'];
+      specificData = [
+        ['Total Leads', '856', '1,000', '-144', '+24.3%', 'On Track'],
+        ['Conversion Rate', '10.4%', '12.0%', '-1.6%', '+1.2%', 'Needs Improvement'],
+        ['CPA', '₹1,056', '₹1,000', '+₹56', '-5.4%', 'On Track'],
+        ['Total Revenue', '₹8,50,000', '₹10,00,000', '-₹1,50,000', '+15.2%', 'On Track'],
+      ];
+    } else if (cleanModuleName === 'Work Tracker') {
+      specificColumns = ['Task ID', 'Task Name', 'Assignee', 'Due Date', 'Project', 'Priority', 'Status'];
+      specificData = [
+        ['TSK-301', 'Finalize Q3 Ads', 'Rahul Sharma', '25-Jun-2026', 'Q3 Campaign', 'High', 'In Progress'],
+        ['TSK-302', 'Update Email Templates', 'Sneha Gupta', '22-Jun-2026', 'Retention', 'Medium', 'Pending'],
+        ['TSK-303', 'Vendor Contract Renewal', 'Amit Patel', '30-Jun-2026', 'Admin', 'High', 'Completed'],
+      ];
+    } else if (cleanModuleName === 'Team Operations') {
+      specificColumns = ['Emp ID', 'Name', 'Role', 'Active Tasks', 'Performance Score', 'Attendance', 'Status'];
+      specificData = [
+        ['EMP-101', 'Rahul Sharma', 'Campaign Manager', '12', '95%', 'Present', 'Active'],
+        ['EMP-102', 'Sneha Gupta', 'Content Strategist', '8', '88%', 'On Leave', 'Inactive'],
+        ['EMP-103', 'Amit Patel', 'SEO Specialist', '15', '92%', 'Present', 'Active'],
+      ];
+    }
+  }
+
+  const hasSpecificData = specificColumns.length > 0;
+
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden flex flex-col h-[calc(100vh-140px)]">
       
@@ -110,34 +192,57 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
           </div>
         </div>
 
-        {/* Blank Table Structure */}
+        {/* Dynamic Table Structure */}
         <div className="flex-1 overflow-auto scrollbar-none">
           <table className="w-max min-w-full text-left text-sm whitespace-nowrap border-separate border-spacing-0">
             <thead className={`text-white font-bold text-[11px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
               <tr>
-                {/* Empty Headers */}
-                {emptyColumns.map((_, i) => (
-                  <th key={i} className={`px-16 py-4 font-bold border-b border-black/10 ${i === 0 ? `sticky left-0 z-30 ${theme.tableHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]` : ''}`}>
-                    &nbsp;
-                  </th>
-                ))}
+                {hasSpecificData ? (
+                  specificColumns.map((col, i) => (
+                    <th key={i} className={`px-6 py-4 font-bold border-b border-black/10 whitespace-nowrap ${i === 0 ? `sticky left-0 z-30 ${theme.tableHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]` : ''}`}>
+                      {col}
+                    </th>
+                  ))
+                ) : (
+                  emptyColumns.map((_, i) => (
+                    <th key={i} className={`px-16 py-4 font-bold border-b border-black/10 ${i === 0 ? `sticky left-0 z-30 ${theme.tableHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]` : ''}`}>
+                      &nbsp;
+                    </th>
+                  ))
+                )}
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {Array.from({ length: 15 }).map((_, rowIndex) => {
-                const isEven = rowIndex % 2 === 0;
-                const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
-                
-                return (
-                  <tr key={rowIndex} className={`group cursor-pointer ${rowBg} hover:bg-purple-50 transition-colors h-14`}>
-                    {emptyColumns.map((_, colIndex) => (
-                      <td key={colIndex} className={`px-6 py-3 border-b border-gray-100 transition-colors ${colIndex === 0 ? `sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] ${isEven ? 'bg-white group-hover:bg-purple-50' : 'bg-gray-50 group-hover:bg-purple-50'}` : ''}`}>
-                        &nbsp;
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
+              {hasSpecificData ? (
+                specificData.map((row, rowIndex) => {
+                  const isEven = rowIndex % 2 === 0;
+                  const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
+                  return (
+                    <tr key={rowIndex} className={`group cursor-pointer ${rowBg} hover:bg-purple-50 transition-colors h-14`}>
+                      {row.map((cell, colIndex) => (
+                        <td key={colIndex} className={`px-6 py-3 border-b border-gray-100 transition-colors whitespace-nowrap ${colIndex === 0 ? `sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] font-medium ${isEven ? 'bg-white group-hover:bg-purple-50' : 'bg-gray-50 group-hover:bg-purple-50'}` : ''}`}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  )
+                })
+              ) : (
+                Array.from({ length: 15 }).map((_, rowIndex) => {
+                  const isEven = rowIndex % 2 === 0;
+                  const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
+                  
+                  return (
+                    <tr key={rowIndex} className={`group cursor-pointer ${rowBg} hover:bg-purple-50 transition-colors h-14`}>
+                      {emptyColumns.map((_, colIndex) => (
+                        <td key={colIndex} className={`px-6 py-3 border-b border-gray-100 transition-colors ${colIndex === 0 ? `sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] ${isEven ? 'bg-white group-hover:bg-purple-50' : 'bg-gray-50 group-hover:bg-purple-50'}` : ''}`}>
+                          &nbsp;
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>

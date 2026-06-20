@@ -16,7 +16,9 @@ import {
   Mail,
   MessageSquare,
   Globe,
-  Share2
+  Share2,
+  CheckCircle,
+  FileText
 } from 'lucide-react';
 import Layout from './Layout';
 import ERPModuleCard from './ERPModuleCard';
@@ -48,13 +50,16 @@ export default function MarketingWorkspace({ onBack, initialMenu }: { onBack: ()
 
   const sidebarLinks = [
     { name: 'Marketing Dashboard', icon: <LayoutDashboard size={20} />, onClick: () => setActiveModule(null) },
-    { name: 'Campaigns', icon: <Megaphone size={20} />, onClick: () => setActiveModule('Campaigns') },
-    { name: 'Lead Generation', icon: <Target size={20} />, onClick: () => setActiveModule('Lead Generation') },
-    { name: 'Social Media', icon: <Share2 size={20} />, onClick: () => setActiveModule('Social Media') },
-    { name: 'Email Marketing', icon: <Mail size={20} />, onClick: () => setActiveModule('Email Marketing') },
-    { name: 'SMS & WhatsApp', icon: <MessageSquare size={20} />, onClick: () => setActiveModule('SMS & WhatsApp') },
-    { name: 'SEO & Website', icon: <Globe size={20} />, onClick: () => setActiveModule('SEO & Website') },
-    { name: 'Performance Analytics', icon: <Activity size={20} />, onClick: () => setActiveModule('Performance Analytics') },
+    { name: 'Lead Pipeline', icon: <Target size={20} />, onClick: () => setActiveModule('Lead Pipeline') },
+    { name: 'Approval Center', icon: <CheckCircle size={20} />, onClick: () => setActiveModule('Approval Center') },
+    { name: 'Customer CRM', icon: <Users size={20} />, onClick: () => setActiveModule('Customer CRM') },
+    { name: 'Quotation Hub', icon: <FileText size={20} />, onClick: () => setActiveModule('Quotation Hub') },
+    { name: 'Workflow Approval', icon: <Activity size={20} />, onClick: () => setActiveModule('Workflow Approval') },
+    { name: 'Response Center', icon: <MessageSquare size={20} />, onClick: () => setActiveModule('Response Center') },
+    { name: 'PO Management', icon: <ShoppingCart size={20} />, onClick: () => setActiveModule('PO Management') },
+    { name: 'Performance Dashboard', icon: <TrendingUp size={20} />, onClick: () => setActiveModule('Performance Dashboard') },
+    { name: 'Work Tracker', icon: <Calendar size={20} />, onClick: () => setActiveModule('Work Tracker') },
+    { name: 'Team Operations', icon: <Users size={20} />, onClick: () => setActiveModule('Team Operations') },
     { name: 'Settings', icon: <Settings size={20} />, onClick: () => setActiveModule('Settings') }
   ];
 
@@ -134,12 +139,16 @@ export default function MarketingWorkspace({ onBack, initialMenu }: { onBack: ()
   ];
 
   const modules = [
-    { name: 'Campaign Management', icon: Megaphone, desc: 'Create, track and optimize marketing campaigns.' },
-    { name: 'Lead Assignment', icon: Target, desc: 'Distribute fresh leads to sales executives.' },
-    { name: 'Social Media Metrics', icon: Share2, desc: 'Analyze engagement, reach and conversions.' },
-    { name: 'Email & SMS Blasts', icon: Mail, desc: 'Manage bulk communications and sequences.' },
-    { name: 'Website Traffic & SEO', icon: Globe, desc: 'Monitor organic visitors and keyword rankings.' },
-    { name: 'Marketing ROI Analysis', icon: Activity, desc: 'Calculate return on ad spend and budget efficiency.' }
+    { name: 'Lead Pipeline', icon: Target, desc: 'Manage and track all incoming marketing leads.' },
+    { name: 'Approval Center', icon: CheckCircle, desc: 'Review and approve marketing content and budgets.' },
+    { name: 'Customer CRM', icon: Users, desc: 'Centralized database for marketing customer relations.' },
+    { name: 'Quotation Hub', icon: FileText, desc: 'Generate and manage marketing vendor quotations.' },
+    { name: 'Workflow Approval', icon: Activity, desc: 'Automated approval workflows for campaigns.' },
+    { name: 'Response Center', icon: MessageSquare, desc: 'Track responses across all marketing channels.' },
+    { name: 'PO Management', icon: ShoppingCart, desc: 'Purchase orders for marketing resources.' },
+    { name: 'Performance Dashboard', icon: TrendingUp, desc: 'High-level overview of marketing metrics.' },
+    { name: 'Work Tracker', icon: Calendar, desc: 'Track tasks and schedules for the marketing team.' },
+    { name: 'Team Operations', icon: Users, desc: 'Manage marketing team assignments and roles.' }
   ];
 
   if (activeModule) {
