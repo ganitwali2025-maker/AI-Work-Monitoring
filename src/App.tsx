@@ -896,7 +896,7 @@ export default function App() {
               activeTab === 'modules' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
             }`}
           >
-            Business Modules
+            Work Departments
             {activeTab === 'modules' && (
               <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
             )}

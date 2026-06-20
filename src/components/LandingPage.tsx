@@ -75,7 +75,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             <div className="hidden lg:flex items-center gap-8 text-sm font-bold text-gray-800">
               <span className="cursor-pointer text-pink-500 border-b-2 border-pink-500 pb-1">Home</span>
               <span className="cursor-pointer hover:text-pink-500 transition-colors">About Us</span>
-              <span className="cursor-pointer hover:text-pink-500 transition-colors flex items-center gap-1">Business Modules <ChevronDown size={14} /></span>
+              <span className="cursor-pointer hover:text-pink-500 transition-colors flex items-center gap-1">Work Departments <ChevronDown size={14} /></span>
               <span className="cursor-pointer hover:text-pink-500 transition-colors flex items-center gap-1">AI Agents <ChevronDown size={14} /></span>
               <span className="cursor-pointer hover:text-pink-500 transition-colors flex items-center gap-1">Services <ChevronDown size={14} /></span>
               <span className="cursor-pointer hover:text-pink-500 transition-colors flex items-center gap-1">Resources <ChevronDown size={14} /></span>
