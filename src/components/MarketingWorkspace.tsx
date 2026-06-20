@@ -105,7 +105,7 @@ export default function MarketingWorkspace({ onBack, initialMenu }: { onBack: ()
       trend: "Running smooth", 
       icon: Megaphone, 
       bgColor: "bg-indigo-100/70",
-      iconColor: "text-indigo-700"
+      iconColor: "text-black"
     },
     { 
       title: "TOP MARKETING EXEC", 
@@ -181,10 +181,10 @@ export default function MarketingWorkspace({ onBack, initialMenu }: { onBack: ()
                 className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start transition-all hover:shadow-md duration-300 relative overflow-hidden"
               >
                 <div className="space-y-1">
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">
+                  <p className="text-xs text-black font-black uppercase tracking-widest">
                     {kpi.title}
                   </p>
-                  <p className="text-xl font-bold text-gray-900 leading-none pt-1">
+                  <p className="text-2xl font-black text-gray-900 leading-none pt-1.5">
                     {kpi.value}
                   </p>
                   <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 pt-1">
@@ -201,7 +201,7 @@ export default function MarketingWorkspace({ onBack, initialMenu }: { onBack: ()
 
           {/* Monthly Performance Score (Circular progress meter) */}
           <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-center items-center transition-all hover:shadow-md duration-300 relative overflow-hidden">
-             <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider mb-2 w-full text-left">
+             <p className="text-xs text-black font-black uppercase tracking-widest mb-2 w-full text-left">
                 MONTHLY SCORE
              </p>
              <div className="relative w-16 h-16 flex justify-center items-center">

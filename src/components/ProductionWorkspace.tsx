@@ -171,10 +171,10 @@ export default function ProductionWorkspace({ onBack, initialMenu }: { onBack: (
                 className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start transition-all hover:shadow-md duration-300 relative overflow-hidden"
               >
                 <div className="space-y-1">
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">
+                  <p className="text-xs text-black font-black uppercase tracking-widest">
                     {kpi.title}
                   </p>
-                  <p className="text-xl font-bold text-gray-900 leading-none pt-1">
+                  <p className="text-2xl font-black text-gray-900 leading-none pt-1.5">
                     {kpi.value}
                   </p>
                   <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 pt-1">

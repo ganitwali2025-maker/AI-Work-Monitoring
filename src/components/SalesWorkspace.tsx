@@ -152,7 +152,7 @@ export default function SalesWorkspace({ onBack, initialMenu }: { onBack: () => 
       icon: FileCheck,
       variant: 'crm' as const,
       badge: 'Pending: 38',
-      badgeColorClass: 'bg-indigo-50/50 text-indigo-700 border-indigo-200/50'
+      badgeColorClass: 'bg-indigo-50/50 text-black border-indigo-200/50'
     },
     {
       name: '2. Sales Order Management',
@@ -216,7 +216,7 @@ export default function SalesWorkspace({ onBack, initialMenu }: { onBack: () => 
       icon: Clock,
       variant: 'logistics' as const,
       badge: 'In Transit: 16',
-      badgeColorClass: 'bg-indigo-50/50 text-indigo-700 border-indigo-200/50'
+      badgeColorClass: 'bg-indigo-50/50 text-black border-indigo-200/50'
     },
     {
       name: '10. POD Management',
@@ -306,10 +306,10 @@ export default function SalesWorkspace({ onBack, initialMenu }: { onBack: () => 
                 className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start transition-all hover:shadow-md duration-300 relative overflow-hidden"
               >
                 <div className="space-y-1">
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">
+                  <p className="text-xs text-black font-black uppercase tracking-widest">
                     {kpi.title}
                   </p>
-                  <p className="text-xl font-bold text-gray-900 leading-none pt-1">
+                  <p className="text-2xl font-black text-gray-900 leading-none pt-1.5">
                     {kpi.value}
                   </p>
                   <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 pt-1">
