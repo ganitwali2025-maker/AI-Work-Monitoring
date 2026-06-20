@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lora", ui-serif, Georgia, serif;
+  --font-serif: "Lora", ui-serif, Georgia, serif;
+}
+
+.mesh-gradient-bg {
+  background-color: #f3f4f6;
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(254, 219, 233, 0.95) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(255, 240, 229, 0.95) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(235, 236, 255, 0.95) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.premium-collar-gradient {
+  background-image: linear-gradient(to right, #ff5a7d 0%, #fca2b4 45%, #ff8e53 80%, #ff6e5a 100%);
+}
+
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}

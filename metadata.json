@@ -1,0 +1,6 @@
+{
+  "name": "ERP Automation Business Workflow",
+  "description": "Premium ERP platform with automated workflows and Google Sheets backend.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
