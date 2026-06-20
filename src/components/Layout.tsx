@@ -228,7 +228,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
             {groupedSections.map((section) => (
               <div key={section.title} className="space-y-1.5">
                 {isSidebarOpen && (
-                  <h4 className={`px-3 text-[10px] uppercase tracking-wider font-extrabold ${theme.textMuted} font-sans opacity-80`}>
+                  <h4 className={`px-3 text-xs uppercase tracking-wider font-extrabold ${theme.textMuted} font-sans opacity-80`}>
                     {section.title}
                   </h4>
                 )}
@@ -242,7 +242,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
                           setActiveMenuName(link.name);
                           link.onClick();
                         }}
-                        className={`flex items-center h-[38px] w-full px-3 py-2 transition-all duration-200 text-xs whitespace-nowrap rounded-lg relative z-10 group cursor-pointer ${
+                        className={`flex items-center h-[38px] w-full px-3 py-2 transition-all duration-200 text-sm whitespace-nowrap rounded-lg relative z-10 group cursor-pointer ${
                           isActive 
                             ? `${theme.activeBg} text-white font-bold` 
                             : 'text-white/75 hover:text-white hover:bg-white/5 font-medium'
@@ -259,7 +259,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
                             {link.icon || <div className="w-5 h-5 flex items-center justify-center">●</div>}
                           </span>
                           {isSidebarOpen && (
-                            <span className="font-sans pl-0.5 tracking-wide text-xs">
+                            <span className="font-sans pl-0.5 tracking-wide text-sm">
                               {link.name}
                             </span>
                           )}
@@ -281,7 +281,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
               {/* Collapse button */}
               <button 
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition duration-205 text-xs font-semibold cursor-pointer"
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition duration-205 text-sm font-semibold cursor-pointer"
                 title="Collapse Sidebar"
               >
                 <span className="transform transition-transform duration-300 shrink-0">
