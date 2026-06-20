@@ -9,7 +9,7 @@ interface Props {
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-  variant: 'crm' | 'procurement' | 'inventory' | 'logistics' | 'production' | 'finance' | 'hr' | 'director' | 'vendor-master' | 'marketing' | 'dashboard' | 'laboratory';
+  variant: 'crm' | 'procurement' | 'inventory' | 'logistics' | 'production' | 'finance' | 'hr' | 'director' | 'vendor-master' | 'marketing' | 'dashboard' | 'laboratory' | 'sales';
   isInner?: boolean;
   badge?: string;
   badgeColorClass?: string;
