@@ -30,25 +30,45 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  
+  // Approval states
+  const [isApprovalModalOpen, setIsApprovalModalOpen] = useState(false);
+  const [selectedRowForApproval, setSelectedRowForApproval] = useState<any[] | null>(null);
+  const [approvalRemarks, setApprovalRemarks] = useState('');
+
   const theme = themeColors[variant] || themeColors.crm;
   
   // Clean module name by removing numbering (e.g. "1. Customer Purchase Orders" -> "Customer Purchase Orders")
   const cleanModuleName = moduleName.replace(/^\d+\.\s*/, '');
   
+  const sheetNameMap: Record<string, string> = {
+    'Lead Pipeline': 'Lead Entry',
+    'Approval Center': 'Approval Center'
+  };
+  const targetSheetName = sheetNameMap[cleanModuleName] || cleanModuleName;
+
+  const getAppScriptUrl = (module: string) => {
+    if (module === 'Approval Center') {
+      // Replace this with the NEW URL you generate for the Approval Center
+      return 'https://script.google.com/macros/s/AKfycbwRRIlccxVeC9zShoimpAY_55BbbLrO3_veqXuAlJvdPRCnuh-4yElFnShDrzxrbUQe/exec';
+    }
+    // Original URL for Lead Pipeline
+    return 'https://script.google.com/macros/s/AKfycbyRM4JeKRXE8RpVRpynoDjbMigxgy3CXY3rXB9V380omJ4jLcUfF_Du84bKTFQUHlL9/exec';
+  };
+
   const fetchSheetData = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      // Replace this URL with your actual Google Apps Script Web App URL
-      const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM4JeKRXE8RpVRpynoDjbMigxgy3CXY3rXB9V380omJ4jLcUfF_Du84bKTFQUHlL9/exec'; 
+      const APP_SCRIPT_URL = getAppScriptUrl(cleanModuleName); 
       
       // Adding a timestamp parameter to bypass browser caching of the Apps Script response
-      const response = await fetch(`${APP_SCRIPT_URL}?t=${new Date().getTime()}`);
+      const response = await fetch(`${APP_SCRIPT_URL}?t=${new Date().getTime()}&sheetName=${encodeURIComponent(targetSheetName)}`);
       if (!response.ok) throw new Error('Failed to fetch data');
       
       const result = await response.json();
       if (Array.isArray(result)) {
-        setLiveData(result); // Apps Script now sends exactly the data rows
+        setLiveData(result);
       } else {
         setLiveData([]);
       }
@@ -61,7 +81,7 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
   };
 
   useEffect(() => {
-    if (variant === 'marketing' && cleanModuleName === 'Lead Pipeline') {
+    if (variant === 'marketing' && (cleanModuleName === 'Lead Pipeline' || cleanModuleName === 'Approval Center')) {
       fetchSheetData();
     } else {
       setLiveData(null);
@@ -75,17 +95,52 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
     
     setIsSubmitting(true);
     try {
-      const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRM4JeKRXE8RpVRpynoDjbMigxgy3CXY3rXB9V380omJ4jLcUfF_Du84bKTFQUHlL9/exec';
+      const APP_SCRIPT_URL = getAppScriptUrl(cleanModuleName);
       
+      const payload = {
+        ...formData,
+        sheetName: targetSheetName
+      };
+
       const response = await fetch(APP_SCRIPT_URL, {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
         // Using text/plain prevents CORS preflight issues with Google Apps Script
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
       });
       
       const result = await response.json();
       if (result.status === 'success') {
+        // Dual submit: Push to Approval Center if Lead Pipeline
+        if (cleanModuleName === 'Lead Pipeline') {
+          try {
+            const APPROVAL_URL = getAppScriptUrl('Approval Center');
+            const approvalPayload = {
+              'Lead ID': formData['Lead ID'] || '', 
+              'Company Name': formData['Company Name'] || '',
+              'Executive Name': formData['Executive Name'] || '',
+              'Marketing Head': formData['Marketing Head'] || '',
+              'Approval Status': 'Pending',
+              'Approval Date': '',
+              'Approval Time': '',
+              'Remarks': formData['Remarks'] || '',
+              'sheetName': 'Approval Center'
+            };
+            const appRes = await fetch(APPROVAL_URL, {
+              method: 'POST',
+              body: JSON.stringify(approvalPayload),
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            });
+            const appJson = await appRes.json();
+            if (appJson.status !== 'success') {
+              alert('Sync to Approval Center failed: ' + appJson.message);
+            }
+          } catch (approvalErr: any) {
+            console.error('Error syncing to Approval Center:', approvalErr);
+            alert('Approval Sync Error: ' + (approvalErr.message || approvalErr) + '\n\nMake sure your Approval Center Apps Script is deployed with "Who has access: Anyone".');
+          }
+        }
+
         alert('Record saved to Google Sheet successfully!');
         setIsFormOpen(false);
         setFormData({});
@@ -102,6 +157,59 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
     }
   };
   
+  const handleOpenApprovalModal = (row: any[]) => {
+    setSelectedRowForApproval(row);
+    setApprovalRemarks('');
+    setIsApprovalModalOpen(true);
+  };
+
+  const handleSubmitApproval = async (status: 'Approved' | 'Rejected') => {
+    if (!selectedRowForApproval) return;
+    setIsSubmitting(true);
+    
+    try {
+      const APP_SCRIPT_URL = getAppScriptUrl('Approval Center');
+      
+      // We need to know which column is "Lead ID"
+      const leadIdIndex = specificColumns.indexOf('Lead ID');
+      const leadId = selectedRowForApproval[leadIdIndex];
+      
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g, '');
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+      const payload = {
+        action: 'update',
+        'Lead ID': leadId,
+        'Approval Status': status,
+        'Approval Date': dateStr,
+        'Approval Time': timeStr,
+        'Remarks': approvalRemarks,
+        'sheetName': 'Approval Center'
+      };
+
+      const response = await fetch(APP_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      });
+      
+      const result = await response.json();
+      if (result.status === 'success') {
+        alert(`Record ${status.toLowerCase()} successfully!`);
+        setIsApprovalModalOpen(false);
+        fetchSheetData();
+      } else {
+        alert(`Failed to ${status.toLowerCase()}: ` + result.message);
+      }
+    } catch (err) {
+      console.error('Error updating approval:', err);
+      alert('Error saving approval.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // Create singular version for the add button (e.g. "Orders" -> "Order")
   let singularName = cleanModuleName;
   if (singularName.endsWith('s')) {
@@ -125,20 +233,11 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
 
   if (variant === 'marketing') {
     if (cleanModuleName === 'Lead Pipeline') {
-      specificColumns = ['Lead ID', 'Lead Date', 'Company Name', 'Contact Person', 'Mobile Number', 'Email', 'City', 'State', 'Industry Type', 'Product Requirement', 'Lead Source', 'Executive Name', 'Remarks', 'Lead Status'];
-      specificData = liveData || [
-        ['LD-1001', '20-Jun-2026', 'TechVision Inc', 'Rajesh Kumar', '+91 9876543210', 'rajesh@techvision.com', 'Mumbai', 'Maharashtra', 'IT', 'ERP Software', 'Google Ads', 'Rahul Sharma', 'Hot lead, needs demo', 'New'],
-        ['LD-1002', '20-Jun-2026', 'DesignStudio', 'Priya Singh', '+91 8765432109', 'priya@designstudio.in', 'Pune', 'Maharashtra', 'Media', 'CRM Module', 'Facebook', 'Amit Patel', 'Follow up on Friday', 'Contacted'],
-        ['LD-1003', '19-Jun-2026', 'BuildIt', 'Sneha Gupta', '+91 7654321098', 'sneha@buildit.co', 'Delhi', 'Delhi', 'Construction', 'Inventory Mgt', 'LinkedIn', 'Sneha Gupta', 'Requested quotation', 'Qualified'],
-        ['LD-1004', '19-Jun-2026', 'AgroTech', 'Manoj Desai', '+91 6543210987', 'manoj@agrotech.com', 'Ahmedabad', 'Gujarat', 'Agriculture', 'Full ERP', 'Organic Search', 'Rahul Sharma', 'New inquiry from website', 'New'],
-      ];
+      specificColumns = ['Lead ID', 'Lead Date', 'Company Name', 'Contact Person', 'Mobile Number', 'Email', 'City', 'State', 'Industry Type', 'Product Requirement', 'Lead Source', 'Executive Name', 'Marketing Head', 'Remarks', 'Lead Status'];
+      specificData = liveData || [];
     } else if (cleanModuleName === 'Approval Center') {
-      specificColumns = ['Approval ID', 'Request Type', 'Requested By', 'Amount/Budget', 'Date', 'Priority', 'Status'];
-      specificData = [
-        ['AP-801', 'Campaign Budget', 'Rahul Sharma', '₹50,000', '20-Jun-2026', 'High', 'Pending'],
-        ['AP-802', 'Ad Creative', 'Sneha Gupta', '-', '19-Jun-2026', 'Medium', 'Approved'],
-        ['AP-803', 'Vendor Payment', 'Amit Patel', '₹15,000', '18-Jun-2026', 'Low', 'Pending'],
-      ];
+      specificColumns = ['Lead ID', 'Company Name', 'Executive Name', 'Marketing Head', 'Approval Status', 'Approval Date', 'Approval Time', 'Remarks'];
+      specificData = liveData || [];
     } else if (cleanModuleName === 'Customer CRM') {
       specificColumns = ['Customer ID', 'Name', 'Company', 'Industry', 'Last Contact', 'Status', 'LTV'];
       specificData = [
@@ -238,11 +337,11 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
         {/* Refresh Button - Styled like a tab */}
         <button 
           onClick={() => {
-            if (variant === 'marketing' && cleanModuleName === 'Lead Pipeline') {
+            if (variant === 'marketing' && (cleanModuleName === 'Lead Pipeline' || cleanModuleName === 'Approval Center')) {
               fetchSheetData();
             } else {
               setIsLoading(true);
-              setTimeout(() => setIsLoading(false), 600);
+              setTimeout(() => setIsLoading(false), 800);
             }
           }}
           disabled={isLoading}
@@ -330,11 +429,27 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
                   const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
                   return (
                     <tr key={rowIndex} className={`group cursor-pointer ${rowBg} hover:bg-purple-50 transition-colors h-14`}>
-                      {row.map((cell, colIndex) => (
+                      {row.map((cell, colIndex) => {
+                        const colName = specificColumns[colIndex];
+                        return (
                         <td key={colIndex} className={`px-6 py-3 border-b border-gray-100 transition-colors whitespace-nowrap ${colIndex === 0 ? `sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] font-medium ${isEven ? 'bg-white group-hover:bg-purple-50' : 'bg-gray-50 group-hover:bg-purple-50'}` : ''}`}>
-                          {cell}
+                          {cleanModuleName === 'Approval Center' && colName === 'Approval Status' && cell === 'Pending' ? (
+                            <div className="flex items-center justify-center gap-3">
+                              <span className="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-amber-200">{cell}</span>
+                              <button onClick={(e) => { e.stopPropagation(); handleOpenApprovalModal(row); }} className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold px-4 py-1.5 rounded-md shadow-sm transition-colors cursor-pointer flex items-center gap-1">
+                                <CheckCircle size={14} /> Review
+                              </button>
+                            </div>
+                          ) : cleanModuleName === 'Approval Center' && colName === 'Approval Status' && cell === 'Approved' ? (
+                             <span className="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-emerald-200 inline-flex items-center gap-1"><CheckCircle size={12} /> {cell}</span>
+                          ) : cleanModuleName === 'Approval Center' && colName === 'Approval Status' && cell === 'Rejected' ? (
+                             <span className="bg-red-100 text-red-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-red-200 inline-flex items-center gap-1"><XCircle size={12} /> {cell}</span>
+                          ) : (
+                            cell
+                          )}
                         </td>
-                      ))}
+                        );
+                      })}
                     </tr>
                   )
                 })
@@ -407,6 +522,46 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
             <button onClick={handleSaveForm} disabled={isSubmitting} className={`px-8 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer ${theme.tableHead} hover:opacity-90 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2`}>
               {isSubmitting ? <Activity size={16} className="animate-spin" /> : null}
               {isSubmitting ? 'Saving...' : `Save ${singularName}`}
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* Approval Modal */}
+      <div className={`fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[200] transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6 ${isApprovalModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`w-full max-w-md bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-out flex flex-col overflow-hidden ${isApprovalModalOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-8'}`}>
+          <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 px-6 py-4 flex items-center justify-between text-white shrink-0 shadow-sm">
+            <div className="flex items-center gap-2">
+              <CheckCircle size={20} />
+              <h3 className="font-bold text-lg tracking-wide uppercase">Approve Record</h3>
+            </div>
+            <button onClick={() => setIsApprovalModalOpen(false)} className="p-1.5 hover:bg-white/20 rounded-full transition-colors cursor-pointer">
+              <X size={20} />
+            </button>
+          </div>
+          
+          <div className="p-6 bg-gray-50/50">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-bold text-gray-700">Remarks / Approval Notes</label>
+              <textarea 
+                placeholder="Enter remarks for this approval..."
+                value={approvalRemarks}
+                onChange={(e) => setApprovalRemarks(e.target.value)}
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-gray-900 shadow-sm min-h-[100px] resize-none"
+              />
+            </div>
+          </div>
+          
+          <div className="p-5 border-t border-gray-100 bg-white shrink-0 flex justify-end gap-3">
+            <button onClick={() => setIsApprovalModalOpen(false)} disabled={isSubmitting} className="px-5 py-2.5 border border-gray-300 bg-white rounded-xl text-gray-700 font-bold hover:bg-gray-100 transition-colors shadow-sm cursor-pointer disabled:opacity-50">
+              Cancel
+            </button>
+            <button onClick={() => handleSubmitApproval('Approved')} disabled={isSubmitting} className="px-6 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2">
+              {isSubmitting ? <Activity size={16} className="animate-spin" /> : <CheckCircle size={16} />}
+              {isSubmitting ? 'Processing...' : 'Approve'}
+            </button>
+            <button onClick={() => handleSubmitApproval('Rejected')} disabled={isSubmitting} className="px-6 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer bg-red-500 hover:bg-red-600 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2">
+              {isSubmitting ? <Activity size={16} className="animate-spin" /> : <XCircle size={16} />}
+              {isSubmitting ? 'Processing...' : 'Reject'}
             </button>
           </div>
         </div>

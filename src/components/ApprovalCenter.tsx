@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ShoppingCart, 
   FileText, 
@@ -9,16 +9,21 @@ import {
   Factory, 
   Truck, 
   FlaskConical,
-  ShieldCheck
+  ShieldCheck,
+  CheckSquare
 } from 'lucide-react';
 import AIAgentCard from './AIAgentCard';
+import GenericDataSheet from './GenericDataSheet';
 
 interface Props {
   userRole?: string;
 }
 
 export default function ApprovalCenter({ userRole = 'admin' }: Props) {
+  const [activeModule, setActiveModule] = useState<string | null>(null);
+
   const allApprovals = [
+    { name: 'Lead Approval', icon: CheckSquare, desc: 'Approve new marketing leads, verify assignments and marketing head authorization.', badge: '', badgeColorClass: 'bg-emerald-100/70 text-emerald-700 border-emerald-200/60', variant: 'marketing' as const },
     { name: 'Purchase Approvals', icon: FileText, desc: 'Review and approve purchase requisitions, POs, and vendor payments.', badge: '', badgeColorClass: 'bg-amber-100/70 text-amber-700 border-amber-200/60', variant: 'procurement' as const },
     { name: 'Sales Approvals', icon: ShoppingCart, desc: 'Authorize sales orders, custom discounts, and credit extensions.', badge: '', badgeColorClass: 'bg-blue-100/70 text-blue-700 border-blue-200/60', variant: 'sales' as const },
     { name: 'Finance Approvals', icon: Landmark, desc: 'Approve expense claims, budget overrides, and journal entries.', badge: '', badgeColorClass: 'bg-teal-100/70 text-teal-700 border-teal-200/60', variant: 'finance' as const },
@@ -37,6 +42,40 @@ export default function ApprovalCenter({ userRole = 'admin' }: Props) {
     if (app.variant === userRole) return true;
     return false;
   });
+
+  const leadApprovalColumns = [
+    'Lead ID',
+    'Company Name',
+    'Executive Name',
+    'Marketing Head',
+    'Approval Status',
+    'Approval Date',
+    'Approval Time',
+    'Remarks'
+  ];
+
+  if (activeModule === 'Lead Approval') {
+    return (
+      <GenericDataSheet
+        moduleName="Approval Center"
+        columns={leadApprovalColumns}
+        onBack={() => setActiveModule(null)}
+        variant="marketing"
+      />
+    );
+  }
+
+  if (activeModule) {
+    const activeData = approvals.find(a => a.name === activeModule);
+    return (
+      <GenericDataSheet
+        moduleName={activeModule}
+        columns={['ID', 'Status', 'Date', 'Time', 'Remarks']}
+        onBack={() => setActiveModule(null)}
+        variant={activeData?.variant || 'crm'}
+      />
+    );
+  }
 
   return (
     <div className="animate-fade-in">
@@ -63,7 +102,7 @@ export default function ApprovalCenter({ userRole = 'admin' }: Props) {
             isInner={true}
             hideAgentText={true}
             index={index}
-            onClick={() => {}}
+            onClick={() => setActiveModule(approval.name)}
           />
         ))}
       </div>

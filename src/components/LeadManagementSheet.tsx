@@ -6,7 +6,7 @@ export default function LeadManagementSheet() {
   const [activeTab, setActiveTab] = useState('All Leads');
   const [isNewLeadModalOpen, setIsNewLeadModalOpen] = useState(false);
   const [leads, setLeads] = useState<any[]>([]);
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytWWJKUYQlBAd03y54B4ohdmncnx1HXX-lGpMq8KYIoLVrOVVST5GnvpSEpHDReKAqaA/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRRIlccxVeC9zShoimpAY_55BbbLrO3_veqXuAlJvdPRCnuh-4yElFnShDrzxrbUQe/exec';
 
   const fetchLeads = async () => {
     try {
