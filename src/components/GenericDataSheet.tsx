@@ -444,6 +444,10 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
                              <span className="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-emerald-200 inline-flex items-center gap-1"><CheckCircle size={12} /> {cell}</span>
                           ) : cleanModuleName === 'Approval Center' && colName === 'Approval Status' && cell === 'Rejected' ? (
                              <span className="bg-red-100 text-red-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-red-200 inline-flex items-center gap-1"><XCircle size={12} /> {cell}</span>
+                          ) : (typeof cell === 'string' && /^\\d{4}-\\d{2}-\\d{2}T/.test(cell)) ? (
+                            colName.toLowerCase().includes('time') 
+                              ? new Date(cell).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true })
+                              : new Date(cell).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' })
                           ) : (
                             cell
                           )}
