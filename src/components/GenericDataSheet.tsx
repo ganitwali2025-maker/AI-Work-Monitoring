@@ -49,7 +49,6 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
 
   const getAppScriptUrl = (module: string) => {
     if (module === 'Approval Center') {
-      // Replace this with the NEW URL you generate for the Approval Center
       return 'https://script.google.com/macros/s/AKfycbwRRIlccxVeC9zShoimpAY_55BbbLrO3_veqXuAlJvdPRCnuh-4yElFnShDrzxrbUQe/exec';
     }
     // Original URL for Lead Pipeline
@@ -97,8 +96,23 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
     try {
       const APP_SCRIPT_URL = getAppScriptUrl(cleanModuleName);
       
+      const now = new Date();
+      const currentDate = now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' });
+      const currentTime = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
+
+      const finalFormData = { ...formData };
+      
+      specificColumns.forEach(col => {
+        if (col.toLowerCase().includes('date') && !finalFormData[col]) {
+          finalFormData[col] = currentDate;
+        }
+        if (col.toLowerCase().includes('time') && !finalFormData[col]) {
+          finalFormData[col] = currentTime;
+        }
+      });
+
       const payload = {
-        ...formData,
+        ...finalFormData,
         sheetName: targetSheetName
       };
 
@@ -175,8 +189,8 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
       const leadId = selectedRowForApproval[leadIdIndex];
       
       const now = new Date();
-      const dateStr = now.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g, '');
-      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+      const dateStr = now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' });
+      const timeStr = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
 
       const payload = {
         action: 'update',
@@ -444,9 +458,9 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
                              <span className="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-emerald-200 inline-flex items-center gap-1"><CheckCircle size={12} /> {cell}</span>
                           ) : cleanModuleName === 'Approval Center' && colName === 'Approval Status' && cell === 'Rejected' ? (
                              <span className="bg-red-100 text-red-800 px-2.5 py-1 rounded-md text-xs font-bold shadow-sm border border-red-200 inline-flex items-center gap-1"><XCircle size={12} /> {cell}</span>
-                          ) : (typeof cell === 'string' && /^\\d{4}-\\d{2}-\\d{2}T/.test(cell)) ? (
+                          ) : (typeof cell === 'string' && /^[0-9]{4}-[0-9]{2}-[0-9]{2}T/.test(cell)) ? (
                             colName.toLowerCase().includes('time') 
-                              ? new Date(cell).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true })
+                              ? new Date(cell).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase()
                               : new Date(cell).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' })
                           ) : (
                             cell
