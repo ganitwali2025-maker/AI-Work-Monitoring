@@ -163,11 +163,11 @@ const AIAgentCard: React.FC<AIAgentCardProps & { index?: number, shouldAnimate?:
   let shortDesc = desc.replace(/^Manage\s+/i, '').replace(/^Monitor\s+/i, '').replace(/^Executive\s+/i, 'Executive ');
   shortDesc = shortDesc.charAt(0).toUpperCase() + shortDesc.slice(1);
 
-  const gradient = variantGradients[variant];
-  const bgColor = isInner ? innerIconBgs[variant] : variantBgColors[variant];
-  const iconColor = isInner ? innerIconColors[variant] : variantIconColors[variant];
-  const cardBg = isInner ? innerCardBgs[variant] : variantCardBgs[variant];
-  const hoverTextColor = variantHoverTextColors[variant];
+  const bgColor = 'bg-[#eaf4d9]'; // Keep static pale green
+  const iconColor = 'text-[#4d6b24]'; // Dark green icon
+  const cardBg = 'bg-white border-gray-200 hover:bg-[#f4f8ee] hover:border-[#a3c47e]';
+  const hoverTextColor = 'text-gray-900 group-hover:text-gray-950';
+
   const iconContainerClass = `${bgColor} ${iconColor}`;
 
   return (
@@ -184,39 +184,36 @@ const AIAgentCard: React.FC<AIAgentCardProps & { index?: number, shouldAnimate?:
       className="group relative h-full rounded-2xl p-[1px] cursor-pointer"
       onClick={onClick}
     >
-      {/* Sharp Border Gradient Glow Layer */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
-      
-      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[15px] border shadow-sm transition-all duration-300 ${cardBg}`}>
+      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[12px] border transition-all duration-200 ${cardBg}`}>
         <div className="flex justify-between items-start mb-4">
-          <div className={`inline-block w-fit p-3 rounded-xl ${iconContainerClass} transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
-            <Icon size={24} />
+          <div className={`inline-block w-fit p-3.5 rounded-xl ${iconContainerClass} transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
+            <Icon size={24} strokeWidth={1.5} />
           </div>
-          <div className="flex items-center gap-1.5 bg-white rounded-full px-2.5 py-1 shadow-sm border border-gray-100">
-            <div className={`w-2 h-2 rounded-full bg-emerald-500 animate-pulse`} />
+          <div className="flex items-center gap-1.5 bg-emerald-50 rounded-full px-2.5 py-1 border border-emerald-100 shadow-sm">
+            <div className={`w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse`} />
             <span className={`text-[10px] font-bold text-emerald-600 tracking-wide uppercase`}>Live</span>
           </div>
         </div>
         
-        <div>
-           <h3 className={`font-serif text-lg font-semibold text-gray-950 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
+        <div className="flex-1">
+           <h3 className={`font-bold text-[16px] text-gray-900 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
              {agentName}
            </h3>
-           <p className="text-sm text-gray-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+           <p className="text-[13px] text-gray-500 leading-relaxed">
              {shortDesc}
            </p>
         </div>
         
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
           {badge ? (
-            <span className={`text-[10px] font-bold tracking-wider rounded px-2.5 py-1 border shadow-xs ${badgeColorClass}`}>
+            <span className={`text-[11px] font-bold rounded px-3 py-1.5 bg-[#eaf4d9] text-[#2d4a22]`}>
               {badge}
             </span>
           ) : (
             <div />
           )}
-          <button className={`flex items-center gap-1.5 text-sm font-semibold transition-colors duration-300 ${bgColor} ${iconColor} px-3 py-1.5 rounded-lg shadow-sm group-hover:shadow-md hover:opacity-80`}>
-            <ExternalLink size={14} /> Open
+          <button className={`flex items-center gap-1.5 text-[13px] font-bold text-gray-800 transition-colors duration-300`}>
+             Open <span className="text-lg leading-none mb-0.5">→</span>
           </button>
         </div>
       </div>

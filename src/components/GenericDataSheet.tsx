@@ -6,20 +6,22 @@ interface Props {
   variant?: 'crm' | 'procurement' | 'inventory' | 'logistics' | 'production' | 'finance' | 'hr' | 'director' | 'vendor-master' | 'sales' | 'marketing' | 'laboratory';
 }
 
-const themeColors: Record<string, { header: string, tableHead: string, text: string, border: string }> = {
-  crm: { header: 'from-[#A855F7] to-[#7E22CE]', tableHead: 'bg-[#A855F7]', text: 'text-[#A855F7]', border: 'border-t-[#A855F7]' },
-  sales: { header: 'from-[#3B82F6] to-[#2563EB]', tableHead: 'bg-[#3B82F6]', text: 'text-[#3B82F6]', border: 'border-t-[#3B82F6]' },
-  procurement: { header: 'from-[#F59E0B] to-[#D97706]', tableHead: 'bg-[#F59E0B]', text: 'text-[#F59E0B]', border: 'border-t-[#F59E0B]' },
-  inventory: { header: 'from-[#10B981] to-[#047857]', tableHead: 'bg-[#10B981]', text: 'text-[#10B981]', border: 'border-t-[#10B981]' },
-  logistics: { header: 'from-[#6366F1] to-[#4338CA]', tableHead: 'bg-[#6366F1]', text: 'text-[#6366F1]', border: 'border-t-[#6366F1]' },
-  production: { header: 'from-[#0EA5E9] to-[#0369A1]', tableHead: 'bg-[#0EA5E9]', text: 'text-[#0EA5E9]', border: 'border-t-[#0EA5E9]' },
-  finance: { header: 'from-[#14B8A6] to-[#0F766E]', tableHead: 'bg-[#14B8A6]', text: 'text-[#14B8A6]', border: 'border-t-[#14B8A6]' },
-  hr: { header: 'from-[#F43F5E] to-[#BE123C]', tableHead: 'bg-[#F43F5E]', text: 'text-[#F43F5E]', border: 'border-t-[#F43F5E]' },
-  director: { header: 'from-[#D946EF] to-[#A21CAF]', tableHead: 'bg-[#D946EF]', text: 'text-[#D946EF]', border: 'border-t-[#D946EF]' },
-  'vendor-master': { header: 'from-[#5B6FFF] to-[#4055D8]', tableHead: 'bg-[#5B6FFF]', text: 'text-[#5B6FFF]', border: 'border-t-[#5B6FFF]' },
-  marketing: { header: 'from-[#C026D3] to-[#86198F]', tableHead: 'bg-[#C026D3]', text: 'text-[#C026D3]', border: 'border-t-[#C026D3]' },
-  laboratory: { header: 'from-[#06B6D4] to-[#0891B2]', tableHead: 'bg-[#06B6D4]', text: 'text-[#06B6D4]', border: 'border-t-[#06B6D4]' },
+const themeColors: Record<string, { header: string, tableHead: string, text: string, border: string, bgHead: string }> = {
+  crm: { header: 'from-[#9333EA] to-[#7E22CE]', tableHead: 'bg-[#9333EA]', text: 'text-white', border: 'border-t-[#9333EA]', bgHead: 'bg-[#9333EA]' },
+  sales: { header: 'from-[#3B82F6] to-[#1D4ED8]', tableHead: 'bg-[#3B82F6]', text: 'text-white', border: 'border-t-[#3B82F6]', bgHead: 'bg-[#3B82F6]' },
+  procurement: { header: 'from-[#F59E0B] to-[#D97706]', tableHead: 'bg-[#F59E0B]', text: 'text-white', border: 'border-t-[#F59E0B]', bgHead: 'bg-[#F59E0B]' },
+  inventory: { header: 'from-[#10B981] to-[#047857]', tableHead: 'bg-[#10B981]', text: 'text-white', border: 'border-t-[#10B981]', bgHead: 'bg-[#10B981]' },
+  logistics: { header: 'from-[#6366F1] to-[#4338CA]', tableHead: 'bg-[#6366F1]', text: 'text-white', border: 'border-t-[#6366F1]', bgHead: 'bg-[#6366F1]' },
+  production: { header: 'from-[#0EA5E9] to-[#0369A1]', tableHead: 'bg-[#0EA5E9]', text: 'text-white', border: 'border-t-[#0EA5E9]', bgHead: 'bg-[#0EA5E9]' },
+  finance: { header: 'from-[#14B8A6] to-[#0F766E]', tableHead: 'bg-[#14B8A6]', text: 'text-white', border: 'border-t-[#14B8A6]', bgHead: 'bg-[#14B8A6]' },
+  hr: { header: 'from-[#F43F5E] to-[#BE123C]', tableHead: 'bg-[#F43F5E]', text: 'text-white', border: 'border-t-[#F43F5E]', bgHead: 'bg-[#F43F5E]' },
+  director: { header: 'from-[#D946EF] to-[#A21CAF]', tableHead: 'bg-[#D946EF]', text: 'text-white', border: 'border-t-[#D946EF]', bgHead: 'bg-[#D946EF]' },
+  'vendor-master': { header: 'from-[#5B6FFF] to-[#4055D8]', tableHead: 'bg-[#5B6FFF]', text: 'text-white', border: 'border-t-[#5B6FFF]', bgHead: 'bg-[#5B6FFF]' },
+  marketing: { header: 'from-[#C026D3] to-[#86198F]', tableHead: 'bg-[#C026D3]', text: 'text-white', border: 'border-t-[#C026D3]', bgHead: 'bg-[#C026D3]' },
+  laboratory: { header: 'from-[#06B6D4] to-[#0891B2]', tableHead: 'bg-[#06B6D4]', text: 'text-white', border: 'border-t-[#06B6D4]', bgHead: 'bg-[#06B6D4]' }
 };
+
+const glassTheme = { header: 'from-[#f2f7ec] to-white', tableHead: 'bg-[#e6f0d5]', text: 'text-[#2d4a22]', border: 'border-t-[#e6f0d5]', bgHead: 'bg-[#e6f0d5]' };
 
 
 export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props) {
@@ -36,7 +38,11 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
   const [selectedRowForApproval, setSelectedRowForApproval] = useState<any[] | null>(null);
   const [approvalRemarks, setApprovalRemarks] = useState('');
 
-  const theme = themeColors[variant] || themeColors.crm;
+  const [appTheme, setAppTheme] = useState<'glass' | 'colorful'>(() => {
+    return (localStorage.getItem('appTheme') as 'glass' | 'colorful') || 'glass';
+  });
+
+  const theme = appTheme === 'colorful' ? (themeColors[variant] || themeColors.crm) : glassTheme;
   
   // Clean module name by removing numbering (e.g. "1. Customer Purchase Orders" -> "Customer Purchase Orders")
   const cleanModuleName = moduleName.replace(/^\d+\.\s*/, '');
@@ -318,11 +324,10 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
     <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden flex flex-col h-[calc(100vh-140px)]">
       
       {/* Header Area */}
-      <div className={`bg-gradient-to-r ${theme.header} px-8 pt-6 pb-12 shrink-0 relative overflow-hidden`}>
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+      <div className={`bg-gradient-to-r ${theme.header} border-b ${appTheme === 'glass' ? 'border-[#e6f0d5]' : 'border-gray-100'} px-8 pt-6 pb-12 shrink-0 relative overflow-hidden transition-colors duration-300`}>
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="flex flex-col gap-1.5">
-            <h2 className="text-2xl font-serif font-bold text-white tracking-wide uppercase drop-shadow-sm">{cleanModuleName}</h2>
+            <h2 className={`text-2xl font-serif font-bold ${theme.text} tracking-wide uppercase drop-shadow-sm transition-colors duration-300`}>{cleanModuleName}</h2>
           </div>
         </div>
       </div>
@@ -339,11 +344,11 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
               onClick={() => setActiveTab(tab.name)}
               className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm ${
                 isActive 
-                  ? 'bg-white text-gray-800 border-t border-x border-gray-200 relative z-20' 
+                  ? 'bg-white text-[#4a6b22] border-t border-x border-gray-200 relative z-20' 
                   : 'bg-[#F4F5F9] text-gray-500 hover:bg-gray-100 hover:text-gray-700 border border-transparent relative z-20'
               }`}
             >
-              {tab.icon} {tab.name}
+              <span className={isActive ? 'text-[#4a6b22]' : 'text-gray-400'}>{tab.icon}</span> {tab.name}
             </button>
           );
         })}
@@ -368,7 +373,7 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
         {/* Add New Button - Styled like a tab */}
         <button 
           onClick={() => setIsFormOpen(true)}
-          className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm text-white ${theme.tableHead} hover:opacity-90 relative z-20`}
+          className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm text-white ${appTheme === 'colorful' ? `bg-gradient-to-r ${theme.header}` : 'bg-[#4a6b22] hover:bg-[#3b5a1a]'} hover:opacity-90 relative z-20`}
         >
           <Plus size={16} /> Add New {singularName}
         </button>
@@ -401,17 +406,17 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
         {/* Dynamic Table Structure */}
         <div className="flex-1 overflow-auto scrollbar-none">
           <table className="w-max min-w-full text-center text-sm whitespace-nowrap border-separate border-spacing-0">
-            <thead className={`text-white font-extrabold text-[13px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
+            <thead className={`${theme.text} font-extrabold text-[13px] uppercase tracking-wider sticky top-0 ${theme.bgHead} z-20 shadow-sm h-12 transition-colors duration-300`}>
               <tr>
                 {hasSpecificData ? (
                   specificColumns.map((col, i) => (
-                    <th key={i} className={`px-6 py-4 font-bold border-b border-black/10 whitespace-nowrap ${i === 0 ? `sticky left-0 z-30 ${theme.tableHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]` : ''}`}>
+                    <th key={i} className={`px-6 py-4 font-bold border-b border-black/5 whitespace-nowrap ${i === 0 ? `sticky left-0 z-30 ${theme.bgHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors duration-300` : ''}`}>
                       {col}
                     </th>
                   ))
                 ) : (
                   emptyColumns.map((_, i) => (
-                    <th key={i} className={`px-16 py-4 font-bold border-b border-black/10 ${i === 0 ? `sticky left-0 z-30 ${theme.tableHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]` : ''}`}>
+                    <th key={i} className={`px-16 py-4 font-bold border-b border-black/5 ${i === 0 ? `sticky left-0 z-30 ${theme.bgHead} shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors duration-300` : ''}`}>
                       &nbsp;
                     </th>
                   ))
@@ -477,9 +482,9 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
                   const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
                   
                   return (
-                    <tr key={rowIndex} className={`group cursor-pointer ${rowBg} hover:bg-purple-50 transition-colors h-14`}>
+                    <tr key={rowIndex} className={`group cursor-pointer ${rowBg} hover:bg-[#f2f7ec] transition-colors h-14`}>
                       {emptyColumns.map((_, colIndex) => (
-                        <td key={colIndex} className={`px-6 py-3 border-b border-gray-100 transition-colors ${colIndex === 0 ? `sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] ${isEven ? 'bg-white group-hover:bg-purple-50' : 'bg-gray-50 group-hover:bg-purple-50'}` : ''}`}>
+                        <td key={colIndex} className={`px-6 py-3 border-b border-gray-100 transition-colors ${colIndex === 0 ? `sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] ${isEven ? 'bg-white group-hover:bg-[#f2f7ec]' : 'bg-gray-50 group-hover:bg-[#f2f7ec]'}` : ''}`}>
                           &nbsp;
                         </td>
                       ))}
@@ -496,9 +501,9 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
       {/* Centered Modal Form */}
       <div className={`fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100] transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6 ${isFormOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className={`w-full max-w-4xl bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-out flex flex-col max-h-[90vh] overflow-hidden ${isFormOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-8'}`}>
-          <div className={`bg-gradient-to-r ${theme.header} px-6 py-4 flex items-center justify-between text-white shrink-0 shadow-sm`}>
-            <h3 className="font-bold text-lg font-serif tracking-wide uppercase">Add New {singularName}</h3>
-            <button onClick={() => setIsFormOpen(false)} className="p-1.5 hover:bg-white/20 rounded-full transition-colors cursor-pointer">
+          <div className={`bg-gradient-to-r ${theme.header} px-6 py-4 flex items-center justify-between shrink-0 shadow-sm border-b border-[#e6f0d5]`}>
+            <h3 className={`font-bold text-lg font-serif tracking-wide uppercase ${theme.text}`}>Add New {singularName}</h3>
+            <button onClick={() => setIsFormOpen(false)} className={`p-1.5 hover:bg-[#e6f0d5] rounded-full transition-colors cursor-pointer ${theme.text}`}>
               <X size={20} />
             </button>
           </div>

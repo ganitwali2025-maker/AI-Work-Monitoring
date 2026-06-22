@@ -168,23 +168,26 @@ export default function ProductionWorkspace({ onBack, initialMenu }: { onBack: (
             return (
               <div 
                 key={kpi.title} 
-                className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start transition-all hover:shadow-md duration-300 relative overflow-hidden"
+                className="group bg-gradient-to-br from-white/90 to-white/50 backdrop-blur-md p-3.5 rounded-2xl border border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex justify-between items-start transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] hover:border-white relative overflow-hidden"
               >
-                <div className="space-y-1">
-                  <p className="text-xs text-black font-black uppercase tracking-widest">
+                <div className="space-y-1 relative z-10">
+                  <p className="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest">
                     {kpi.title}
                   </p>
-                  <p className="text-2xl font-black text-gray-900 leading-none pt-1.5">
+                  <p className="text-2xl font-black text-[#2b3a1a] leading-none pt-0.5">
                     {kpi.value}
                   </p>
-                  <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 pt-1">
+                  <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-600/90 pt-0.5">
                     <span>{kpi.trend}</span>
                   </div>
                 </div>
 
-                <div className={`p-2 rounded-lg ${kpi.bgColor} flex items-center justify-center shrink-0 shadow-xs ${kpi.iconColor}`}>
+                <div className={`p-2 rounded-xl ${kpi.bgColor} flex items-center justify-center shrink-0 shadow-sm ${kpi.iconColor} relative z-10 group-hover:scale-110 transition-transform duration-300`}>
                   <KpiIcon size={18} />
                 </div>
+                
+                {/* Subtle decorative background shape */}
+                <div className={`absolute -bottom-6 -right-6 w-24 h-24 rounded-full ${kpi.bgColor} opacity-30 blur-2xl group-hover:opacity-60 transition-opacity duration-300 pointer-events-none`}></div>
               </div>
             );
           })}

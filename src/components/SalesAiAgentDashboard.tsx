@@ -37,31 +37,31 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
 
         {/* AI Action Center Launchpad */}
         <section>
-          <h3 className="text-[11px] font-bold text-purple-600 uppercase tracking-widest mb-4">ACTIVE AI AGENTS</h3>
+          <h3 className="text-[11px] font-bold text-[#4a6b22] uppercase tracking-widest mb-4">ACTIVE AI AGENTS</h3>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 items-stretch">
             
             {/* 1. Elite CEO AI (Full Width) */}
             <div 
               onClick={() => onOpenAiAgent('ceo')}
-              className="lg:col-span-2 bg-gradient-to-br from-purple-900 to-purple-800 rounded-2xl p-8 shadow-md cursor-pointer hover:shadow-xl transition-all group flex flex-col md:flex-row gap-8 items-center relative overflow-hidden"
+              className="lg:col-span-2 bg-gradient-to-br from-[#4a6b22] to-[#2d4a22] rounded-2xl p-8 shadow-md cursor-pointer hover:shadow-xl transition-all group flex flex-col md:flex-row gap-8 items-center relative overflow-hidden"
               style={{ viewTransitionName: 'sales-ceo-card' }}
             >
               <div className="absolute top-[-20px] right-[-20px] opacity-5 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                 <Crown size={200} />
               </div>
 
-              <div className="w-24 h-24 rounded-2xl bg-purple-800/50 flex items-center justify-center text-purple-300 shrink-0 border border-purple-700 group-hover:scale-105 transition-transform relative z-10">
+              <div className="w-24 h-24 rounded-2xl bg-[#3b5a1a]/50 flex items-center justify-center text-[#eaf4d9] shrink-0 border border-[#4a6b22] group-hover:scale-105 transition-transform relative z-10">
                 <Crown size={48} />
               </div>
               
               <div className="flex-1 text-white relative z-10">
                 <div className="flex items-center gap-3 mb-2">
                   <h4 className="text-3xl font-bold tracking-tight">ELITE CEO AI</h4>
-                  <span className="text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded uppercase tracking-wider border border-amber-500/30">Executive</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee]0/20 text-[#eaf4d9] px-2 py-0.5 rounded uppercase tracking-wider border border-[#f4f8ee]/30">Executive</span>
                 </div>
                 
-                <div className="text-sm text-purple-200 mb-6 leading-relaxed max-w-3xl space-y-1">
+                <div className="text-sm text-[#dbebc0] mb-6 leading-relaxed max-w-3xl space-y-1">
                   <p><strong>You are ELITE CEO AI.</strong> Analyze this business data and brief me like my best CFO in under 5 minutes.</p>
                   <p><strong>Give me:</strong></p>
                   <ul className="list-decimal pl-4 space-y-0.5">
@@ -73,17 +73,17 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                     <li>One bold growth move I should consider this month</li>
                     <li>What will break if I do nothing this week</li>
                   </ul>
-                  <p className="text-amber-300 font-bold mt-2">Rules: No fluff. No paragraphs. Bullet points only. CEO language.</p>
+                  <p className="text-[#eaf4d9] font-bold mt-2">Rules: No fluff. No paragraphs. Bullet points only. CEO language.</p>
                 </div>
                 
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-[10px] font-bold bg-purple-950/50 text-purple-300 px-3 py-1.5 rounded-full border border-purple-700/50">Health Verdict</span>
-                  <span className="text-[10px] font-bold bg-purple-950/50 text-purple-300 px-3 py-1.5 rounded-full border border-purple-700/50">Priority Decisions</span>
-                  <span className="text-[10px] font-bold bg-purple-950/50 text-purple-300 px-3 py-1.5 rounded-full border border-purple-700/50">Growth Move</span>
+                  <span className="text-[10px] font-bold bg-[#1e3314]/50 text-[#eaf4d9] px-3 py-1.5 rounded-full border border-[#4a6b22]/50">Health Verdict</span>
+                  <span className="text-[10px] font-bold bg-[#1e3314]/50 text-[#eaf4d9] px-3 py-1.5 rounded-full border border-[#4a6b22]/50">Priority Decisions</span>
+                  <span className="text-[10px] font-bold bg-[#1e3314]/50 text-[#eaf4d9] px-3 py-1.5 rounded-full border border-[#4a6b22]/50">Growth Move</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-sm font-bold text-purple-900 bg-white px-6 py-3 rounded-xl shadow-md group-hover:bg-purple-50 transition-colors shrink-0 relative z-10">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#2d4a22] bg-white px-6 py-3 rounded-xl shadow-md group-hover:bg-[#f4f8ee] transition-colors shrink-0 relative z-10">
                 Launch Dashboard <ArrowUpRight size={18} />
               </div>
             </div>
@@ -91,15 +91,15 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
             {/* 2. SALES GROWTH AI */}
             <div 
               onClick={() => onOpenAiAgent('sales')}
-              className="bg-white rounded-2xl p-6 border border-emerald-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-emerald-400 transition-all group flex flex-col h-full"
+              className="bg-white rounded-2xl p-6 border border-[#dbebc0] shadow-sm cursor-pointer hover:shadow-lg hover:border-[#4a6b22] transition-all group flex flex-col h-full"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-50 flex items-center justify-center text-emerald-600 mb-6 border border-emerald-100 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#f4f8ee] to-white flex items-center justify-center text-[#4a6b22] mb-6 border border-[#eaf4d9] group-hover:scale-110 transition-transform">
                 <TrendingUp size={32} />
               </div>
               
               <div className="flex-1 flex flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">SALES GROWTH AI</h4>
+                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#2d4a22] transition-colors">SALES GROWTH AI</h4>
                 </div>
                 
                 <div className="text-xs text-gray-600 mb-6 leading-relaxed flex-1 space-y-1">
@@ -114,13 +114,13 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                     <li>One customer at risk of churning — what to do about them</li>
                     <li>Daily follow-up checklist for my sales team (3 items max)</li>
                   </ul>
-                  <p className="text-emerald-600 font-bold mt-2">Rules: Be ruthless with priorities. Money first.</p>
+                  <p className="text-[#4a6b22] font-bold mt-2">Rules: Be ruthless with priorities. Money first.</p>
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                  <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-1 rounded border border-emerald-100">Delayed Orders</span>
-                  <span className="text-[10px] font-bold bg-amber-50 text-amber-600 px-2 py-1 rounded border border-amber-100">Upsell Opportunity</span>
-                  <span className="text-[10px] font-bold bg-rose-50 text-rose-600 px-2 py-1 rounded border border-rose-100">Churn Risk</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Delayed Orders</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Upsell Opportunity</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Churn Risk</span>
                 </div>
               </div>
             </div>
@@ -128,15 +128,15 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
             {/* 3. LOGISTICS MASTER AI */}
             <div 
               onClick={() => onOpenAiAgent('logistics')}
-              className="bg-white rounded-2xl p-6 border border-blue-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-blue-400 transition-all group flex flex-col h-full"
+              className="bg-white rounded-2xl p-6 border border-[#dbebc0] shadow-sm cursor-pointer hover:shadow-lg hover:border-[#4a6b22] transition-all group flex flex-col h-full"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center text-blue-600 mb-6 border border-blue-100 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#f4f8ee] to-white flex items-center justify-center text-[#4a6b22] mb-6 border border-[#eaf4d9] group-hover:scale-110 transition-transform">
                 <Truck size={32} />
               </div>
               
               <div className="flex-1 flex flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors">LOGISTICS MASTER AI</h4>
+                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#2d4a22] transition-colors">LOGISTICS MASTER AI</h4>
                 </div>
                 
                 <div className="text-xs text-gray-600 mb-6 leading-relaxed flex-1 space-y-1">
@@ -151,13 +151,13 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                     <li>One change I can make today to reduce logistics cost</li>
                     <li>Alert me: any delivery that could become a customer complaint</li>
                   </ul>
-                  <p className="text-blue-600 font-bold mt-2">Rules: Short. Direct. Logistics language.</p>
+                  <p className="text-[#4a6b22] font-bold mt-2">Rules: Short. Direct. Logistics language.</p>
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                  <span className="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-1 rounded border border-blue-100">Vehicle Allocation</span>
-                  <span className="text-[10px] font-bold bg-rose-50 text-rose-600 px-2 py-1 rounded border border-rose-100">Delivery Risk</span>
-                  <span className="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-2 py-1 rounded border border-indigo-100">Cost Reduction</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Vehicle Allocation</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Delivery Risk</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Cost Reduction</span>
                 </div>
               </div>
             </div>
@@ -165,15 +165,15 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
             {/* 4. REVENUE RECOVERY AI */}
             <div 
               onClick={() => onOpenAiAgent('recovery')}
-              className="bg-white rounded-2xl p-6 border border-rose-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-rose-400 transition-all group flex flex-col h-full"
+              className="bg-white rounded-2xl p-6 border border-[#dbebc0] shadow-sm cursor-pointer hover:shadow-lg hover:border-[#4a6b22] transition-all group flex flex-col h-full"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-100 to-rose-50 flex items-center justify-center text-rose-600 mb-6 border border-rose-100 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#f4f8ee] to-white flex items-center justify-center text-[#4a6b22] mb-6 border border-[#eaf4d9] group-hover:scale-110 transition-transform">
                 <CreditCard size={32} />
               </div>
               
               <div className="flex-1 flex flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-rose-700 transition-colors">REVENUE RECOVERY AI</h4>
+                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#2d4a22] transition-colors">REVENUE RECOVERY AI</h4>
                 </div>
                 
                 <div className="text-xs text-gray-600 mb-6 leading-relaxed flex-1 space-y-1">
@@ -188,13 +188,13 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                     <li>Which invoices are disputed vs genuinely delayed</li>
                     <li>One policy change to prevent this level of outstanding next month</li>
                   </ul>
-                  <p className="text-rose-600 font-bold mt-2">Rules: Be direct. Name the customers. Give exact ₹ figures.</p>
+                  <p className="text-[#4a6b22] font-bold mt-2">Rules: Be direct. Name the customers. Give exact ₹ figures.</p>
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                  <span className="text-[10px] font-bold bg-rose-50 text-rose-600 px-2 py-1 rounded border border-rose-100">High Risk Customers</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">High Risk Customers</span>
                   <span className="text-[10px] font-bold bg-orange-50 text-orange-600 px-2 py-1 rounded border border-orange-100">Disputed Invoices</span>
-                  <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-1 rounded border border-emerald-100">Collection Script</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Collection Script</span>
                 </div>
               </div>
             </div>
@@ -202,15 +202,15 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
             {/* 5. SMART INVENTORY AI */}
             <div 
               onClick={() => onOpenAiAgent('inventory')}
-              className="bg-white rounded-2xl p-6 border border-amber-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-amber-400 transition-all group flex flex-col h-full"
+              className="bg-white rounded-2xl p-6 border border-[#dbebc0] shadow-sm cursor-pointer hover:shadow-lg hover:border-[#4a6b22] transition-all group flex flex-col h-full"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center text-amber-600 mb-6 border border-amber-100 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#f4f8ee] to-white flex items-center justify-center text-[#4a6b22] mb-6 border border-[#eaf4d9] group-hover:scale-110 transition-transform">
                 <Package size={32} />
               </div>
               
               <div className="flex-1 flex flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-amber-700 transition-colors">SMART INVENTORY AI</h4>
+                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#2d4a22] transition-colors">SMART INVENTORY AI</h4>
                 </div>
                 
                 <div className="text-xs text-gray-600 mb-6 leading-relaxed flex-1 space-y-1">
@@ -225,13 +225,13 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                     <li>One inventory policy that will save me 10%+ in holding costs</li>
                     <li>Stock vs demand mismatch — what's piling up while customers wait</li>
                   </ul>
-                  <p className="text-amber-600 font-bold mt-2">Rules: No waste. No shortage. Just facts and fixes.</p>
+                  <p className="text-[#4a6b22] font-bold mt-2">Rules: No waste. No shortage. Just facts and fixes.</p>
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                  <span className="text-[10px] font-bold bg-amber-50 text-amber-600 px-2 py-1 rounded border border-amber-100">Dead Stock Alert</span>
-                  <span className="text-[10px] font-bold bg-rose-50 text-rose-600 px-2 py-1 rounded border border-rose-100">Critical Shortages</span>
-                  <span className="text-[10px] font-bold bg-cyan-50 text-cyan-600 px-2 py-1 rounded border border-cyan-100">Excess Inventory</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Dead Stock Alert</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Critical Shortages</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Excess Inventory</span>
                 </div>
               </div>
             </div>
@@ -239,15 +239,15 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
             {/* 6. BUSINESS INSIGHT AI */}
             <div 
               onClick={() => onOpenAiAgent('insight')}
-              className="bg-white rounded-2xl p-6 border border-cyan-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-cyan-400 transition-all group flex flex-col h-full"
+              className="bg-white rounded-2xl p-6 border border-[#dbebc0] shadow-sm cursor-pointer hover:shadow-lg hover:border-[#4a6b22] transition-all group flex flex-col h-full"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-100 to-cyan-50 flex items-center justify-center text-cyan-600 mb-6 border border-cyan-100 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#f4f8ee] to-white flex items-center justify-center text-[#4a6b22] mb-6 border border-[#eaf4d9] group-hover:scale-110 transition-transform">
                 <BrainCircuit size={32} />
               </div>
               
               <div className="flex-1 flex flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-cyan-700 transition-colors">BUSINESS INSIGHT AI</h4>
+                  <h4 className="text-xl font-bold text-gray-900 group-hover:text-[#2d4a22] transition-colors">BUSINESS INSIGHT AI</h4>
                 </div>
                 
                 <div className="text-xs text-gray-600 mb-6 leading-relaxed flex-1 space-y-1">
@@ -263,13 +263,13 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                     <li>One data point that surprised you most in this dataset</li>
                     <li>My business in 30 days if current trends continue — good or bad</li>
                   </ul>
-                  <p className="text-cyan-600 font-bold mt-2">Rules: Talk like a smart analyst who knows business, not an AI generating reports.</p>
+                  <p className="text-[#4a6b22] font-bold mt-2">Rules: Talk like a smart analyst who knows business, not an AI generating reports.</p>
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                  <span className="text-[10px] font-bold bg-cyan-50 text-cyan-600 px-2 py-1 rounded border border-cyan-100">KPI Scorecard</span>
-                  <span className="text-[10px] font-bold bg-purple-50 text-purple-600 px-2 py-1 rounded border border-purple-100">Hidden Risks</span>
-                  <span className="text-[10px] font-bold bg-amber-50 text-amber-600 px-2 py-1 rounded border border-amber-100">Bottlenecks</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">KPI Scorecard</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Hidden Risks</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee] text-[#4a6b22] px-2 py-1 rounded border border-[#eaf4d9]">Bottlenecks</span>
                 </div>
               </div>
             </div>
@@ -277,23 +277,23 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
             {/* 7. AI ACTION CENTER (Full Width) */}
             <div 
               onClick={() => onOpenAiAgent('action-center')}
-              className="lg:col-span-2 bg-gradient-to-br from-indigo-900 to-indigo-800 rounded-2xl p-8 shadow-md cursor-pointer hover:shadow-xl transition-all group flex flex-col md:flex-row gap-8 items-center relative overflow-hidden"
+              className="lg:col-span-2 bg-gradient-to-br from-[#4a6b22] to-[#2d4a22] rounded-2xl p-8 shadow-md cursor-pointer hover:shadow-xl transition-all group flex flex-col md:flex-row gap-8 items-center relative overflow-hidden"
             >
               <div className="absolute top-[-20px] left-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
                 <Zap size={200} />
               </div>
 
-              <div className="w-24 h-24 rounded-2xl bg-indigo-800/50 flex items-center justify-center text-indigo-300 shrink-0 border border-indigo-700 group-hover:scale-105 transition-transform relative z-10">
+              <div className="w-24 h-24 rounded-2xl bg-[#3b5a1a]/50 flex items-center justify-center text-[#eaf4d9] shrink-0 border border-[#4a6b22] group-hover:scale-105 transition-transform relative z-10">
                 <Zap size={48} />
               </div>
               
               <div className="flex-1 text-white relative z-10">
                 <div className="flex items-center gap-3 mb-2">
                   <h4 className="text-3xl font-bold tracking-tight">AI ACTION CENTER</h4>
-                  <span className="text-[10px] font-bold bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded uppercase tracking-wider border border-rose-500/30">Aggregator</span>
+                  <span className="text-[10px] font-bold bg-[#f4f8ee]0/20 text-rose-300 px-2 py-0.5 rounded uppercase tracking-wider border border-rose-500/30">Aggregator</span>
                 </div>
                 
-                <div className="text-sm text-indigo-200 mb-6 leading-relaxed max-w-3xl space-y-1">
+                <div className="text-sm text-[#dbebc0] mb-6 leading-relaxed max-w-3xl space-y-1">
                   <p><strong>You are AI ACTION CENTER.</strong> You receive outputs from 6 AI agents and create ONE unified action list for management.</p>
                   <p><strong>YOUR JOB:</strong></p>
                   <ul className="list-decimal pl-4 space-y-0.5">
@@ -309,13 +309,13 @@ export default function SalesAiAgentDashboard({ onBack, onOpenAiAgent = () => {}
                 </div>
                 
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-[10px] font-bold bg-indigo-950/50 text-indigo-300 px-3 py-1.5 rounded-full border border-indigo-700/50">Priority Ranking</span>
-                  <span className="text-[10px] font-bold bg-indigo-950/50 text-indigo-300 px-3 py-1.5 rounded-full border border-indigo-700/50">Conflict Resolution</span>
-                  <span className="text-[10px] font-bold bg-indigo-950/50 text-indigo-300 px-3 py-1.5 rounded-full border border-indigo-700/50">One-Page Briefing</span>
+                  <span className="text-[10px] font-bold bg-[#1e3314]/50 text-[#eaf4d9] px-3 py-1.5 rounded-full border border-[#4a6b22]/50">Priority Ranking</span>
+                  <span className="text-[10px] font-bold bg-[#1e3314]/50 text-[#eaf4d9] px-3 py-1.5 rounded-full border border-[#4a6b22]/50">Conflict Resolution</span>
+                  <span className="text-[10px] font-bold bg-[#1e3314]/50 text-[#eaf4d9] px-3 py-1.5 rounded-full border border-[#4a6b22]/50">One-Page Briefing</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-sm font-bold text-indigo-900 bg-white px-6 py-3 rounded-xl shadow-md group-hover:bg-indigo-50 transition-colors shrink-0 relative z-10">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#2d4a22] bg-white px-6 py-3 rounded-xl shadow-md group-hover:bg-[#f4f8ee] transition-colors shrink-0 relative z-10">
                 Launch Center <ArrowUpRight size={18} />
               </div>
             </div>

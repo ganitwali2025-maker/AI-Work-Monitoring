@@ -79,15 +79,7 @@ export default function ApprovalCenter({ userRole = 'admin' }: Props) {
 
   return (
     <div className="animate-fade-in">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-emerald-100 text-emerald-700 rounded-xl">
-          <ShieldCheck size={24} />
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold font-serif text-gray-900">Approval Center</h2>
-          <p className="text-sm text-gray-500">Centralized hub for cross-departmental authorizations, escalations, and compliance workflows.</p>
-        </div>
-      </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {approvals.map((approval, index) => (

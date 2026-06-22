@@ -143,6 +143,8 @@ const variantHoverTextColors: Record<Props['variant'], string> = {
   sales: 'group-hover:text-blue-700',
 };
 
+import { useState, useEffect } from 'react';
+
 export default function ERPModuleCard({ 
   name, 
   icon: Icon, 
@@ -155,15 +157,24 @@ export default function ERPModuleCard({
   badge, 
   badgeColorClass,
   index = 0,
-  shouldAnimate = true
-}: Props & { index?: number, shouldAnimate?: boolean }) {
-  const gradient = variantGradients[variant];
-  const bgColor = isInner ? innerIconBgs[variant] : variantBgColors[variant];
-  const iconColor = isInner ? innerIconColors[variant] : variantIconColors[variant];
-  const cardBg = isInner ? innerCardBgs[variant] : variantCardBgs[variant];
-  const hoverTextColor = variantHoverTextColors[variant];
+  shouldAnimate = true,
+  appTheme: propAppTheme
+}: Props & { index?: number, shouldAnimate?: boolean, appTheme?: 'glass' | 'colorful' }) {
+  
+  const [appTheme, setAppTheme] = useState<'glass' | 'colorful'>(() => {
+    if (propAppTheme) return propAppTheme;
+    return (localStorage.getItem('appTheme') as 'glass' | 'colorful') || 'glass';
+  });
 
-  const iconContainerClass = `${bgColor} ${iconColor}`;
+  const iconColor = appTheme === 'colorful' 
+    ? (isInner ? innerIconColors[variant] : variantIconColors[variant]) 
+    : 'text-[#4d6b24]';
+  const cardBg = appTheme === 'colorful' 
+    ? (isInner ? innerCardBgs[variant] : variantCardBgs[variant]) 
+    : 'bg-gradient-to-b from-[#fdfbfb] to-[#f4f8ee] border-[#dbebc0] hover:bg-[#eaf4d9] hover:border-[#4a6b22] hover:shadow-[0_4px_15px_rgba(74,107,34,0.15)]';
+  const hoverTextColor = appTheme === 'colorful' 
+    ? variantHoverTextColors[variant] 
+    : 'text-gray-900 group-hover:text-[#2d4a22]';
 
   return (
     <motion.div 
@@ -181,33 +192,30 @@ export default function ERPModuleCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {/* Sharp Border Gradient Glow Layer */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
-      
-      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[15px] border shadow-sm transition-all duration-300 ${cardBg}`}>
-        <div className={`inline-block w-fit p-3 rounded-xl ${iconContainerClass} mb-4 transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
-          <Icon size={24} />
+      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[12px] border transition-all duration-200 ${cardBg}`}>
+        <div className={`inline-block w-fit mb-4 transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 ${appTheme === 'colorful' && isInner ? innerIconBgs[variant] + ' p-2 rounded-xl' : ''} ${iconColor}`}>
+          <Icon size={32} strokeWidth={1.5} />
         </div>
         
-        <div>
-           <h3 className={`font-serif text-lg font-semibold text-gray-950 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
+        <div className="flex-1">
+           <h3 className={`font-bold text-[16px] text-gray-900 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
              {name}
            </h3>
-           <p className="text-sm text-gray-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+           <p className="text-[13px] text-gray-500 leading-relaxed">
              {desc || `Access module functionalities for ${name}...`}
            </p>
         </div>
         
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
           {badge ? (
-            <span className={`text-[10px] font-bold tracking-wider rounded px-2.5 py-1 border shadow-xs ${badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
+            <span className={`text-[11px] font-bold rounded px-3 py-1.5 ${appTheme === 'colorful' ? badgeColorClass : 'bg-[#eaf4d9] text-[#2d4a22]'}`}>
               {badge}
             </span>
           ) : (
-            <span className="text-xs font-medium text-gray-400">MODULE</span>
+            <div />
           )}
-          <button className={`flex items-center gap-2 text-sm font-semibold transition-colors duration-300 ${hoverTextColor}`}>
-             Access <span>→</span>
+          <button className={`flex items-center gap-1.5 text-[13px] font-bold text-gray-800 transition-colors duration-300`}>
+             Access <span className="text-lg leading-none mb-0.5">→</span>
           </button>
         </div>
       </div>
