@@ -41,7 +41,15 @@ export default function ReportingCenter({ userRole = 'admin' }: Props) {
 
   return (
     <div className="animate-fade-in">
-
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-3 bg-indigo-100 text-indigo-700 rounded-xl">
+          <FileBarChart size={24} />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold font-serif text-gray-900">Reporting Center</h2>
+          <p className="text-sm text-gray-500">Centralized hub for all departmental reports, analytics, and automated schedules.</p>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {reports.map((report, index) => (

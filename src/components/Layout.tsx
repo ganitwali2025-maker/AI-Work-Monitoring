@@ -4,8 +4,7 @@ import {
   ArrowLeft, 
   Search, 
   Bell, 
-  Settings,
-  Palette
+  Settings
 } from 'lucide-react';
 
 interface SidebarLink {
@@ -33,19 +32,11 @@ const premiumThemes: Record<string, {
 }> = {
   crm: {
     subtitle: 'Customer Relationship & Sales System',
-    headerGradient: 'from-[#9333EA] to-[#7E22CE]',
-    sidebarGradient: 'from-[#7E22CE] to-[#581C87]',
-    activeBg: 'bg-[#9333EA] shadow-[0_0_15px_rgba(147,51,234,0.4)]',
-    accent: '#9333EA',
+    headerGradient: 'from-[#A855F7] to-[#7E22CE]',
+    sidebarGradient: 'from-[#7E22CE] to-[#6B21A8]',
+    activeBg: 'bg-[#A855F7] shadow-[0_0_15px_rgba(168,85,247,0.4)]',
+    accent: '#A855F7',
     textMuted: 'text-purple-100',
-  },
-  sales: {
-    subtitle: 'Sales Pipeline & Revenue Management',
-    headerGradient: 'from-[#3B82F6] to-[#1D4ED8]',
-    sidebarGradient: 'from-[#1D4ED8] to-[#1E3A8A]',
-    activeBg: 'bg-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)]',
-    accent: '#3B82F6',
-    textMuted: 'text-blue-100',
   },
   procurement: {
     subtitle: 'Purchase & Procurement Management System',
@@ -134,13 +125,6 @@ import { useEffect as UseEffectAlias } from 'react';
 export default function Layout({ departmentName, onBack, sidebarLinks, children, variant = 'inventory', activeModule }: Props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeMenuName, setActiveMenuName] = useState(sidebarLinks[0]?.name || '');
-  const [appTheme, setAppTheme] = useState<'glass' | 'colorful'>(() => {
-    return (localStorage.getItem('appTheme') as 'glass' | 'colorful') || 'glass';
-  });
-
-  React.useEffect(() => {
-    localStorage.setItem('appTheme', appTheme);
-  }, [appTheme]);
 
   React.useEffect(() => {
     if (activeModule !== undefined) {
@@ -185,74 +169,66 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
   }).filter(sec => sec.links.length > 0);
 
   return (
-    <div className="flex flex-col h-screen bg-[#f8f9f8] text-gray-950 font-sans overflow-hidden relative">
-      {/* Background Animated VFX */}
-      {appTheme === 'glass' && (
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-gradient-to-br from-[#d4f0b3]/40 to-[#e6f0d5]/20 rounded-full blur-[100px] animate-[pulse_10s_ease-in-out_infinite]"></div>
-          <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-gradient-to-tl from-[#e6f0d5]/50 to-[#d4f0b3]/20 rounded-full blur-[120px] animate-[pulse_12s_ease-in-out_infinite_reverse]"></div>
-          <div className="absolute top-[20%] left-[60%] w-[30%] h-[30%] bg-gradient-to-tr from-[#d4f0b3]/30 to-[#f2f7ec]/20 rounded-full blur-[90px] animate-[pulse_8s_ease-in-out_infinite]"></div>
-        </div>
-      )}
-      
+    <div className="flex flex-col h-screen bg-[#F5F7FC] text-gray-950 font-sans overflow-hidden">
       {/* Header */}
-      <div className={`shrink-0 h-[80px] ${appTheme === 'colorful' ? `bg-gradient-to-r ${theme.headerGradient} text-white border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.1)]` : 'bg-gradient-to-r from-[#eaf4d9] to-[#f4f8ee] text-[#1e3314] border-b border-[#dbebc0] shadow-sm'} z-50 flex items-center justify-between px-6 transition-all duration-300 relative overflow-hidden`}>
-        {appTheme === 'glass' && (
-          <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#dbebc0] via-[#eaf4d9] to-[#dbebc0] bg-[length:200%_auto] animate-[pulse_6s_ease-in-out_infinite] opacity-40 pointer-events-none"></div>
-        )}
-        
+      <div className={`shrink-0 h-[80px] bg-gradient-to-r ${theme.headerGradient} text-white border-b border-white/10 shadow-lg shadow-indigo-900/5 z-50 flex items-center justify-between px-6 transition-all duration-300`}>
         {/* Left section */}
-        <div className="flex items-center gap-4 relative z-10">
+        <div className="flex items-center gap-4">
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-            className={`p-2 rounded-lg transition-colors cursor-pointer ${appTheme === 'colorful' ? 'hover:bg-white/20 text-white' : 'hover:bg-[#e6f0d5] text-[#2d4a22]'}`}
+            className="p-2 rounded-lg hover:bg-white/10 text-white transition cursor-pointer"
           >
             <Menu size={24} />
           </button>
           <div className="flex flex-col select-none">
-            <h1 className={`font-serif text-lg sm:text-2xl font-bold tracking-tight leading-none uppercase ${appTheme === 'colorful' ? 'text-white' : 'text-[#2d4a22]'}`}>
+            <h1 className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-white leading-none uppercase">
               {departmentName}
             </h1>
-            <span className={`text-[10px] font-medium font-sans mt-1 ${appTheme === 'colorful' ? theme.textMuted : 'text-[#4a6b22]'}`}>
+            <span className={`text-[10px] ${theme.textMuted} font-sans mt-1`}>
               {theme.subtitle}
             </span>
           </div>
         </div>
 
+        {/* Center section removed */}
+
         {/* Right section */}
         <div className="flex items-center gap-4">
-          <div className={`relative p-2 rounded-lg transition-colors cursor-pointer ${appTheme === 'colorful' ? 'text-white hover:bg-white/20' : 'text-[#4a6b22] hover:text-[#2d4a22] hover:bg-[#e6f0d5]'}`}>
+          {/* Search bar removed */}
+
+          {/* Notification bell */}
+          <div className="relative p-2 text-white/80 hover:text-white hover:bg-white/15 rounded-lg transition cursor-pointer">
             <Bell size={18} />
-            <span className={`absolute top-1 right-1 w-4 h-4 rounded-full text-[8px] font-bold flex items-center justify-center font-sans ${appTheme === 'colorful' ? 'bg-white text-black' : 'bg-[#2d4a22] text-white'}`}>8</span>
+            <span className="absolute top-1 right-1 w-4 h-4 bg-orange-500 rounded-full text-[8px] font-bold text-white flex items-center justify-center font-sans">8</span>
           </div>
 
-          <div className={`p-2 rounded-lg transition-colors cursor-pointer ${appTheme === 'colorful' ? 'text-white hover:bg-white/20' : 'text-[#4a6b22] hover:text-[#2d4a22] hover:bg-[#e6f0d5]'}`}>
+          {/* Settings icon */}
+          <div className="p-2 text-white/80 hover:text-white hover:bg-white/15 rounded-lg transition cursor-pointer">
             <Settings size={18} />
           </div>
 
+          {/* User profile removed */}
+
+          {/* Back to Dashboard */}
           <button 
             onClick={onBack} 
-            className={`px-7 py-2.5 font-extrabold text-xs uppercase tracking-widest flex items-center gap-2 shrink-0 transition-all duration-300 cursor-pointer rounded-full ${appTheme === 'colorful' ? 'bg-white/20 text-white hover:bg-white/30 shadow-md hover:shadow-lg border border-white/20' : 'bg-[#6e8a42] hover:bg-[#5a7333] text-white shadow-sm'}`}
+            className="border border-white/50 text-white bg-white/20 rounded-lg px-4 py-2 hover:bg-white/30 font-bold text-xs flex items-center gap-2 shadow-[0_0_15px_rgba(255,255,255,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] shrink-0 transition-all duration-300 cursor-pointer hover:border-white"
           >
-            <ArrowLeft size={16} /> Back To Dashboard
+            <ArrowLeft size={14} /> Back To Dashboard
           </button>
         </div>
       </div>
 
       {/* Sidebar & Main */}
-      <div className="flex flex-1 min-h-0 w-full relative z-10">
+      <div className="flex flex-1 min-h-0 w-full">
         {/* Sidebar */}
-        <aside className={`${isSidebarOpen ? 'w-[280px]' : 'w-22'} ${appTheme === 'colorful' ? `bg-gradient-to-b ${theme.sidebarGradient} text-white border-r border-white/10 shadow-[4px_0_24px_rgba(0,0,0,0.1)]` : 'bg-gradient-to-b from-[#eaf4d9] to-[#f4f8ee] border-r border-[#dbebc0] shadow-[4px_0_24px_rgba(45,74,34,0.05)]'} transition-all duration-300 h-full flex flex-col justify-between py-5 overflow-hidden z-20 shrink-0`}>
+        <aside className={`${isSidebarOpen ? 'w-[280px]' : 'w-22'} bg-gradient-to-b ${theme.sidebarGradient} border-r border-white/10 shadow-lg shadow-indigo-900/5 transition-all duration-300 h-full flex flex-col justify-between py-5 overflow-hidden z-20 shrink-0`}>
           {/* Scrollable menu part */}
           <div className="flex-1 overflow-y-auto px-4 space-y-5 select-none scrollbar-none pb-4">
-            {groupedSections.map((section, secIndex) => (
-              <div 
-                key={section.title} 
-                className="space-y-1.5 animate-in fade-in slide-in-from-left-4" 
-                style={{ animationFillMode: 'both', animationDelay: `${secIndex * 100}ms` }}
-              >
+            {groupedSections.map((section) => (
+              <div key={section.title} className="space-y-1.5">
                 {isSidebarOpen && (
-                  <h4 className={`px-3 text-xs uppercase tracking-wider font-extrabold font-sans opacity-80 ${appTheme === 'colorful' ? theme.textMuted : 'text-[#4a6b22]'}`}>
+                  <h4 className={`px-3 text-xs uppercase tracking-wider font-extrabold ${theme.textMuted} font-sans opacity-80`}>
                     {section.title}
                   </h4>
                 )}
@@ -266,20 +242,20 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
                           setActiveMenuName(link.name);
                           link.onClick();
                         }}
-                        className={`flex items-center h-[38px] w-full px-3 py-2 transition-all duration-300 text-sm whitespace-nowrap rounded-xl relative z-10 group cursor-pointer ${
+                        className={`flex items-center h-[38px] w-full px-3 py-2 transition-all duration-200 text-sm whitespace-nowrap rounded-lg relative z-10 group cursor-pointer ${
                           isActive 
-                            ? (appTheme === 'colorful' ? `${theme.activeBg} text-white font-extrabold translate-x-1` : 'bg-gradient-to-r from-[#e6f0d5] to-transparent border border-white/60 text-[#2d4a22] font-extrabold shadow-[0_2px_10px_rgba(0,0,0,0.03)] translate-x-1')
-                            : (appTheme === 'colorful' ? 'text-white/70 hover:text-white hover:bg-white/10 font-semibold hover:translate-x-1 hover:shadow-sm' : 'text-[#4a6b22] hover:text-[#2d4a22] hover:bg-white/60 font-semibold hover:translate-x-1 hover:shadow-sm')
+                            ? `${theme.activeBg} text-white font-bold` 
+                            : 'text-white/75 hover:text-white hover:bg-white/5 font-medium'
                         }`}
                         title={isSidebarOpen ? undefined : link.name}
                       >
-                        {/* Left Green Accent Line */}
+                        {/* Left White Accent Line */}
                         {isActive && (
-                          <div className={`absolute left-0 top-1.5 bottom-1.5 w-[4px] rounded-r-md ${appTheme === 'colorful' ? 'bg-white shadow-[2px_0_8px_rgba(255,255,255,0.5)]' : 'bg-gradient-to-b from-[#4a6b22] to-[#2d4a22] shadow-[2px_0_8px_rgba(45,74,34,0.3)]'}`} />
+                          <div className="absolute left-0 top-1.5 bottom-1.5 w-[3px] bg-white rounded-r-md" />
                         )}
 
                         <div className="flex items-center gap-3 w-full">
-                          <span className={`transition-all duration-200 ${isActive ? (appTheme === 'colorful' ? 'text-white scale-110' : 'text-[#2d4a22] scale-110') : (appTheme === 'colorful' ? 'text-white/70 group-hover:text-white group-hover:scale-110' : 'text-[#4a6b22] group-hover:text-[#2d4a22] group-hover:scale-110')} shrink-0`}>
+                          <span className={`transition-all duration-200 ${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'} shrink-0`}>
                             {link.icon || <div className="w-5 h-5 flex items-center justify-center">●</div>}
                           </span>
                           {isSidebarOpen && (
@@ -297,24 +273,30 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
           </div>
 
           {/* BOTTOM SIDEBAR AREA */}
-          <div className={`px-4 pt-3 border-t flex flex-col gap-3 relative select-none ${appTheme === 'colorful' ? 'border-white/10' : 'border-[#e6f0d5]'}`}>
+          <div className="px-4 pt-3 border-t border-white/10 flex flex-col gap-3 relative select-none">
+            {/* Quick Help Card Removed */}
+
+            {/* Floating Action Button + Collapse button */}
             <div className="flex items-center justify-between select-none">
+              {/* Collapse button */}
               <button 
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-semibold cursor-pointer group ${appTheme === 'colorful' ? 'text-white/70 hover:text-white hover:bg-white/10' : 'hover:bg-[#e6f0d5] text-[#4a6b22] hover:text-[#2d4a22]'}`}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition duration-205 text-sm font-semibold cursor-pointer"
                 title="Collapse Sidebar"
               >
-                <span className="transform transition-transform duration-300 shrink-0 group-hover:-translate-x-1">
+                <span className="transform transition-transform duration-300 shrink-0">
                   {isSidebarOpen ? '◀' : '▶'}
                 </span>
                 {isSidebarOpen && <span className="font-sans">Collapse Sidebar</span>}
               </button>
+
+              {/* Floating Action Button removed */}
             </div>
           </div>
         </aside>
 
         {/* Content */}
-        <main className={`flex-1 p-8 ${appTheme === 'colorful' ? 'bg-[#f8f9f8]' : 'bg-white'} min-w-0 overflow-y-auto scroll-smooth animate-in fade-in slide-in-from-bottom-4 duration-500`}>
+        <main className="flex-1 p-8 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth">
           {children}
         </main>
       </div>

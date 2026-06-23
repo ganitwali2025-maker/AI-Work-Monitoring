@@ -60,10 +60,10 @@ export default function LeadManagementSheet() {
       {/* Table Container Card */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col flex-1 min-h-0 min-w-0 relative">
         
-        {/* Green Header Area */}
-        <div className="bg-gradient-to-r from-[#f2f7ec] to-white border-b border-[#e6f0d5] pt-6 pb-12 px-8 relative shrink-0">
+        {/* Purple Header Area */}
+        <div className="bg-[#7A28CB] pt-6 pb-12 px-8 text-white relative shrink-0">
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-semibold tracking-wide text-[#2d4a22]">CRM LEAD MANAGEMENT</h2>
+            <h2 className="text-3xl font-semibold tracking-wide">CRM LEAD MANAGEMENT</h2>
           </div>
         </div>
         
@@ -77,11 +77,11 @@ export default function LeadManagementSheet() {
                 onClick={() => setActiveTab(tab.name)}
                 className={`flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm ${
                   isActive 
-                    ? 'bg-white text-[#4a6b22] border-t border-x border-gray-200' 
+                    ? 'bg-white text-[#4A3B69] border-t border-x border-gray-200' 
                     : 'bg-[#F4F5F9] text-gray-500 hover:bg-gray-100 hover:text-gray-700 border border-transparent'
                 }`}
               >
-                <span className={isActive ? 'text-[#4a6b22]' : 'text-gray-400'}>{tab.icon}</span>
+                <span className={isActive ? 'text-[#4A3B69]' : 'text-gray-400'}>{tab.icon}</span>
                 {tab.name}
               </button>
             );
@@ -90,7 +90,7 @@ export default function LeadManagementSheet() {
           {/* Add New Lead Button next to tabs */}
           <button 
             onClick={() => setIsNewLeadModalOpen(true)}
-            className="flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-[#4a6b22] hover:bg-[#3b5a1a] text-white ml-2 border border-[#4a6b22]"
+            className="flex items-center gap-2 px-5 py-3 rounded-t-xl transition-all shadow-sm cursor-pointer whitespace-nowrap font-bold text-sm bg-emerald-500 hover:bg-emerald-600 text-white ml-2 border border-emerald-600"
           >
             <Plus size={16} /> Add New Lead
           </button>
@@ -114,7 +114,7 @@ export default function LeadManagementSheet() {
               <input 
                 type="text" 
                 placeholder="Search leads..." 
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4a6b22]/20 focus:border-[#4a6b22] transition-all bg-gray-50 hover:bg-white text-gray-800"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4A3B69]/20 focus:border-[#4A3B69] transition-all bg-gray-50 hover:bg-white text-gray-800"
               />
             </div>
           </div>
@@ -122,38 +122,38 @@ export default function LeadManagementSheet() {
           {/* Table */}
           <div className="flex-1 overflow-auto scrollbar-none">
             <table className="w-max text-left text-sm whitespace-nowrap border-separate border-spacing-0">
-              <thead className="text-[#2d4a22] font-bold text-[11px] uppercase tracking-wider sticky top-0 bg-[#e6f0d5] z-20 shadow-sm">
+              <thead className="text-white font-bold text-[11px] uppercase tracking-wider sticky top-0 bg-[#7A28CB] z-20 shadow-sm">
                 <tr>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10 sticky left-0 z-30 bg-[#e6f0d5] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Lead ID</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Lead Date</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Company Name</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Industry Type</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Contact Person</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Designation</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Mobile Number</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Email Address</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">City</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">State</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Lead Source</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Product Interest</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Lead Value (₹)</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Priority Level</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Lead Status</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Assigned To</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Assign Date</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Last Follow-up Date</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Last Followup DoneBy</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Last Followup Summary</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Total Follow-ups</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Next Action</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Next Action Date</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Expected Closure Date</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Conversion Prob (%)</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Quotation Sent (Y/N)</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">PO Received (Y/N)</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Lead Age (Days)</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Remarks</th>
-                  <th className="px-6 py-4 font-bold border-b border-[#2d4a22]/10">Closed Date</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#6A1B9A] sticky left-0 z-30 bg-[#7A28CB] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">Lead ID</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Lead Date</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Company Name</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Industry Type</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Contact Person</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Designation</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Mobile Number</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Email Address</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">City</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">State</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Lead Source</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Product Interest</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Lead Value (₹)</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Priority Level</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Lead Status</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Assigned To</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Assign Date</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Last Follow-up Date</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Last Followup DoneBy</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Last Followup Summary</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Total Follow-ups</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Next Action</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Next Action Date</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Expected Closure Date</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Conversion Prob (%)</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Quotation Sent (Y/N)</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">PO Received (Y/N)</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Lead Age (Days)</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Remarks</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#4A148C]">Closed Date</th>
                 </tr>
               </thead>
               <tbody className="text-gray-700">
@@ -162,8 +162,8 @@ export default function LeadManagementSheet() {
                   const rowBg = isEven ? 'bg-white' : 'bg-gray-50';
                   
                   return (
-                    <tr key={lead.id} className={`group cursor-pointer ${rowBg} hover:bg-[#f2f7ec] transition-colors`}>
-                      <td className={`px-6 py-3 border-b border-gray-100 font-bold text-[#2d4a22] sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors ${isEven ? 'bg-white group-hover:bg-[#f2f7ec]' : 'bg-gray-50 group-hover:bg-[#f2f7ec]'}`}>{lead.leadId}</td>
+                    <tr key={lead.id} className={`group cursor-pointer ${rowBg} hover:bg-purple-50 transition-colors`}>
+                      <td className={`px-6 py-3 border-b border-gray-100 font-bold text-[#4A3B69] sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors ${isEven ? 'bg-white group-hover:bg-purple-50' : 'bg-gray-50 group-hover:bg-purple-50'}`}>{lead.leadId}</td>
                     <td className="px-6 py-3 border-b border-gray-100 font-medium">{lead.leadDate}</td>
                     <td className="px-6 py-3 border-b border-gray-100 font-bold">{lead.companyName}</td>
                     <td className="px-6 py-3 border-b border-gray-100">{lead.industryType}</td>

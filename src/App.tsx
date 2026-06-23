@@ -42,7 +42,6 @@ import {
   CheckSquare,
   UserSquare,
   Bell,
-  Palette,
   Database,
   User,
   Clock,
@@ -534,20 +533,12 @@ const departments = [
 export default function App() {
   const [currentView, setCurrentView] = useState('landing');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [userRole, setUserRole] = useState('admin');
   const [activeTab, setActiveTab] = useState<'reyo' | 'modules' | 'agents' | 'approvals' | 'reports'>('modules');
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [formattedDate, setFormattedDate] = useState('');
-  const [appTheme, setAppTheme] = useState<'glass' | 'colorful'>(() => {
-    return (localStorage.getItem('appTheme') as 'glass' | 'colorful') || 'glass';
-  });
-
-  useEffect(() => {
-    localStorage.setItem('appTheme', appTheme);
-  }, [appTheme]);
 
   useEffect(() => {
     const now = new Date();
@@ -689,33 +680,11 @@ export default function App() {
   };
 
   if (currentView === 'landing' || !isAuthenticated) {
-    return (
-      <>
-        <LandingPage onLoginSuccess={(role) => {
-          setIsLoggingIn(true);
-          setTimeout(() => {
-            setUserRole(role);
-            setIsAuthenticated(true);
-            setCurrentView('dashboard');
-            setIsLoggingIn(false);
-          }, 2500);
-        }} />
-        
-        {isLoggingIn && (
-          <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white/40 backdrop-blur-md transition-all duration-500">
-            <div className="relative z-10 flex flex-col items-center bg-white/80 backdrop-blur-xl px-16 py-12 rounded-[32px] shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-white">
-              <div className="flex items-center justify-center gap-3 mb-8">
-                 <div className="w-5 h-5 bg-[#517b27] rounded-full animate-bounce shadow-sm" style={{ animationDelay: '0ms' }}></div>
-                 <div className="w-5 h-5 bg-[#759f42] rounded-full animate-bounce shadow-sm" style={{ animationDelay: '150ms' }}></div>
-                 <div className="w-5 h-5 bg-[#a6c76e] rounded-full animate-bounce shadow-sm" style={{ animationDelay: '300ms' }}></div>
-              </div>
-              <h2 className="text-[#2b3a1a] font-extrabold text-[24px] tracking-tight mb-2">Passary Refractories</h2>
-              <p className="text-[#657356] text-sm font-bold tracking-widest animate-pulse">AUTHENTICATING...</p>
-            </div>
-          </div>
-        )}
-      </>
-    );
+    return <LandingPage onLoginSuccess={(role) => {
+      setUserRole(role);
+      setIsAuthenticated(true);
+      setCurrentView('dashboard');
+    }} />;
   }
 
   if (currentView !== 'dashboard') {
@@ -764,151 +733,173 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${appTheme === 'colorful' ? 'bg-[#f8f9f8]' : 'bg-white'} text-gray-950 font-sans flex flex-col items-center`}>
-      
-      {/* Floating Header */}
-      <div className="w-full px-4 pt-4 sm:px-8 lg:px-12">
-        <header className="bg-gradient-to-r from-white via-[#fcfdfa] to-[#f4f8ee] backdrop-blur-md rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-white flex items-center justify-between px-6 py-3.5 select-none relative overflow-hidden">
-          
-          {/* Logo Area */}
-          <div 
-            className="flex items-center gap-3 shrink-0 cursor-pointer"
-            onClick={() => {
-              setShouldAnimate(false);
-              setCurrentView('dashboard');
-              setActiveTab('modules');
-            }}
-          >
-            <div className="flex items-center justify-center">
-              <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="5" y="5" width="90" height="90" rx="20" fill="#e6f0d5" />
-                <path d="M 25 75 L 25 50 A 25 25 0 0 1 75 50 L 75 75 L 58 75 L 58 50 A 8 8 0 0 0 42 50 L 42 75 Z" fill="#4a6b22" />
-              </svg>
-            </div>
-            <div className="flex items-center gap-4 whitespace-nowrap">
-              <span className="font-extrabold text-[24px] lg:text-[28px] tracking-tight text-[#2d4a22]">
-                Passary Refractories
+    <div className="min-h-screen mesh-gradient-bg text-gray-950 font-sans flex flex-col">
+      {/* Sticky top horizontal header navigation */}
+      <header className="bg-white text-gray-900 border-b border-gray-200/80 shadow-xs sticky top-0 z-30 select-none">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 gap-4">
+            
+            {/* Logo Area & Left Tagline */}
+            <div 
+              className="flex items-center gap-3.5 shrink-0 cursor-pointer"
+              onClick={() => {
+                setShouldAnimate(false);
+                setCurrentView('dashboard');
+                setActiveTab('modules');
+              }}
+            >
+              {/* Graphic Logo (Tri-color Concentric Crescent Logo) */}
+              <div className="w-11 h-11 flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
+                <svg className="w-11 h-11" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="translate(50, 50)">
+                    {/* Outer crescents */}
+                    {/* Top (Orange) */}
+                    <path d="M -22 -4 C -15 -35, 15 -35, 22 -4 C 12 -23, -12 -23, -22 -4 Z" fill="#F09235" />
+                    {/* Bottom-Right (Red-Coral) */}
+                    <path d="M -22 -4 C -15 -35, 15 -35, 22 -4 C 12 -23, -12 -23, -22 -4 Z" fill="#E25C52" transform="rotate(120)" />
+                    {/* Bottom-Left (Teal) */}
+                    <path d="M -22 -4 C -15 -35, 15 -35, 22 -4 C 12 -23, -12 -23, -22 -4 Z" fill="#23A1A0" transform="rotate(240)" />
+                    
+                    {/* Inner crescents */}
+                    {/* Top (Red-Coral) */}
+                    <path d="M -12 0 C -8 -18, 8 -18, 12 0 C 6 -11, -6 -11, -12 0 Z" fill="#E25C52" />
+                    {/* Bottom-Right (Teal) */}
+                    <path d="M -12 0 C -8 -18, 8 -18, 12 0 C 6 -11, -6 -11, -12 0 Z" fill="#23A1A0" transform="rotate(120)" />
+                    
+                    {/* Center circle (Orange) */}
+                    <circle cx="0" cy="0" r="7.5" fill="#F09235" />
+                  </g>
+                </svg>
+              </div>
+
+              {/* Tagline text: normalized size */}
+              <span className="font-bold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-neutral-950 via-neutral-800 to-neutral-950 bg-clip-text text-transparent leading-normal pb-1 pt-1">
+                Streamline Every Process, Effortlessly
               </span>
             </div>
-          </div>
 
-          {/* Right Profile & Actions */}
-          <div className="flex items-center gap-5 shrink-0">
-            <button 
-              onClick={() => setAppTheme(appTheme === 'glass' ? 'colorful' : 'glass')}
-              className="text-gray-600 hover:text-[#4a6b22] transition-colors cursor-pointer"
-              title="Toggle Theme"
-            >
-              <Palette size={20} />
-            </button>
+            {/* Right Side Tagline, Settings & Login Button */}
+            <div className="flex items-center gap-3.5 shrink-0">
+              {/* Tagline */}
+              <span className="hidden md:inline-block text-xs font-bold bg-gradient-to-r from-teal-600 via-rose-500 to-orange-500 bg-clip-text text-transparent tracking-wide uppercase">
+                Automate • Manage • Grow
+              </span>
 
-            <button className="text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
-              <Bell size={20} />
-            </button>
-            
-            <div className="flex items-center px-2 py-1.5">
-              <div className="flex flex-col text-right">
-                <span className="text-[14px] font-bold text-gray-900 leading-tight">
-                  {userRole === 'admin' ? 'Admin User' : `${userRole.charAt(0).toUpperCase()}${userRole.slice(1)} User`}
-                </span>
-                <span className="text-[12px] text-gray-500 capitalize mt-0.5">
-                  {userRole === 'admin' ? 'Administrator' : userRole}
-                </span>
-              </div>
+              <div className="hidden md:block h-4 border-l border-gray-250/60" />
+
+              {/* Settings */}
+              <button 
+                onClick={() => setCurrentView('director')}
+                className="p-1.5 hover:bg-gray-150 rounded-lg text-gray-500 hover:text-gray-900 transition duration-205 cursor-pointer"
+                title="Settings"
+              >
+                <Settings size={18} />
+              </button>
+
+              <div className="h-6 border-l border-gray-200" />
+
+              {/* Logout Button */}
+              <button 
+                onClick={() => {
+                  localStorage.removeItem('isAuthenticated');
+                  setCurrentView('landing');
+                }}
+                className="px-5 py-2 text-xs font-extrabold bg-pink-600 hover:bg-pink-700 text-white rounded-full transition duration-200 shadow-sm cursor-pointer border-0"
+              >
+                Logout
+              </button>
             </div>
 
-            <button 
-              onClick={() => {
-                localStorage.removeItem('isAuthenticated');
-                setCurrentView('landing');
-              }}
-              className="hidden sm:block bg-gradient-to-r from-[#4a6b22] to-[#5a802b] hover:from-[#3b4c24] hover:to-[#4a6b22] text-white px-7 py-2.5 rounded-full text-[11px] font-bold tracking-widest transition-all shadow-md hover:shadow-lg cursor-pointer border border-white/20"
-            >
-              LOGOUT
-            </button>
           </div>
-        </header>
-      </div>
+        </div>
+      </header>
 
       {/* Main Content Pane */}
-      <main className={`flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 overflow-y-auto scroll-smooth ${appTheme === 'colorful' ? 'bg-[#fdfbfb]' : ''}`}>
-        {/* Banner */}
-        <header className={`mb-6 ${appTheme === 'colorful' ? 'bg-gradient-to-r from-rose-400 to-orange-500 shadow-xl' : 'bg-[#f4f8ee] shadow-sm'} px-10 py-10 rounded-[24px] flex flex-col md:flex-row items-center justify-between relative overflow-hidden min-h-[220px]`}>
+      <main className="flex-1 p-8 overflow-y-auto scroll-smooth">
+        {/* Header */}
+        <header className="mb-8 select-none premium-collar-gradient text-slate-900 p-8 rounded-3xl border-none shadow-md flex flex-col items-center text-center gap-5 relative overflow-hidden">
+          <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px] pointer-events-none" />
           
-          {/* Decorative Background Shapes on Right */}
-          <div className="absolute right-0 top-0 bottom-0 w-[55%] pointer-events-none overflow-hidden flex items-end justify-end">
-             {/* Beautiful Animated Rings */}
-             <div className="absolute right-[-10%] top-[-40%] w-[600px] h-[600px] rounded-full border-[20px] border-white/20 animate-[spin_30s_linear_infinite]" />
-             <div className="absolute right-[5%] top-[-20%] w-[400px] h-[400px] rounded-full border-[3px] border-white/20 animate-[spin_20s_linear_infinite_reverse]" />
-             <div className={`absolute right-[-10%] bottom-[-20%] w-[450px] h-[450px] rounded-full blur-3xl animate-[pulse_6s_ease-in-out_infinite] ${appTheme === 'colorful' ? 'bg-white/10' : 'bg-[#eaf4d9]/50'}`} />
-             
-             <img src="/illustration_v2.png" alt="Working" className="relative z-10 h-[110%] object-contain origin-bottom -mb-4 mr-10 mix-blend-multiply animate-float" />
-          </div>
-
-          <div className="relative z-20 flex flex-col items-start w-full max-w-2xl text-left">
-            <h2 className={`text-[28px] sm:text-[32px] md:text-[36px] font-bold ${appTheme === 'colorful' ? 'text-gray-900' : 'text-[#2b3a1a]'} tracking-tight leading-tight mb-4 whitespace-nowrap`}>
+          <div className="relative z-10 flex flex-col items-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2">
               {activeTab === 'reyo' && 'How can REYO AI assist you today?'}
               {activeTab === 'modules' && 'What would you like to work on today?'}
               {activeTab === 'agents' && 'Which AI Agent would you like to consult?'}
               {activeTab === 'approvals' && 'Pending authorizations require your attention'}
               {activeTab === 'reports' && 'Which report would you like to view today?'}
             </h2>
-            
-            <div className={`flex items-center gap-4 text-[13px] font-semibold mb-6 tracking-wide ${appTheme === 'colorful' ? 'text-gray-800' : 'text-gray-600'}`}>
-              <span className={`flex items-center gap-2 ${appTheme === 'colorful' ? 'text-gray-900' : 'text-[#4a6b22]'}`}>
-                <span className={`w-2 h-2 rounded-full inline-block ${appTheme === 'colorful' ? 'bg-green-600' : 'bg-[#527a29]'}`} />
+            <div className="flex flex-wrap justify-center items-center gap-3 text-xs font-semibold text-slate-800">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse" />
                 {activeTab === 'reyo' && 'Overall Work Monitor & AI Companion'}
                 {activeTab === 'modules' && 'ERP Automation Business Workflow'}
                 {activeTab === 'agents' && 'AI Intelligence & Automation Core'}
                 {activeTab === 'approvals' && 'Centralized Approval Center'}
                 {activeTab === 'reports' && 'Analytics & Reporting Hub'}
               </span>
-              <span className={appTheme === 'colorful' ? 'text-gray-700' : 'text-gray-300'}>|</span>
-              <span className={`flex items-center gap-1.5 ${appTheme === 'colorful' ? 'text-gray-800' : 'text-gray-500'}`}>
+              <span className="text-slate-500">•</span>
+              <span className="flex items-center gap-1.5">
                 <Calendar size={14} />
-                {formattedDate || "22 Jun 2026"}
+                {formattedDate || "17 May 2025, Saturday"}
               </span>
             </div>
+          </div>
 
-            {/* Banner Search & Quick Controls */}
-            <div className="flex items-center gap-4 w-full max-w-lg">
-              <div className="relative flex-1">
-                <input 
-                  id="module-search"
-                  type="text"
-                  placeholder="Search modules..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 text-sm font-medium bg-white border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ebf5a]/50 transition-all placeholder:text-gray-400 shadow-sm"
-                />
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-              </div>
-              <button className="py-2.5 px-5 bg-white border border-transparent text-gray-800 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm font-semibold shadow-sm hover:shadow hover:bg-gray-50 cursor-pointer whitespace-nowrap shrink-0">
-                <HelpCircle size={15} className="text-gray-600" />
-                <span>Help Guide</span>
-              </button>
+          {/* Banner Search & Quick Controls */}
+          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 w-full max-w-2xl mt-2">
+            {/* Elegant Search Bar */}
+            <div className="relative w-full sm:flex-1">
+              <input 
+                id="module-search"
+                type="text"
+                placeholder="Search modules..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 text-xs font-semibold bg-white/80 hover:bg-white focus:bg-white border border-slate-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-450 transition-all placeholder:text-slate-400 font-sans shadow-md"
+              />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
             </div>
+
+
+            {/* Help Button */}
+            <button className="w-full sm:w-auto py-3 px-5 bg-white/60 hover:bg-white/95 border border-slate-200/40 text-slate-800 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-xs font-bold shadow-md backdrop-blur-md cursor-pointer">
+              <HelpCircle size={15} />
+              <span>Help Guide</span>
+            </button>
           </div>
         </header>
 
 
-        {/* Pill Buttons Toggle Tabs & Title */}
-        <div className="flex flex-wrap items-center gap-4 mb-8">
-          <div className="flex flex-wrap items-center gap-2 bg-white p-1.5 rounded-xl border border-gray-200 shadow-sm w-max">
+        {/* Text Toggle Tabs (Acting as Titles) */}
+        <div className="flex gap-8 mb-8 border-b border-gray-200">
+          <button
+            onClick={() => {
+              setActiveTab('reyo');
+              setShouldAnimate(true);
+            }}
+            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
+              activeTab === 'reyo' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            }`}
+          >
+            REYO AI Assistant
+            {activeTab === 'reyo' && (
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+            )}
+          </button>
           
           <button
             onClick={() => {
               setActiveTab('modules');
               setShouldAnimate(true);
             }}
-            className={`px-4 py-2 flex items-center gap-2 text-[14px] font-bold font-sans transition-all cursor-pointer rounded-lg ${
-              activeTab === 'modules' 
-                ? (appTheme === 'colorful' ? 'bg-orange-100 text-orange-700 shadow-sm ring-1 ring-orange-200' : 'bg-[#f2f7ec] text-[#2d4a22] shadow-sm ring-1 ring-[#e6f0d5]') 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
+              activeTab === 'modules' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
             }`}
           >
-            <LayoutGrid size={16} />
             Work Departments
+            {activeTab === 'modules' && (
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+            )}
           </button>
           
           <button
@@ -916,14 +907,14 @@ export default function App() {
               setActiveTab('agents');
               setShouldAnimate(true);
             }}
-            className={`px-4 py-2 flex items-center gap-2 text-[14px] font-bold font-sans transition-all cursor-pointer rounded-lg ${
-              activeTab === 'agents' 
-                ? (appTheme === 'colorful' ? 'bg-orange-100 text-orange-700 shadow-sm ring-1 ring-orange-200' : 'bg-[#f2f7ec] text-[#2d4a22] shadow-sm ring-1 ring-[#e6f0d5]') 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
+              activeTab === 'agents' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
             }`}
           >
-            <Sparkles size={16} />
             AI Agents
+            {activeTab === 'agents' && (
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+            )}
           </button>
           
           <button
@@ -931,14 +922,14 @@ export default function App() {
               setActiveTab('approvals');
               setShouldAnimate(true);
             }}
-            className={`px-4 py-2 flex items-center gap-2 text-[14px] font-bold font-sans transition-all cursor-pointer rounded-lg ${
-              activeTab === 'approvals' 
-                ? (appTheme === 'colorful' ? 'bg-orange-100 text-orange-700 shadow-sm ring-1 ring-orange-200' : 'bg-[#f2f7ec] text-[#2d4a22] shadow-sm ring-1 ring-[#e6f0d5]') 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
+              activeTab === 'approvals' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
             }`}
           >
-            <CheckCircle size={16} />
             Approval Center
+            {activeTab === 'approvals' && (
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+            )}
           </button>
 
           <button
@@ -946,20 +937,15 @@ export default function App() {
               setActiveTab('reports');
               setShouldAnimate(true);
             }}
-            className={`px-4 py-2 flex items-center gap-2 text-[14px] font-bold font-sans transition-all cursor-pointer rounded-lg ${
-              activeTab === 'reports' 
-                ? (appTheme === 'colorful' ? 'bg-orange-100 text-orange-700 shadow-sm ring-1 ring-orange-200' : 'bg-[#f2f7ec] text-[#2d4a22] shadow-sm ring-1 ring-[#e6f0d5]') 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
+              activeTab === 'reports' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
             }`}
           >
-            <BarChart size={16} />
             Reporting Center
+            {activeTab === 'reports' && (
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+            )}
           </button>
-          </div>
-          <span className="text-gray-300 font-light text-2xl hidden md:inline">—</span>
-          <span className="text-[16px] lg:text-[18px] font-extrabold text-[#444f60] tracking-wide hidden md:inline mt-0.5">
-            Work Monitoring & Performance Analytics Suite
-          </span>
         </div>
 
         {/* AI Assistant Panel */}
@@ -999,7 +985,7 @@ export default function App() {
         {activeTab === 'agents' && (
           <div className="mb-12">
             <div className="mb-6">
-              <p className="text-gray-500 text-sm font-medium">Every module has its own dedicated AI Agent — get work done directly</p>
+              <p className="text-gray-500 text-sm font-medium">Har module ka apna dedicated AI Agent — seedha kaam karo</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1048,7 +1034,6 @@ export default function App() {
                     isInner={userRole !== 'admin'}
                     index={index}
                     shouldAnimate={shouldAnimate}
-                    appTheme={appTheme}
                     onClick={() => {
                       if (dept.view === 'reyo-ai') {
                         setActiveTab('reyo');

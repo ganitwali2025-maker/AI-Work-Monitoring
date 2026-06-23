@@ -7,7 +7,7 @@ export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
   const [chatInput, setChatInput] = useState('');
 
   return (
-    <div className="min-h-screen bg-[#f2f7ec] text-gray-900 font-sans p-6 sm:p-8 flex flex-col">
+    <div className="min-h-screen bg-[#F5F7FC] text-gray-900 font-sans p-6 sm:p-8 flex flex-col">
       {/* Header */}
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <div className="flex items-center gap-4">

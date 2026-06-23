@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Lora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Lora", ui-serif, Georgia, serif;
   --font-serif: "Lora", ui-serif, Georgia, serif;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .premium-collar-gradient {
-  background-image: linear-gradient(to right, #e8f5d6 0%, #d9edbe 45%, #cbe8a4 80%, #b8db76 100%);
+  background-image: linear-gradient(to right, #ff5a7d 0%, #fca2b4 45%, #ff8e53 80%, #ff6e5a 100%);
 }
 
 ::view-transition-group(*),
@@ -35,13 +35,4 @@
 ::view-transition-new(*) {
   animation-duration: 0.25s;
   animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-.animate-float {
-  animation: float 4s ease-in-out infinite;
 }
