@@ -177,15 +177,17 @@ export default function CrmWorkspace({ onBack, initialMenu = 'CRM Dashboard' }: 
 
   return (
     <Layout activeModule={activeMenu} departmentName="CRM & CUSTOMER MANAGEMENT" onBack={handleBack} sidebarLinks={sidebarLinks} variant="crm">
-        {activeMenu === 'Lead Management' ? (
-          <div className="h-[calc(100vh-144px)] w-full min-w-0 flex flex-col overflow-hidden">
-            <LeadManagementSheet />
-          </div>
-        ) : (
-          <div className="h-[calc(100vh-144px)] w-full min-w-0 flex flex-col overflow-hidden">
-            <GenericDataSheet moduleName={activeMenu} variant="crm" />
-          </div>
-        )}
+        <div className="p-4 h-full w-full">
+          {activeMenu === 'Lead Management' ? (
+            <div className="h-[calc(100vh-176px)] w-full min-w-0 flex flex-col overflow-hidden">
+              <LeadManagementSheet />
+            </div>
+          ) : (
+            <div className="h-[calc(100vh-176px)] w-full min-w-0 flex flex-col overflow-hidden">
+              <GenericDataSheet moduleName={activeMenu} variant="crm" />
+            </div>
+          )}
+        </div>
     </Layout>
   );
 }

@@ -20,6 +20,7 @@ interface Props {
   children: React.ReactNode;
   variant?: 'crm' | 'procurement' | 'inventory' | 'logistics' | 'production' | 'finance' | 'hr' | 'director' | 'vendor-master' | 'marketing' | 'laboratory';
   activeModule?: string | null;
+  noPadding?: boolean;
 }
 
 const premiumThemes: Record<string, {
@@ -122,7 +123,7 @@ const premiumThemes: Record<string, {
 
 import { useEffect as UseEffectAlias } from 'react';
 
-export default function Layout({ departmentName, onBack, sidebarLinks, children, variant = 'inventory', activeModule }: Props) {
+export default function Layout({ departmentName, onBack, sidebarLinks, children, variant = 'inventory', activeModule, noPadding = false }: Props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeMenuName, setActiveMenuName] = useState(sidebarLinks[0]?.name || '');
 
@@ -296,7 +297,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
         </aside>
 
         {/* Content */}
-        <main className="flex-1 p-8 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth">
+        <main className={`flex-1 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth ${noPadding ? '' : 'p-8'}`}>
           {children}
         </main>
       </div>

@@ -64,7 +64,10 @@ import {
   AlertTriangle,
   ListChecks,
   FlaskConical,
-  FileBarChart
+  FileBarChart,
+  Menu,
+  X,
+  PanelLeft
 } from 'lucide-react';
 import CrmWorkspace from './components/CrmWorkspace';
 import SalesWorkspace from './components/SalesWorkspace';
@@ -92,6 +95,7 @@ import SalesAiAgentDashboard from './components/SalesAiAgentDashboard';
 import LaboratoryWorkspace from './components/LaboratoryWorkspace';
 import ReportingCenter from './components/ReportingCenter';
 import ApprovalCenter from './components/ApprovalCenter';
+
 const departments = [
   { 
     name: 'Marketing Performance Center', 
@@ -534,10 +538,10 @@ export default function App() {
   const [currentView, setCurrentView] = useState('landing');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState('admin');
-  const [activeTab, setActiveTab] = useState<'reyo' | 'modules' | 'agents' | 'approvals' | 'reports'>('modules');
+  const [activeTab, setActiveTab] = useState<'reyo' | 'modules' | 'agents' | 'approvals' | 'reports' | 'my-team'>('modules');
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
@@ -733,55 +737,41 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen mesh-gradient-bg text-gray-950 font-sans flex flex-col">
+    <div className="min-h-screen mesh-gradient-bg text-gray-950 font-sans flex flex-col overflow-hidden">
       {/* Sticky top horizontal header navigation */}
       <header className="bg-white text-gray-900 border-b border-gray-200/80 shadow-xs sticky top-0 z-30 select-none">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-4">
             
             {/* Logo Area & Left Tagline */}
-            <div 
-              className="flex items-center gap-3.5 shrink-0 cursor-pointer"
-              onClick={() => {
+            <div className="flex items-center gap-2">
+
+              <div 
+                className="flex items-center gap-3.5 shrink-0 cursor-pointer"
+                onClick={() => {
                 setShouldAnimate(false);
                 setCurrentView('dashboard');
                 setActiveTab('modules');
               }}
             >
-              {/* Graphic Logo (Tri-color Concentric Crescent Logo) */}
-              <div className="w-11 h-11 flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
-                <svg className="w-11 h-11" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g transform="translate(50, 50)">
-                    {/* Outer crescents */}
-                    {/* Top (Orange) */}
-                    <path d="M -22 -4 C -15 -35, 15 -35, 22 -4 C 12 -23, -12 -23, -22 -4 Z" fill="#F09235" />
-                    {/* Bottom-Right (Red-Coral) */}
-                    <path d="M -22 -4 C -15 -35, 15 -35, 22 -4 C 12 -23, -12 -23, -22 -4 Z" fill="#E25C52" transform="rotate(120)" />
-                    {/* Bottom-Left (Teal) */}
-                    <path d="M -22 -4 C -15 -35, 15 -35, 22 -4 C 12 -23, -12 -23, -22 -4 Z" fill="#23A1A0" transform="rotate(240)" />
-                    
-                    {/* Inner crescents */}
-                    {/* Top (Red-Coral) */}
-                    <path d="M -12 0 C -8 -18, 8 -18, 12 0 C 6 -11, -6 -11, -12 0 Z" fill="#E25C52" />
-                    {/* Bottom-Right (Teal) */}
-                    <path d="M -12 0 C -8 -18, 8 -18, 12 0 C 6 -11, -6 -11, -12 0 Z" fill="#23A1A0" transform="rotate(120)" />
-                    
-                    {/* Center circle (Orange) */}
-                    <circle cx="0" cy="0" r="7.5" fill="#F09235" />
-                  </g>
+              {/* Graphic Logo (Passary Refractories) */}
+              <div className="flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
+                <svg className="w-8 h-8" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#8a9a5b" />
                 </svg>
               </div>
 
-              {/* Tagline text: normalized size */}
-              <span className="font-bold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-neutral-950 via-neutral-800 to-neutral-950 bg-clip-text text-transparent leading-normal pb-1 pt-1">
-                Streamline Every Process, Effortlessly
+              {/* Tagline text: updated size, bold, and split colors */}
+              <span className="font-extrabold text-xl sm:text-2xl tracking-tight leading-normal pb-1 pt-1 ml-2">
+                <span className="text-[#8a9a5b]">Passary Refractories</span>
+                <span className="text-gray-400 mx-2">–</span>
+                <span className="text-[#f05627]">Forging Energy-Efficient Solutions</span>
               </span>
             </div>
-
-            {/* Right Side Tagline, Settings & Login Button */}
+            </div>            {/* Right Side Tagline, Settings & Login Button */}
             <div className="flex items-center gap-3.5 shrink-0">
               {/* Tagline */}
-              <span className="hidden md:inline-block text-xs font-bold bg-gradient-to-r from-teal-600 via-rose-500 to-orange-500 bg-clip-text text-transparent tracking-wide uppercase">
+              <span className="hidden md:inline-block text-[11px] font-bold text-slate-400 tracking-wider uppercase">
                 Automate • Manage • Grow
               </span>
 
@@ -804,7 +794,7 @@ export default function App() {
                   localStorage.removeItem('isAuthenticated');
                   setCurrentView('landing');
                 }}
-                className="px-5 py-2 text-xs font-extrabold bg-pink-600 hover:bg-pink-700 text-white rounded-full transition duration-200 shadow-sm cursor-pointer border-0"
+                className="px-4 py-2 text-xs font-bold bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 rounded-full transition-all duration-200 shadow-sm cursor-pointer"
               >
                 Logout
               </button>
@@ -814,9 +804,13 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Content Pane */}
-      <main className="flex-1 p-8 overflow-y-auto scroll-smooth">
-        {/* Header */}
+      {/* Body Container */}
+      <div className="flex flex-1 overflow-hidden relative">
+
+
+        {/* Main Content Pane */}
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30">
+          {/* Header */}
         <header className="mb-8 select-none premium-collar-gradient text-slate-900 p-8 rounded-3xl border-none shadow-md flex flex-col items-center text-center gap-5 relative overflow-hidden">
           <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px] pointer-events-none" />
           
@@ -827,6 +821,7 @@ export default function App() {
               {activeTab === 'agents' && 'Which AI Agent would you like to consult?'}
               {activeTab === 'approvals' && 'Pending authorizations require your attention'}
               {activeTab === 'reports' && 'Which report would you like to view today?'}
+              {activeTab === 'my-team' && 'Manage your team and resources'}
             </h2>
             <div className="flex flex-wrap justify-center items-center gap-3 text-xs font-semibold text-slate-800">
               <span className="flex items-center gap-1.5">
@@ -836,6 +831,7 @@ export default function App() {
                 {activeTab === 'agents' && 'AI Intelligence & Automation Core'}
                 {activeTab === 'approvals' && 'Centralized Approval Center'}
                 {activeTab === 'reports' && 'Analytics & Reporting Hub'}
+                {activeTab === 'my-team' && 'Team & Resource Management'}
               </span>
               <span className="text-slate-500">•</span>
               <span className="flex items-center gap-1.5">
@@ -946,6 +942,21 @@ export default function App() {
               <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
             )}
           </button>
+          
+          <button
+            onClick={() => {
+              setActiveTab('my-team');
+              setShouldAnimate(true);
+            }}
+            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
+              activeTab === 'my-team' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            }`}
+          >
+            My Team
+            {activeTab === 'my-team' && (
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+            )}
+          </button>
         </div>
 
         {/* AI Assistant Panel */}
@@ -979,6 +990,12 @@ export default function App() {
         {activeTab === 'reports' && (
           <div className="mb-12">
             <ReportingCenter userRole={userRole} />
+          </div>
+        )}
+
+        {activeTab === 'my-team' && (
+          <div className="mb-12 text-center py-12">
+            <p className="text-gray-400 text-lg font-serif">My Team module is coming soon.</p>
           </div>
         )}
 
@@ -1056,7 +1073,8 @@ export default function App() {
             </div>
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
