@@ -96,35 +96,51 @@ const innerIconColors: Record<Props['variant'], string> = {
 };
 
 const variantCardBgs: Record<Props['variant'], string> = {
-  crm: 'bg-purple-50 hover:bg-purple-100/80 border-purple-200',
-  procurement: 'bg-amber-50 hover:bg-amber-100/80 border-amber-200',
-  inventory: 'bg-emerald-50 hover:bg-emerald-100/80 border-emerald-200',
-  logistics: 'bg-indigo-50 hover:bg-indigo-100/80 border-indigo-200',
-  production: 'bg-sky-50 hover:bg-sky-100/80 border-sky-200',
-  finance: 'bg-teal-50 hover:bg-teal-100/80 border-teal-200',
-  hr: 'bg-rose-50 hover:bg-rose-100/80 border-rose-200',
-  director: 'bg-violet-50 hover:bg-violet-100/80 border-violet-200',
-  'vendor-master': 'bg-[#EAEDFF] hover:bg-[#D5DFFF]/80 border-blue-200',
-  marketing: 'bg-fuchsia-50 hover:bg-fuchsia-100/80 border-fuchsia-200',
-  dashboard: 'bg-rose-50 hover:bg-rose-100/80 border-rose-200',
-  laboratory: 'bg-cyan-50 hover:bg-cyan-100/80 border-cyan-200',
-  sales: 'bg-blue-50 hover:bg-blue-100/80 border-blue-200',
+  crm: 'bg-white',
+  procurement: 'bg-white',
+  inventory: 'bg-white',
+  logistics: 'bg-white',
+  production: 'bg-white',
+  finance: 'bg-white',
+  hr: 'bg-white',
+  director: 'bg-white',
+  'vendor-master': 'bg-white',
+  marketing: 'bg-white',
+  dashboard: 'bg-white',
+  laboratory: 'bg-white',
+  sales: 'bg-white',
 };
 
 const innerCardBgs: Record<Props['variant'], string> = {
-  crm: 'bg-white group-hover:bg-purple-50/80 border-gray-200/60 group-hover:border-purple-200/50',
-  procurement: 'bg-white group-hover:bg-amber-50/80 border-gray-200/60 group-hover:border-amber-200/50',
-  inventory: 'bg-white group-hover:bg-emerald-50/80 border-gray-200/60 group-hover:border-emerald-200/50',
-  logistics: 'bg-white group-hover:bg-indigo-50/80 border-gray-200/60 group-hover:border-indigo-200/50',
-  production: 'bg-white group-hover:bg-sky-50/80 border-gray-200/60 group-hover:border-sky-200/50',
-  finance: 'bg-white group-hover:bg-teal-50/80 border-gray-200/60 group-hover:border-teal-200/50',
-  hr: 'bg-white group-hover:bg-rose-50/80 border-gray-200/60 group-hover:border-rose-200/50',
-  director: 'bg-white group-hover:bg-violet-50/80 border-gray-200/60 group-hover:border-violet-200/50',
-  'vendor-master': 'bg-white group-hover:bg-[#EAEDFF]/40 border-gray-200/60 group-hover:border-blue-200/50',
-  marketing: 'bg-white group-hover:bg-fuchsia-50/80 border-gray-200/60 group-hover:border-fuchsia-200/50',
-  dashboard: 'bg-white group-hover:bg-rose-50/80 border-gray-200/60 group-hover:border-rose-200/50',
-  laboratory: 'bg-white group-hover:bg-cyan-50/80 border-gray-200/60 group-hover:border-cyan-200/50',
-  sales: 'bg-white group-hover:bg-blue-50/80 border-gray-200/60 group-hover:border-blue-200/50',
+  crm: 'bg-white',
+  procurement: 'bg-white',
+  inventory: 'bg-white',
+  logistics: 'bg-white',
+  production: 'bg-white',
+  finance: 'bg-white',
+  hr: 'bg-white',
+  director: 'bg-white',
+  'vendor-master': 'bg-white',
+  marketing: 'bg-white',
+  dashboard: 'bg-white',
+  laboratory: 'bg-white',
+  sales: 'bg-white',
+};
+
+const variantHoverShadows: Record<Props['variant'], string> = {
+  crm: 'group-hover:shadow-[0_8px_30px_rgba(168,85,247,0.3)]',
+  procurement: 'group-hover:shadow-[0_8px_30px_rgba(245,158,11,0.3)]',
+  inventory: 'group-hover:shadow-[0_8px_30px_rgba(16,185,129,0.3)]',
+  logistics: 'group-hover:shadow-[0_8px_30px_rgba(99,102,241,0.3)]',
+  production: 'group-hover:shadow-[0_8px_30px_rgba(14,165,233,0.3)]',
+  finance: 'group-hover:shadow-[0_8px_30px_rgba(20,184,166,0.3)]',
+  hr: 'group-hover:shadow-[0_8px_30px_rgba(244,63,94,0.3)]',
+  director: 'group-hover:shadow-[0_8px_30px_rgba(139,92,246,0.3)]',
+  'vendor-master': 'group-hover:shadow-[0_8px_30px_rgba(47,63,191,0.3)]',
+  marketing: 'group-hover:shadow-[0_8px_30px_rgba(217,70,239,0.3)]',
+  dashboard: 'group-hover:shadow-[0_8px_30px_rgba(255,90,125,0.3)]',
+  laboratory: 'group-hover:shadow-[0_8px_30px_rgba(6,182,212,0.3)]',
+  sales: 'group-hover:shadow-[0_8px_30px_rgba(59,130,246,0.3)]',
 };
 
 const variantHoverTextColors: Record<Props['variant'], string> = {
@@ -162,6 +178,7 @@ export default function ERPModuleCard({
   const iconColor = isInner ? innerIconColors[variant] : variantIconColors[variant];
   const cardBg = isInner ? innerCardBgs[variant] : variantCardBgs[variant];
   const hoverTextColor = variantHoverTextColors[variant];
+  const hoverShadow = variantHoverShadows[variant];
 
   const iconContainerClass = `${bgColor} ${iconColor}`;
 
@@ -184,7 +201,7 @@ export default function ERPModuleCard({
       {/* Sharp Border Gradient Glow Layer */}
       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
       
-      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[15px] border shadow-sm transition-all duration-300 ${cardBg}`}>
+      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[15px] border-none transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${cardBg} ${hoverShadow}`}>
         <div className={`inline-block w-fit p-3 rounded-xl ${iconContainerClass} mb-4 transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
           <Icon size={24} />
         </div>

@@ -67,7 +67,9 @@ import {
   FileBarChart,
   Menu,
   X,
-  PanelLeft
+  PanelLeft,
+  Bot,
+  ClipboardCheck
 } from 'lucide-react';
 import CrmWorkspace from './components/CrmWorkspace';
 import SalesWorkspace from './components/SalesWorkspace';
@@ -737,7 +739,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen mesh-gradient-bg text-gray-950 font-sans flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[#f9fbf6] text-gray-950 font-sans flex flex-col overflow-hidden relative">
+      {/* Decorative Brand Colors Background Blobs (Olive Green & Vibrant Orange) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[45rem] h-[45rem] bg-[#7C9C54]/30 rounded-full blur-[140px] pointer-events-none animate-blob z-0"></div>
+      <div className="absolute bottom-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-[#F2642A]/20 rounded-full blur-[140px] pointer-events-none animate-blob animation-delay-400 z-0"></div>
+      <div className="absolute top-[20%] left-[60%] w-[35rem] h-[35rem] bg-[#7C9C54]/20 rounded-full blur-[120px] pointer-events-none animate-blob animation-delay-800 z-0"></div>
+      
       {/* Sticky top horizontal header navigation */}
       <header className="bg-white text-gray-900 border-b border-gray-200/80 shadow-xs sticky top-0 z-30 select-none">
         <div className="w-full px-4 sm:px-6 lg:px-8">
@@ -768,23 +775,25 @@ export default function App() {
                 <span className="text-[#f05627]">Forging Energy-Efficient Solutions</span>
               </span>
             </div>
-            </div>            {/* Right Side Tagline, Settings & Login Button */}
-            <div className="flex items-center gap-3.5 shrink-0">
-              {/* Tagline */}
-              <span className="hidden md:inline-block text-[11px] font-bold text-slate-400 tracking-wider uppercase">
-                Automate • Manage • Grow
-              </span>
+            </div>            {/* Right Side Tagline, Notifications, Settings & Logout */}
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+              {/* Notification & Settings */}
 
-              <div className="hidden md:block h-4 border-l border-gray-250/60" />
-
-              {/* Settings */}
-              <button 
-                onClick={() => setCurrentView('director')}
-                className="p-1.5 hover:bg-gray-150 rounded-lg text-gray-500 hover:text-gray-900 transition duration-205 cursor-pointer"
-                title="Settings"
-              >
-                <Settings size={18} />
-              </button>
+              {/* Notification & Settings */}
+              <div className="flex items-center gap-3">
+                <button className="relative p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]">
+                  <Bell size={18} strokeWidth={2.2} />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-[#F2642A] rounded-full border border-white animate-pulse"></span>
+                </button>
+                
+                <button 
+                  onClick={() => setCurrentView('director')}
+                  className="p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
+                  title="Settings"
+                >
+                  <Settings size={18} strokeWidth={2.2} />
+                </button>
+              </div>
 
               <div className="h-6 border-l border-gray-200" />
 
@@ -794,9 +803,10 @@ export default function App() {
                   localStorage.removeItem('isAuthenticated');
                   setCurrentView('landing');
                 }}
-                className="px-4 py-2 text-xs font-bold bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 rounded-full transition-all duration-200 shadow-sm cursor-pointer"
+                className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)] cursor-pointer group tracking-wider"
               >
                 Logout
+                <svg className="w-4 h-4 text-white/90 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
               </button>
             </div>
 
@@ -810,22 +820,40 @@ export default function App() {
 
         {/* Main Content Pane */}
         <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30">
-          {/* Header */}
-        <header className="mb-8 select-none premium-collar-gradient text-slate-900 p-8 rounded-3xl border-none shadow-md flex flex-col items-center text-center gap-5 relative overflow-hidden">
-          <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px] pointer-events-none" />
+        <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-4 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           
-          <div className="relative z-10 flex flex-col items-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2">
-              {activeTab === 'reyo' && 'How can REYO AI assist you today?'}
+          {/* Background Container */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#eef6e6] via-[#f7ebd9] to-[#ffdbb8]">
+            {/* SVG Waves */}
+            <svg className="absolute bottom-0 w-full h-auto text-[#dceacd] opacity-60 pointer-events-none" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path fill="currentColor" d="M0,256L48,229.3C96,203,192,149,288,154.7C384,160,480,224,576,250.7C672,277,768,267,864,240C960,213,1056,171,1152,149.3C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+            <svg className="absolute bottom-0 w-full h-auto text-[#eef6e6] opacity-90 pointer-events-none" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path fill="currentColor" d="M0,128L48,138.7C96,149,192,171,288,181.3C384,192,480,192,576,170.7C672,149,768,107,864,101.3C960,96,1056,128,1152,149.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+
+            {/* Subtle decorative dots */}
+            <div className="absolute top-[30%] left-[60%] w-24 h-24 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#F2642A 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
+            <div className="absolute bottom-[20%] left-[5%] w-20 h-20 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#7C9C54 1px, transparent 1px)', backgroundSize: '8px 8px' }}></div>
+
+            {/* Sparkles */}
+            <Sparkles className="absolute top-[20%] left-[45%] text-white opacity-60" size={12} />
+            <Sparkles className="absolute top-[40%] right-[35%] text-white opacity-80" size={16} />
+            <Sparkles className="absolute bottom-[30%] left-[30%] text-white opacity-50" size={10} />
+          </div>
+
+          <div className="relative z-10 flex flex-col items-start w-full md:w-[65%]">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#113a1a] tracking-tight leading-tight mb-2 font-serif">
+              {activeTab === 'reyo' && 'How can PASSARY AI ASSISTANT assist you today?'}
               {activeTab === 'modules' && 'What would you like to work on today?'}
               {activeTab === 'agents' && 'Which AI Agent would you like to consult?'}
               {activeTab === 'approvals' && 'Pending authorizations require your attention'}
               {activeTab === 'reports' && 'Which report would you like to view today?'}
               {activeTab === 'my-team' && 'Manage your team and resources'}
             </h2>
-            <div className="flex flex-wrap justify-center items-center gap-3 text-xs font-semibold text-slate-800">
+            <div className="flex flex-wrap items-center gap-2.5 text-[11px] font-semibold text-[#3b5936] mb-4">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F2642A] inline-block animate-pulse" />
                 {activeTab === 'reyo' && 'Overall Work Monitor & AI Companion'}
                 {activeTab === 'modules' && 'ERP Automation Business Workflow'}
                 {activeTab === 'agents' && 'AI Intelligence & Automation Core'}
@@ -833,53 +861,62 @@ export default function App() {
                 {activeTab === 'reports' && 'Analytics & Reporting Hub'}
                 {activeTab === 'my-team' && 'Team & Resource Management'}
               </span>
-              <span className="text-slate-500">•</span>
-              <span className="flex items-center gap-1.5">
-                <Calendar size={14} />
+              <span className="text-[#3b5936]/40">|</span>
+              <span className="flex items-center gap-1.5 text-[#3b5936]/80">
+                <Calendar size={12} />
                 {formattedDate || "17 May 2025, Saturday"}
               </span>
             </div>
-          </div>
 
-          {/* Banner Search & Quick Controls */}
-          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 w-full max-w-2xl mt-2">
-            {/* Elegant Search Bar */}
-            <div className="relative w-full sm:flex-1">
-              <input 
-                id="module-search"
-                type="text"
-                placeholder="Search modules..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 text-xs font-semibold bg-white/80 hover:bg-white focus:bg-white border border-slate-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-450 transition-all placeholder:text-slate-400 font-sans shadow-md"
-              />
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+            {/* Banner Search & Quick Controls */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
+              {/* Elegant Search Bar */}
+              <div className="relative w-full sm:flex-1">
+                <input 
+                  id="module-search"
+                  type="text"
+                  placeholder="Search modules..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 text-[11px] font-semibold bg-white/95 border-none text-gray-700 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C9C54]/30 transition-all placeholder:text-gray-400 font-sans shadow-sm"
+                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#244f24]" size={13} strokeWidth={2.5} />
+              </div>
+
+              {/* Help Button */}
+              <button className="w-full sm:w-auto py-2.5 px-4 bg-white/95 border-none text-gray-800 rounded-[12px] hover:bg-gray-50 transition-all duration-200 flex items-center justify-center gap-1.5 text-[11px] font-bold shadow-sm cursor-pointer">
+                <HelpCircle size={14} className="text-[#244f24]" strokeWidth={2.5} />
+                <span>Help Guide</span>
+              </button>
             </div>
-
-
-            {/* Help Button */}
-            <button className="w-full sm:w-auto py-3 px-5 bg-white/60 hover:bg-white/95 border border-slate-200/40 text-slate-800 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-xs font-bold shadow-md backdrop-blur-md cursor-pointer">
-              <HelpCircle size={15} />
-              <span>Help Guide</span>
-            </button>
+          </div>
+          
+          {/* Right side illustration */}
+          <div className="relative z-10 hidden md:flex w-full md:w-[35%] justify-end pointer-events-none mix-blend-darken">
+            <img 
+              src="/dashboard-illustration-5.png" 
+              alt="Working illustration" 
+              className="max-w-[180px] lg:max-w-[220px] object-contain animate-float-slow filter brightness-[1.02] contrast-[1.05]" 
+            />
           </div>
         </header>
 
 
         {/* Text Toggle Tabs (Acting as Titles) */}
-        <div className="flex gap-8 mb-8 border-b border-gray-200">
+        <div className="flex gap-6 sm:gap-8 mb-8 border-b border-gray-200/80 bg-gradient-to-r from-[#edf4e8] via-[#f6f9f2] to-transparent px-4 sm:px-6 pt-4 overflow-x-auto hide-scrollbar rounded-t-2xl">
           <button
             onClick={() => {
               setActiveTab('reyo');
               setShouldAnimate(true);
             }}
-            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
-              activeTab === 'reyo' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
+              activeTab === 'reyo' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
-            REYO AI Assistant
+            <Sparkles size={16} strokeWidth={2.5} />
+            PASSARY AI ASSISTANT
             {activeTab === 'reyo' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
             )}
           </button>
           
@@ -888,13 +925,14 @@ export default function App() {
               setActiveTab('modules');
               setShouldAnimate(true);
             }}
-            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
-              activeTab === 'modules' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
+              activeTab === 'modules' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
+            <Briefcase size={16} strokeWidth={2.5} />
             Work Departments
             {activeTab === 'modules' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
             )}
           </button>
           
@@ -903,13 +941,14 @@ export default function App() {
               setActiveTab('agents');
               setShouldAnimate(true);
             }}
-            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
-              activeTab === 'agents' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
+              activeTab === 'agents' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
+            <Bot size={16} strokeWidth={2.5} />
             AI Agents
             {activeTab === 'agents' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
             )}
           </button>
           
@@ -918,13 +957,14 @@ export default function App() {
               setActiveTab('approvals');
               setShouldAnimate(true);
             }}
-            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
-              activeTab === 'approvals' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
+              activeTab === 'approvals' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
+            <ClipboardCheck size={16} strokeWidth={2.5} />
             Approval Center
             {activeTab === 'approvals' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
             )}
           </button>
 
@@ -933,13 +973,14 @@ export default function App() {
               setActiveTab('reports');
               setShouldAnimate(true);
             }}
-            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
-              activeTab === 'reports' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
+              activeTab === 'reports' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
+            <BarChart size={16} strokeWidth={2.5} />
             Reporting Center
             {activeTab === 'reports' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
             )}
           </button>
           
@@ -948,27 +989,28 @@ export default function App() {
               setActiveTab('my-team');
               setShouldAnimate(true);
             }}
-            className={`pb-2 text-lg sm:text-xl font-bold font-serif transition-all cursor-pointer relative ${
-              activeTab === 'my-team' ? 'text-gray-950' : 'text-gray-400 hover:text-gray-700'
+            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
+              activeTab === 'my-team' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
             }`}
           >
+            <Users size={16} strokeWidth={2.5} />
             My Team
             {activeTab === 'my-team' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
             )}
           </button>
         </div>
 
         {/* AI Assistant Panel */}
         {activeTab === 'reyo' && (
-          <section className="mb-12 bg-white border border-gray-200/80 rounded-2xl p-6 shadow-md">
+          <section className="mb-12 bg-white border border-gray-200/80 rounded-2xl p-6 shadow-md animate-fade-in-up">
             <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">
                   <Sparkles size={16} />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-gray-950 font-sans">REYO AI Assistant</h4>
+                  <h4 className="text-sm font-bold text-gray-950 font-sans">PASSARY AI ASSISTANT</h4>
                   <p className="text-[10px] text-gray-500 font-medium">Overall Work Monitor & Automation Assistant</p>
                 </div>
               </div>
@@ -982,25 +1024,25 @@ export default function App() {
 
 
         {activeTab === 'approvals' && (
-          <div className="mb-12">
+          <div className="mb-12 animate-fade-in-up">
             <ApprovalCenter userRole={userRole} />
           </div>
         )}
 
         {activeTab === 'reports' && (
-          <div className="mb-12">
+          <div className="mb-12 animate-fade-in-up">
             <ReportingCenter userRole={userRole} />
           </div>
         )}
 
         {activeTab === 'my-team' && (
-          <div className="mb-12 text-center py-12">
+          <div className="mb-12 text-center py-12 animate-fade-in-up">
             <p className="text-gray-400 text-lg font-serif">My Team module is coming soon.</p>
           </div>
         )}
 
         {activeTab === 'agents' && (
-          <div className="mb-12">
+          <div className="mb-12 animate-fade-in-up">
             <div className="mb-6">
               <p className="text-gray-500 text-sm font-medium">Har module ka apna dedicated AI Agent — seedha kaam karo</p>
             </div>
@@ -1037,7 +1079,7 @@ export default function App() {
         )}
 
         {activeTab === 'modules' && (
-          <div className="mb-12">
+          <div className="mb-12 animate-fade-in-up">
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDepartments.length > 0 ? (
