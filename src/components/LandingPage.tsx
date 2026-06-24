@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, User, Leaf, Settings, Users, Activity, Zap, Shield, BarChart2, Phone, Mail, MapPin, Send, Home } from 'lucide-react';
+import { Bell, User, Leaf, Settings, Users, Activity, Zap, Shield, BarChart2, Phone, Mail, MapPin, Send, Home, CheckCircle2, Box, Database, Bot, PieChart, Brain, LayoutDashboard, RefreshCw, TrendingUp, Target, ArrowUpRight, IndianRupee, Clock, Headset, MessageSquare, Lock, FileText, PenLine, ChevronRight } from 'lucide-react';
 
 interface LandingPageProps {
   onLoginSuccess: (role: string) => void;
@@ -146,9 +146,14 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#517b27] to-[#8a9a5b] drop-shadow-sm">Passary Refractories</span>
              </h1>
           </div>
-          <h2 className="text-xl md:text-[22px] font-medium text-[#5c6b4a] leading-relaxed tracking-wide mb-10 animate-fade-in-up stagger-2 max-w-xl">
-            We believe in driving progress responsibly by forging energy-efficient solutions and saving over 1.5 lakh tons of coal energy for a greener future.
-          </h2>
+          <div className="flex flex-col gap-3 mb-10 animate-fade-in-up stagger-2 max-w-xl">
+            <h2 className="text-xl md:text-[22px] font-medium text-[#5c6b4a] leading-relaxed tracking-wide">
+              Transform your daily operations with intelligent workflow automation, AI-driven assistance, and centralized business process management.
+            </h2>
+            <div className="text-[13px] sm:text-[14px] font-extrabold text-[#4a6b22] tracking-widest leading-relaxed">
+              ERP Automation &bull; AI Assistant &bull; Google Workspace Integration &bull; Smart Business Operations
+            </div>
+          </div>
           <div className="flex flex-wrap items-center gap-5 animate-fade-in-up stagger-4">
             <button className="bg-[#4a6b22] hover:bg-[#3b591b] text-white px-9 py-4 rounded-full text-[13px] font-bold tracking-widest transition-all shadow-[0_8px_20px_rgba(74,107,34,0.25)] hover:shadow-[0_8px_25px_rgba(74,107,34,0.4)] hover:-translate-y-1 flex items-center gap-2 group">
               LEARN MORE
@@ -171,213 +176,503 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
       </section>
 
       {/* --- SECTION 2: ABOUT US --- */}
-      <section id="about" className="min-h-screen relative flex flex-col lg:flex-row items-center py-24 bg-transparent">
-        <div className="w-full lg:w-[50%] flex flex-col justify-center px-8 md:px-16 lg:px-24 xl:px-32 relative z-10">
-          <div className="mb-10 animate-fade-in-up stagger-1">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-[#fdf2e8] border border-[#f5dbbf] text-[#d97706] text-xs font-bold tracking-widest mb-6">
-               OUR MISSION
-            </div>
-            <h2 className="text-4xl md:text-[52px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-6">
-              Driving Efficiency.<br /> <span className="text-[#517b27]">Building a Greener Tomorrow.</span>
-            </h2>
-            <p className="text-[#5c6b4a] text-lg leading-relaxed max-w-xl font-medium">
-              Passary Refractories is committed to creating energy-efficient solutions through smart automation. Our mission is to help industries reduce energy consumption, optimize operations, and contribute to a sustainable future.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/60 backdrop-blur-sm border border-white/80 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition-transform">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#eaf4d9] to-[#d9f0a3] flex items-center justify-center mb-5 text-[#3b591b] shadow-inner">
-                <Leaf size={24} strokeWidth={2} />
-              </div>
-              <h3 className="font-bold text-[#2b3a1a] mb-2">Sustainability</h3>
-              <p className="text-[13px] text-[#647185] leading-relaxed">
-                Focusing on reducing energy usage and promoting a cleaner environment.
-              </p>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm border border-white/80 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition-transform">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#eaf4d9] to-[#d9f0a3] flex items-center justify-center mb-5 text-[#3b591b] shadow-inner">
-                <Settings size={24} strokeWidth={2} />
-              </div>
-              <h3 className="font-bold text-[#2b3a1a] mb-2">Innovation</h3>
-              <p className="text-[13px] text-[#647185] leading-relaxed">
-                Leveraging smart automation to drive operational excellence.
-              </p>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm border border-white/80 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition-transform">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#eaf4d9] to-[#d9f0a3] flex items-center justify-center mb-5 text-[#3b591b] shadow-inner">
-                <Users size={24} strokeWidth={2} />
-              </div>
-              <h3 className="font-bold text-[#2b3a1a] mb-2">Commitment</h3>
-              <p className="text-[13px] text-[#647185] leading-relaxed">
-                Dedicated to delivering reliable solutions and lasting value.
-              </p>
-            </div>
-          </div>
-        </div>
+      <section id="about" className="relative flex flex-col items-center justify-center min-h-[100vh] py-12 bg-gradient-to-b from-white to-[#f4f9ea]/40 px-4 md:px-8 lg:px-12 overflow-hidden">
         
-        <div className="w-full lg:w-[50%] relative min-h-[400px] lg:min-h-full flex items-center justify-center z-20 pr-4 lg:pr-16 mt-16 lg:mt-0 animate-fade-in-up stagger-4">
-           {/* Placeholder for the Wind Turbines illustration */}
-           <div className="w-full max-w-[600px] aspect-square bg-[#eaf4d9]/50 rounded-full flex flex-col items-center justify-center border border-[#d9f0a3] text-[#517b27]/50 border-dashed animate-float-slow">
-             <Leaf size={64} className="mb-4 animate-float" />
-             <span className="font-bold tracking-widest text-sm uppercase">About Illustration Placeholder</span>
-           </div>
+        {/* Top Split Area */}
+        <div className="w-full max-w-[1800px] flex flex-col mb-10 z-10 mx-auto">
+          
+          {/* Top Text Block (Centered) */}
+          <div className="w-full flex flex-col items-center text-center">
+            <div className="mb-6 animate-fade-in-up stagger-1 flex flex-col items-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-widest mb-4 shadow-sm">
+                <Leaf size={12} />
+                OUR MISSION
+              </div>
+              <h2 className="text-3xl md:text-[42px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-4 max-w-[1600px]">
+                Smart <span className="text-[#4a6b22]">ERP</span>. Intelligent <span className="text-[#4a6b22]">AI</span>. Seamless <span className="text-[#517b27]">Workflow</span>.
+              </h2>
+              <p className="text-[#5c6b4a] text-[15px] leading-relaxed font-medium max-w-[1200px]">
+                Our ERP system integrates AI-powered automation to simplify processes, reduce manual work, and drive business efficiency. Work smarter, make better decisions, and grow faster with intelligent technology.
+              </p>
+            </div>
+
+            {/* 4 Feature Mini Grid */}
+            <div className="flex flex-wrap justify-center gap-6 md:gap-12 lg:gap-20 animate-fade-in-up stagger-2 w-full max-w-[1600px] mt-8">
+              <div className="flex gap-3 items-center text-left">
+                <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#4a6b22] shrink-0 border border-[#e1ebd5]">
+                  <Box size={18} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-[#2b3a1a] mb-0.5 text-[14px]">Integrated ERP Modules</h4>
+                  <p className="text-[#647185] text-[12px] leading-snug font-medium">Finance, HR, Sales, Purchase & More</p>
+                </div>
+              </div>
+              <div className="flex gap-3 items-center text-left">
+                <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#4a6b22] shrink-0 border border-[#e1ebd5]">
+                  <Bot size={18} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-[#2b3a1a] mb-0.5 text-[14px]">AI-Powered Automation</h4>
+                  <p className="text-[#647185] text-[12px] leading-snug font-medium">Automate tasks and business processes</p>
+                </div>
+              </div>
+              <div className="flex gap-3 items-center text-left">
+                <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#4a6b22] shrink-0 border border-[#e1ebd5]">
+                  <Database size={18} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-[#2b3a1a] mb-0.5 text-[14px]">Centralized Data</h4>
+                  <p className="text-[#647185] text-[12px] leading-snug font-medium">All data in one secure platform</p>
+                </div>
+              </div>
+              <div className="flex gap-3 items-center text-left">
+                <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#4a6b22] shrink-0 border border-[#e1ebd5]">
+                  <PieChart size={18} />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-[#2b3a1a] mb-0.5 text-[14px]">Real-Time Insights</h4>
+                  <p className="text-[#647185] text-[12px] leading-snug font-medium">Live dashboards and smart analytics</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
+        {/* 4 Cards Grid */}
+        <div className="w-full max-w-[1800px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 z-10 mx-auto">
+          
+          {/* Card 1 */}
+          <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+            <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+              <LayoutDashboard size={20} />
+            </div>
+            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Smart ERP Management</h3>
+            <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Manage all core business operations in one place.</p>
+            <ul className="space-y-2">
+              {['Finance & Accounting', 'HR & Payroll', 'Sales & CRM', 'Purchase & Inventory', 'Reports & Analytics'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                  <CheckCircle2 size={14} className="text-blue-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Card 2 */}
+          <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+            <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-4">
+              <Bot size={20} />
+            </div>
+            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">AI Assistant Workflow</h3>
+            <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Get answers, automate tasks, and generate reports.</p>
+            <ul className="space-y-2">
+              {['ChatGPT & Gemini AI', 'Intelligent Query Responses', 'Report Generation', 'Data Analysis & Insights', 'Smart Recommendations'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                  <CheckCircle2 size={14} className="text-purple-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+            <div className="w-10 h-10 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center mb-4">
+              <RefreshCw size={20} />
+            </div>
+            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Automation & Integration</h3>
+            <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Automate tasks and integrate tools seamlessly.</p>
+            <ul className="space-y-2">
+              {['Workflow Automation', 'Approval Management', 'Email Response Automation', 'Google Sheets Integration', 'Google Drive Integration'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                  <CheckCircle2 size={14} className="text-orange-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Card 4 */}
+          <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+            <div className="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-4">
+              <TrendingUp size={20} />
+            </div>
+            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Performance & Growth</h3>
+            <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Track performance and make data-driven decisions.</p>
+            <ul className="space-y-2">
+              {['Real-Time Dashboards', 'KPI Tracking', 'Business Intelligence', 'Custom Reports', 'Predictive Analytics'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+        </div>
+
+        {/* Bottom Promise Bar */}
+        <div className="w-full max-w-[1800px] bg-white rounded-2xl border border-[#e1ebd5] flex flex-col md:flex-row items-center divide-y md:divide-y-0 md:divide-x divide-gray-100 shadow-sm z-10 mx-auto">
+          <div className="flex items-center gap-2 p-4 xl:px-8 shrink-0">
+            <Shield size={20} className="text-[#4a6b22]" />
+            <span className="font-black text-[#2b3a1a] text-base">Our Promise</span>
+          </div>
+          
+          <div className="flex-1 p-4 xl:px-6">
+            <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[14px]">Reduce Manual Work</h5>
+            <p className="text-[11px] text-gray-500 font-medium">Save time and reduce errors</p>
+          </div>
+          
+          <div className="flex-1 p-4 xl:px-6">
+            <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[14px]">Improve Productivity</h5>
+            <p className="text-[11px] text-gray-500 font-medium">Empower your teams</p>
+          </div>
+          
+          <div className="flex-1 p-4 xl:px-6">
+            <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[14px]">Data Security</h5>
+            <p className="text-[11px] text-gray-500 font-medium">Secure. Reliable. Always.</p>
+          </div>
+          
+          <div className="flex-1 p-4 xl:px-6">
+            <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[14px]">Drive Growth</h5>
+            <p className="text-[11px] text-gray-500 font-medium">Smarter operations, better results</p>
+          </div>
+        </div>
       </section>
 
       {/* --- SECTION 3: SERVICES --- */}
-      <section id="services" className="min-h-screen relative flex flex-col items-center justify-center py-24 bg-transparent px-8 md:px-16 lg:px-24">
-        <div className="w-full max-w-[1400px] relative z-10">
-          <div className="mb-16 animate-fade-in-up stagger-1 text-center flex flex-col items-center">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-white/60 border border-[#e1ebd5] text-[#517b27] text-xs font-bold tracking-widest mb-6">
-               CORE CAPABILITIES
+      <section id="services" className="relative flex flex-col items-center justify-center min-h-[100vh] py-12 bg-gradient-to-b from-[#f4f9ea]/40 to-white px-4 md:px-8 lg:px-12 overflow-hidden">
+        <div className="w-full max-w-[1800px] relative z-10 flex flex-col items-center mx-auto">
+          
+          <div className="mb-10 animate-fade-in-up stagger-1 text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-widest mb-4 shadow-sm">
+               <Target size={12}/> CORE CAPABILITIES
             </div>
-            <h2 className="text-4xl md:text-[52px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-6 max-w-3xl">
+            <h2 className="text-3xl md:text-[42px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-4 max-w-[1600px]">
               Smart Automation Solutions<br/> for a <span className="text-[#517b27]">Smarter Tomorrow</span>
             </h2>
-            <p className="text-[#5c6b4a] text-lg leading-relaxed max-w-2xl font-medium">
-              We provide intelligent automation solutions that help industries improve efficiency, reduce costs, and ensure sustainable, long-term growth.
+            <div className="w-16 h-1 bg-gradient-to-r from-[#4a6b22] to-transparent mb-4"></div>
+            <p className="text-[#5c6b4a] text-[15px] leading-relaxed max-w-[1200px] font-medium text-center">
+              We deliver intelligent automation solutions that empower industries to boost efficiency, reduce costs, and achieve sustainable, long-term growth.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            <div className="bg-white/80 backdrop-blur-xl rounded-[24px] p-8 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] hover:-translate-y-2 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-[#f4f9ea] group-hover:bg-[#4a6b22] rounded-2xl flex items-center justify-center mb-8 text-[#517b27] group-hover:text-white transition-colors duration-300">
-                <Activity size={32} strokeWidth={1.5} />
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            {/* Card 1 */}
+            <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+              <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
+                <Activity size={20} />
               </div>
-              <h3 className="font-extrabold text-[#2b3a1a] mb-4 text-xl tracking-tight">Process Automation</h3>
-              <p className="text-[15px] text-[#647185] leading-relaxed">
+              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Process Automation</h3>
+              <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Streamline operations and minimize manual intervention with our advanced automation systems.
               </p>
+              <ul className="space-y-2">
+                {['Workflow Automation', 'Task Scheduling', 'Approval Management', 'Error Reduction'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                    <CheckCircle2 size={14} className="text-[#4a6b22] shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
             
-            <div className="bg-white/80 backdrop-blur-xl rounded-[24px] p-8 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] hover:-translate-y-2 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-[#f4f9ea] group-hover:bg-[#4a6b22] rounded-2xl flex items-center justify-center mb-8 text-[#517b27] group-hover:text-white transition-colors duration-300">
-                <Settings size={32} strokeWidth={1.5} />
+            {/* Card 2 */}
+            <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+              <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
+                <Settings size={20} />
               </div>
-              <h3 className="font-extrabold text-[#2b3a1a] mb-4 text-xl tracking-tight">Energy Management</h3>
-              <p className="text-[15px] text-[#647185] leading-relaxed">
+              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Energy Management</h3>
+              <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Optimize energy usage and reduce consumption with real-time monitoring and smart analytics.
               </p>
+              <ul className="space-y-2">
+                {['Real-time Monitoring', 'Energy Optimization', 'Cost Reduction', 'Sustainability Focus'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                    <CheckCircle2 size={14} className="text-[#4a6b22] shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl rounded-[24px] p-8 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] hover:-translate-y-2 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-[#f4f9ea] group-hover:bg-[#4a6b22] rounded-2xl flex items-center justify-center mb-8 text-[#517b27] group-hover:text-white transition-colors duration-300">
-                <Shield size={32} strokeWidth={1.5} />
+            {/* Card 3 */}
+            <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+              <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
+                <Shield size={20} />
               </div>
-              <h3 className="font-extrabold text-[#2b3a1a] mb-4 text-xl tracking-tight">Control Systems</h3>
-              <p className="text-[15px] text-[#647185] leading-relaxed">
+              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Control Systems</h3>
+              <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Reliable and scalable control solutions to ensure safety, accuracy, and maximum performance.
               </p>
+              <ul className="space-y-2">
+                {['SCADA & PLC Integration', 'Remote Monitoring', 'System Reliability', 'Performance Optimization'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                    <CheckCircle2 size={14} className="text-[#4a6b22] shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl rounded-[24px] p-8 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] hover:-translate-y-2 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-[#f4f9ea] group-hover:bg-[#4a6b22] rounded-2xl flex items-center justify-center mb-8 text-[#517b27] group-hover:text-white transition-colors duration-300">
-                <BarChart2 size={32} strokeWidth={1.5} />
+            {/* Card 4 */}
+            <div className="bg-white rounded-3xl p-6 border border-[#e1ebd5] shadow-sm hover:shadow-[0_20px_40px_rgba(74,107,34,0.08)] transition-all hover:-translate-y-1">
+              <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
+                <BarChart2 size={20} />
               </div>
-              <h3 className="font-extrabold text-[#2b3a1a] mb-4 text-xl tracking-tight">Data & Analytics</h3>
-              <p className="text-[15px] text-[#647185] leading-relaxed">
+              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Data & Analytics</h3>
+              <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Harness the power of data to make informed decisions and drive continuous improvement.
               </p>
+              <ul className="space-y-2">
+                {['Real-time Dashboards', 'Advanced Analytics', 'Predictive Insights', 'Data-driven Decisions'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-[12px] text-[#2b3a1a] font-semibold">
+                    <CheckCircle2 size={14} className="text-[#4a6b22] shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className="flex justify-center">
-            <button className="bg-[#2b3a1a] hover:bg-[#3b591b] text-white px-10 py-4 rounded-full text-[13px] font-bold tracking-widest transition-all shadow-[0_8px_20px_rgba(43,58,26,0.2)] hover:shadow-[0_8px_25px_rgba(43,58,26,0.3)] hover:-translate-y-1">
-              EXPLORE FULL SERVICES
-            </button>
-          </div>
-        </div>
 
+
+          {/* Bottom Promise Bar (5 Items) */}
+          <div className="w-full bg-white rounded-2xl border border-[#e1ebd5] flex flex-col md:flex-row items-center divide-y md:divide-y-0 md:divide-x divide-gray-100 shadow-sm">
+            <div className="flex items-start md:items-center gap-3 p-4 xl:px-6 flex-1">
+              <Shield size={20} className="text-[#4a6b22] shrink-0 mt-1 md:mt-0" />
+              <div>
+                <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[12px]">Improved Efficiency</h5>
+                <p className="text-[10px] text-gray-500 font-medium">Automate. Optimize. Excel.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start md:items-center gap-3 p-4 xl:px-6 flex-1">
+              <IndianRupee size={20} className="text-[#4a6b22] shrink-0 mt-1 md:mt-0" />
+              <div>
+                <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[12px]">Cost Savings</h5>
+                <p className="text-[10px] text-gray-500 font-medium">Reduce costs, increase value.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start md:items-center gap-3 p-4 xl:px-6 flex-1">
+              <Leaf size={20} className="text-[#4a6b22] shrink-0 mt-1 md:mt-0" />
+              <div>
+                <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[12px]">Sustainable Future</h5>
+                <p className="text-[10px] text-gray-500 font-medium">Build a greener tomorrow.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start md:items-center gap-3 p-4 xl:px-6 flex-1">
+              <Clock size={20} className="text-[#4a6b22] shrink-0 mt-1 md:mt-0" />
+              <div>
+                <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[12px]">Real-time Monitoring</h5>
+                <p className="text-[10px] text-gray-500 font-medium">Live data, instant insights.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start md:items-center gap-3 p-4 xl:px-6 flex-1">
+              <Users size={20} className="text-[#4a6b22] shrink-0 mt-1 md:mt-0" />
+              <div>
+                <h5 className="font-bold text-[#2b3a1a] mb-0.5 text-[12px]">Scalable Solutions</h5>
+                <p className="text-[10px] text-gray-500 font-medium">Grow with confidence.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
 
       {/* --- SECTION 4: CONTACT US --- */}
-      <section id="contact" className="min-h-screen relative flex flex-col lg:flex-row items-center py-24 bg-transparent">
-        <div className="w-full lg:w-[45%] flex flex-col justify-center px-8 md:px-16 lg:px-24 xl:px-32 relative z-10">
-          <div className="mb-12">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-white/60 border border-[#e1ebd5] text-[#517b27] text-xs font-bold tracking-widest mb-6">
-               GET IN TOUCH
-            </div>
-            <h2 className="text-4xl md:text-[52px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-6">
-              Let's Connect
-            </h2>
-            <p className="text-[#5c6b4a] text-lg leading-relaxed max-w-md font-medium">
-              Have a question or need a solution?<br/> We're here to help. Reach out to us today.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-8">
-            <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/40 hover:bg-white/60 border border-white/50 transition-colors shadow-sm">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#eaf4d9] to-[#d9f0a3] rounded-xl flex items-center justify-center shrink-0 text-[#3b591b] shadow-inner">
-                <Phone size={24} strokeWidth={1.5} />
+      <section id="contact" className="min-h-screen relative flex flex-col items-center justify-center py-12 bg-gradient-to-b from-white to-[#f4f9ea]/40 px-4 md:px-8 lg:px-12 overflow-hidden">
+        <div className="w-full max-w-[1600px] flex flex-col lg:flex-row gap-12 xl:gap-20 relative z-10 mx-auto">
+          
+          {/* Left Column */}
+          <div className="w-full lg:w-[45%] flex flex-col justify-center">
+            <div className="mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-widest mb-3 shadow-sm">
+                 <Headset size={12} /> GET IN TOUCH
               </div>
-              <div>
-                <h4 className="font-extrabold text-[#2b3a1a] mb-1 text-lg">Phone</h4>
-                <p className="text-[#647185] font-medium">+91 9876543210</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/40 hover:bg-white/60 border border-white/50 transition-colors shadow-sm">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#eaf4d9] to-[#d9f0a3] rounded-xl flex items-center justify-center shrink-0 text-[#3b591b] shadow-inner">
-                <Mail size={24} strokeWidth={1.5} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-[#2b3a1a] mb-1 text-lg">Email</h4>
-                <p className="text-[#647185] font-medium">info@passary.com</p>
-              </div>
+              <h2 className="text-3xl md:text-[42px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-3">
+                Let's <span className="text-[#4a6b22]">Connect</span>
+              </h2>
+              <h3 className="text-xl md:text-xl font-bold text-[#2b3a1a] mb-2">
+                We're here to help!
+              </h3>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#4a6b22] to-transparent mb-3"></div>
+              <p className="text-[#5c6b4a] text-[15px] leading-relaxed max-w-md font-medium mb-4">
+                Have a question, need a solution, or want to learn more about our automation services? Our team is ready to assist you. Reach out to us today and let's build smarter solutions together.
+              </p>
             </div>
 
-            <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/40 hover:bg-white/60 border border-white/50 transition-colors shadow-sm">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#eaf4d9] to-[#d9f0a3] rounded-xl flex items-center justify-center shrink-0 text-[#3b591b] shadow-inner">
-                <MapPin size={24} strokeWidth={1.5} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-[#2b3a1a] mb-1 text-lg">Address</h4>
-                <p className="text-[#647185] font-medium leading-relaxed">
-                  123, Industrial Area, Raipur,<br/>
-                  Chhattisgarh, India - 492001
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full lg:w-[55%] relative flex items-center justify-center z-20 px-8 mt-16 lg:mt-0">
-          <div className="w-full max-w-[550px] bg-white/90 backdrop-blur-xl rounded-[32px] shadow-[0_20px_60px_rgba(43,58,26,0.08)] border border-white p-8 md:p-12 relative">
-            
-            {/* Form Fields */}
-            <form className="flex flex-col gap-6">
-              <div>
-                <label className="block text-[13px] font-extrabold text-[#2b3a1a] tracking-wide mb-2 pl-1">Your Name</label>
-                <input type="text" placeholder="John Doe" className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl px-5 py-4 outline-none focus:border-[#517b27] focus:ring-4 focus:ring-[#517b27]/10 transition-all text-[15px] font-medium placeholder-gray-400" />
-              </div>
-              <div>
-                <label className="block text-[13px] font-extrabold text-[#2b3a1a] tracking-wide mb-2 pl-1">Email Address</label>
-                <input type="email" placeholder="john@example.com" className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl px-5 py-4 outline-none focus:border-[#517b27] focus:ring-4 focus:ring-[#517b27]/10 transition-all text-[15px] font-medium placeholder-gray-400" />
-              </div>
-              <div>
-                <label className="block text-[13px] font-extrabold text-[#2b3a1a] tracking-wide mb-2 pl-1">Subject</label>
-                <input type="text" placeholder="How can we help?" className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl px-5 py-4 outline-none focus:border-[#517b27] focus:ring-4 focus:ring-[#517b27]/10 transition-all text-[15px] font-medium placeholder-gray-400" />
-              </div>
-              <div>
-                <label className="block text-[13px] font-extrabold text-[#2b3a1a] tracking-wide mb-2 pl-1">Message</label>
-                <textarea rows={4} placeholder="Type your message here..." className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl px-5 py-4 outline-none focus:border-[#517b27] focus:ring-4 focus:ring-[#517b27]/10 transition-all text-[15px] font-medium placeholder-gray-400 resize-none"></textarea>
+            {/* Contact Cards */}
+            <div className="flex flex-col gap-3 mb-6">
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#e1ebd5] shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-[#f4f9ea] rounded-xl flex items-center justify-center shrink-0 text-[#4a6b22] group-hover:bg-[#4a6b22] group-hover:text-white transition-colors">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-[#2b3a1a] text-[14px]">Phone</h4>
+                    <p className="text-[#4a6b22] font-bold text-[13px]">+91 98765 43210</p>
+                    <p className="text-gray-400 text-[10px] font-medium mt-0.5">Mon - Sat: 9:00 AM to 6:00 PM</p>
+                  </div>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#4a6b22] group-hover:bg-[#eaf4d9] transition-colors">
+                  <ChevronRight size={16} />
+                </div>
               </div>
               
-              <button type="button" className="w-full bg-[#4a6b22] hover:bg-[#3b591b] text-white py-5 rounded-xl text-[14px] font-bold tracking-widest transition-all shadow-[0_8px_20px_rgba(74,107,34,0.25)] hover:shadow-[0_8px_25px_rgba(74,107,34,0.4)] hover:-translate-y-1 mt-4">
-                SEND MESSAGE
-              </button>
-            </form>
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#e1ebd5] shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-[#f4f9ea] rounded-xl flex items-center justify-center shrink-0 text-[#4a6b22] group-hover:bg-[#4a6b22] group-hover:text-white transition-colors">
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-[#2b3a1a] text-[14px]">Email</h4>
+                    <p className="text-[#4a6b22] font-bold text-[13px]">info@passary.com</p>
+                    <p className="text-gray-400 text-[10px] font-medium mt-0.5">We reply within 24 hours</p>
+                  </div>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#4a6b22] group-hover:bg-[#eaf4d9] transition-colors">
+                  <ChevronRight size={16} />
+                </div>
+              </div>
 
-            {/* Placeholder for Paper Plane Illustration */}
-            <div className="absolute -right-20 -bottom-10 hidden xl:flex flex-col items-center">
-               <div className="w-40 h-40 bg-[#eaf4d9] rounded-full flex flex-col items-center justify-center border border-[#d9f0a3] text-[#517b27] border-dashed">
-                 <Send size={40} className="mb-2" />
-                 <span className="font-bold tracking-widest text-[10px] uppercase text-center px-4">Contact Illustration</span>
-               </div>
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#e1ebd5] shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-[#f4f9ea] rounded-xl flex items-center justify-center shrink-0 text-[#4a6b22] group-hover:bg-[#4a6b22] group-hover:text-white transition-colors">
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-[#2b3a1a] text-[14px]">Address</h4>
+                    <p className="text-[#2b3a1a] font-bold text-[12px] leading-snug max-w-[200px]">123, Industrial Area, Raipur, Chhattisgarh, India</p>
+                    <p className="text-[#4a6b22] text-[10px] font-semibold mt-1">Visit us at our office</p>
+                  </div>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#4a6b22] group-hover:bg-[#eaf4d9] transition-colors">
+                  <ChevronRight size={16} />
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom 4 items */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-[#f8fcf3] p-3 rounded-2xl border border-[#e1ebd5]/50">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-8 h-8 bg-[#eaf4d9] rounded-full flex items-center justify-center text-[#4a6b22] mb-1.5">
+                  <Users size={14} />
+                </div>
+                <h5 className="font-bold text-[#2b3a1a] text-[11px] mb-0.5">Expert Support</h5>
+                <p className="text-gray-500 text-[9px]">Get assistance from<br/>our experts</p>
+              </div>
+              <div className="flex flex-col items-center text-center border-l border-[#e1ebd5]/50">
+                <div className="w-8 h-8 bg-[#eaf4d9] rounded-full flex items-center justify-center text-[#4a6b22] mb-1.5">
+                  <Shield size={14} />
+                </div>
+                <h5 className="font-bold text-[#2b3a1a] text-[11px] mb-0.5">Quick Response</h5>
+                <p className="text-gray-500 text-[9px]">We respond within<br/>24 hours</p>
+              </div>
+              <div className="flex flex-col items-center text-center border-l border-[#e1ebd5]/50">
+                <div className="w-8 h-8 bg-[#eaf4d9] rounded-full flex items-center justify-center text-[#4a6b22] mb-1.5">
+                  <Box size={14} />
+                </div>
+                <h5 className="font-bold text-[#2b3a1a] text-[11px] mb-0.5">Reliable Solutions</h5>
+                <p className="text-gray-500 text-[9px]">Smart & scalable<br/>solutions for you</p>
+              </div>
+              <div className="flex flex-col items-center text-center border-l border-[#e1ebd5]/50">
+                <div className="w-8 h-8 bg-[#eaf4d9] rounded-full flex items-center justify-center text-[#4a6b22] mb-1.5">
+                  <Settings size={14} />
+                </div>
+                <h5 className="font-bold text-[#2b3a1a] text-[11px] mb-0.5">End-to-End Service</h5>
+                <p className="text-gray-500 text-[9px]">From consultation to<br/>implementation</p>
+              </div>
             </div>
           </div>
+
+          {/* Right Column - Form */}
+          <div className="w-full lg:w-[55%] relative flex items-center justify-center z-20">
+            <div className="w-full bg-white rounded-[32px] shadow-[0_20px_60px_rgba(43,58,26,0.06)] border border-[#e1ebd5] p-6 md:p-8 relative">
+              
+              {/* Form Header */}
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 bg-[#f4f9ea] rounded-xl flex items-center justify-center shrink-0 text-[#4a6b22]">
+                  <MessageSquare size={24} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-[#2b3a1a] tracking-tight mb-1">Send us a Message</h3>
+                  <p className="text-[#647185] text-[13px] font-medium">Fill out the form below and we'll get back to you.</p>
+                  <div className="w-8 h-0.5 bg-[#d9f0a3] mt-3"></div>
+                </div>
+              </div>
+
+              {/* Form Fields */}
+              <form className="flex flex-col gap-4">
+                <div>
+                  <label className="block text-[12px] font-extrabold text-[#2b3a1a] tracking-wide mb-1.5 pl-1">Your Name</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#4a6b22]">
+                      <User size={16} />
+                    </div>
+                    <input type="text" placeholder="John Doe" className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#517b27] focus:ring-2 focus:ring-[#517b27]/20 transition-all text-[13px] font-medium placeholder-gray-400" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[12px] font-extrabold text-[#2b3a1a] tracking-wide mb-1.5 pl-1">Email Address</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#4a6b22]">
+                      <Mail size={16} />
+                    </div>
+                    <input type="email" placeholder="john@example.com" className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#517b27] focus:ring-2 focus:ring-[#517b27]/20 transition-all text-[13px] font-medium placeholder-gray-400" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[12px] font-extrabold text-[#2b3a1a] tracking-wide mb-1.5 pl-1">Subject</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#4a6b22]">
+                      <FileText size={16} />
+                    </div>
+                    <input type="text" placeholder="How can we help?" className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#517b27] focus:ring-2 focus:ring-[#517b27]/20 transition-all text-[13px] font-medium placeholder-gray-400" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[12px] font-extrabold text-[#2b3a1a] tracking-wide mb-1.5 pl-1">Message</label>
+                  <div className="relative">
+                    <div className="absolute top-3.5 left-0 pl-4 flex items-start pointer-events-none text-[#4a6b22]">
+                      <PenLine size={16} />
+                    </div>
+                    <textarea rows={3} placeholder="Type your message here..." className="w-full bg-[#f8fcf3] border border-[#e1ebd5] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#517b27] focus:ring-2 focus:ring-[#517b27]/20 transition-all text-[13px] font-medium placeholder-gray-400 resize-none"></textarea>
+                  </div>
+                </div>
+                
+                <button type="button" className="w-full flex items-center justify-center gap-2 bg-[#2b3a1a] hover:bg-[#3b591b] text-white py-3.5 rounded-xl text-[13px] font-bold tracking-widest transition-all shadow-[0_8px_20px_rgba(43,58,26,0.2)] hover:shadow-[0_8px_25px_rgba(43,58,26,0.3)] hover:-translate-y-1 mt-1">
+                  SEND MESSAGE <Send size={16} />
+                </button>
+
+                <div className="flex items-center justify-center gap-2 mt-2">
+                  <Lock size={12} className="text-[#4a6b22]" />
+                  <p className="text-[11px] text-[#2b3a1a] font-semibold">Your information is safe with us. We never share your data.</p>
+                </div>
+              </form>
+
+              {/* Call Now Banner */}
+              <div className="mt-5 bg-[#f4f9ea] rounded-2xl p-4 flex items-center justify-between border border-[#e1ebd5]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4a6b22] shadow-sm shrink-0">
+                    <Headset size={20} />
+                  </div>
+                  <div>
+                    <h5 className="text-[12px] font-bold text-[#2b3a1a] mb-0.5">Need immediate help?</h5>
+                    <p className="text-[10px] text-gray-500 font-medium">Call us directly at <span className="text-[#4a6b22] font-bold">+91 98765 43210</span></p>
+                  </div>
+                </div>
+                <button className="flex items-center gap-2 bg-white border border-[#4a6b22] text-[#4a6b22] hover:bg-[#4a6b22] hover:text-white px-4 py-2 rounded-full text-[10px] font-bold transition-colors shadow-sm ml-2">
+                  <Phone size={12} /> CALL NOW
+                </button>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </section>
 
