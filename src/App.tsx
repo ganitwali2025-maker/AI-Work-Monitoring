@@ -982,8 +982,8 @@ export default function App() {
         </div>
 
 
-        {/* Pill-shaped Tabs */}
-        <div className="flex items-center gap-2 sm:gap-3 mb-8 px-4 sm:px-6 pt-2 pb-2 overflow-x-auto hide-scrollbar">
+        {/* Pill-shaped Tabs (Desktop Only) */}
+        <div className="hidden md:flex items-center gap-2 sm:gap-3 mb-8 px-4 sm:px-6 pt-2 pb-2 overflow-x-auto hide-scrollbar">
           <button
             onClick={() => {
               setActiveTab('reyo');
@@ -1270,7 +1270,7 @@ export default function App() {
                           setCurrentView(dept.view);
                         }
                       }}
-                      className="bg-white rounded-[20px] p-3 sm:p-4 border border-gray-100 shadow-sm flex flex-col items-start relative transition-all active:scale-95 cursor-pointer aspect-square max-h-[120px]"
+                      className="bg-white rounded-[20px] p-3 sm:p-4 border border-gray-100 shadow-sm flex flex-col justify-between items-start relative transition-all active:scale-95 cursor-pointer h-[120px]"
                     >
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${colorScheme}`}>
                         <Icon size={16} />
