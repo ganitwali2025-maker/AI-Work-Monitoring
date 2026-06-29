@@ -1242,6 +1242,21 @@ export default function App() {
               {filteredDepartments.length > 0 ? (
                 filteredDepartments.map((dept) => {
                   const Icon = dept.icon;
+                  const colorScheme = {
+                    crm: 'bg-purple-50 text-purple-600 border-purple-100',
+                    procurement: 'bg-amber-50 text-amber-600 border-amber-100',
+                    inventory: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                    logistics: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+                    production: 'bg-sky-50 text-sky-600 border-sky-100',
+                    finance: 'bg-teal-50 text-teal-600 border-teal-100',
+                    hr: 'bg-rose-50 text-rose-600 border-rose-100',
+                    director: 'bg-violet-50 text-violet-600 border-violet-100',
+                    'vendor-master': 'bg-blue-50 text-blue-600 border-blue-100',
+                    marketing: 'bg-pink-50 text-pink-600 border-pink-100',
+                    laboratory: 'bg-cyan-50 text-cyan-600 border-cyan-100',
+                    sales: 'bg-blue-50 text-blue-600 border-blue-100',
+                  }[dept.variant] || 'bg-gray-50 text-gray-600 border-gray-100';
+
                   return (
                     <div
                       key={`mobile-module-${dept.name}`}
@@ -1257,7 +1272,7 @@ export default function App() {
                       }}
                       className="bg-white rounded-[20px] p-3 sm:p-4 border border-gray-100 shadow-sm flex flex-col justify-between items-start relative transition-all active:scale-95 cursor-pointer h-[120px]"
                     >
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border border-emerald-100 bg-emerald-50 text-emerald-600">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${colorScheme}`}>
                         <Icon size={16} />
                       </div>
                       
@@ -1265,7 +1280,7 @@ export default function App() {
                         {dept.name}
                       </h4>
                       
-                      <div className="absolute bottom-2.5 right-2.5 text-[#ff5a1f]">
+                      <div className={`absolute bottom-2.5 right-2.5 ${colorScheme.split(' ')[1]}`}>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
                         </svg>
