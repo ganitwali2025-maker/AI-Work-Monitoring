@@ -231,25 +231,24 @@ export default function ERPModuleCard({
       </div>
 
       {/* Mobile View */}
-      <div className={`relative z-10 min-h-[72px] flex md:hidden items-center justify-between p-4 rounded-[15px] border border-gray-100/50 shadow-sm transition-all active:bg-gray-50 ${cardBg}`}>
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
-            <Icon size={20} />
-          </div>
-          <div className="overflow-hidden">
-            <div className="flex items-center gap-2">
-              <h4 className="text-[13px] font-bold text-gray-900 leading-snug truncate">{name}</h4>
-              {badge && (
-                <span className={`text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 border shadow-2xs shrink-0 ${badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
-                  {badge}
-                </span>
-              )}
-            </div>
-            <p className="text-[11px] text-gray-500 truncate mt-0.5">{desc || `Access ${name} module...`}</p>
-          </div>
+      <div className={`relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100/50 shadow-sm transition-all active:scale-95 ${cardBg}`}>
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+          <Icon size={16} />
         </div>
-        <div className={`pl-2 shrink-0 ${iconColor.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
-           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        
+        <div className="w-full">
+          <div className="flex items-start gap-1">
+            <h4 className="text-[10px] font-extrabold text-gray-900 leading-tight line-clamp-3 w-full pr-2 break-words text-left">{name}</h4>
+          </div>
+          {badge && (
+            <span className={`inline-block mt-1 text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 border shadow-2xs ${badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
+              {badge}
+            </span>
+          )}
+        </div>
+
+        <div className={`absolute bottom-2.5 right-2.5 ${iconColor.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
            </svg>
         </div>

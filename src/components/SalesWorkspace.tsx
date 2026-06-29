@@ -326,7 +326,7 @@ export default function SalesWorkspace({ onBack, initialMenu }: { onBack: () => 
         </section>
 
         {/* Modules 4-Column Responsive Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 px-1 md:px-0">
           {modules.map((mod) => (
             <ERPModuleCard 
               key={mod.name} 

@@ -159,7 +159,7 @@ export default function CostingWorkspace({ onBack, initialMenu }: { onBack: () =
         </section>
 
         {/* Modules Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 px-1 md:px-0">
           {modules.map(mod => (
             <ERPModuleCard key={mod.name} name={mod.name} icon={mod.icon} desc={`Access module functionalities for ${mod.name}...`} variant="finance"  onClick={() => setActiveModule(mod.name)} />
           ))}
