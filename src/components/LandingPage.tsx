@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, User, Leaf, Settings, Users, Activity, Zap, Shield, BarChart2, Phone, Mail, MapPin, Send, Home, CheckCircle2, Box, Database, Bot, PieChart, Brain, LayoutDashboard, RefreshCw, TrendingUp, Target, ArrowUpRight, IndianRupee, Clock, Headset, MessageSquare, Lock, FileText, PenLine, ChevronRight, Eye, Cloud, Factory } from 'lucide-react';
+import { Bell, User, Leaf, Settings, Users, Activity, Zap, Shield, BarChart2, Phone, Mail, MapPin, Send, Home, CheckCircle2, Box, Database, Bot, PieChart, Brain, LayoutDashboard, RefreshCw, TrendingUp, Target, ArrowUpRight, IndianRupee, Clock, Headset, MessageSquare, Lock, FileText, PenLine, ChevronRight, Eye, Cloud, Factory, ChevronDown } from 'lucide-react';
 
 interface LandingPageProps {
   onLoginSuccess: (role: string) => void;
@@ -13,10 +13,14 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
   const [loginId, setLoginId] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [showIdSuggestions, setShowIdSuggestions] = useState(false);
+
+  const validIds = ['marketing', 'crm', 'sales', 'customer', 'purchase', 'vendor', 'inventory', 'lab', 'dispatch', 'production', 'finance', 'hr', 'costing', 'director', 'admin'];
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginId.toLowerCase() === 'admin' && loginPassword === '1234') {
+    const id = loginId.toLowerCase();
+    if (validIds.includes(id) && loginPassword === '1234') {
       setIsAuthenticating(true);
       let progress = 0;
       const interval = setInterval(() => {
@@ -26,7 +30,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
           setLoadingProgress(100);
           clearInterval(interval);
           setTimeout(() => {
-            onLoginSuccess('admin');
+            onLoginSuccess(id);
           }, 400);
         } else {
           setLoadingProgress(progress);
@@ -180,20 +184,50 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
               </p>
 
               <form onSubmit={handleLoginSubmit} className="flex flex-col gap-5">
-                <div>
-                  <label className="block text-[13px] font-extrabold text-[#2b3a1a] mb-2">Employee ID / Email</label>
+                <div className="relative">
+                  <label className="block text-[13px] font-extrabold text-[#2b3a1a] mb-2">Employee ID</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#4a6b22]">
                       <User size={18} />
                     </div>
                     <input 
                       type="text" 
                       value={loginId}
-                      onChange={(e) => setLoginId(e.target.value)}
-                      placeholder="Enter your Employee ID or Email" 
-                      className="w-full bg-white border border-[#e1ebd5] rounded-xl pl-12 pr-4 py-3.5 outline-none focus:border-[#4a6b22] focus:ring-2 focus:ring-[#4a6b22]/20 transition-all text-[14px] placeholder-gray-400"
+                      onChange={(e) => {
+                        setLoginId(e.target.value);
+                        setShowIdSuggestions(true);
+                      }}
+                      onBlur={() => setTimeout(() => setShowIdSuggestions(false), 200)}
+                      placeholder="Enter your Employee ID" 
+                      className="w-full bg-white border border-[#4a6b22] rounded-xl pl-12 pr-10 py-3.5 outline-none focus:border-[#4a6b22] focus:ring-2 focus:ring-[#4a6b22]/20 transition-all text-[14px] placeholder-gray-400 text-gray-900 font-medium"
                     />
+                    <button type="button" onClick={() => setShowIdSuggestions(!showIdSuggestions)} className="absolute inset-y-0 right-0 pr-4 flex items-center text-[#4a6b22] hover:text-gray-900">
+                       <ChevronDown size={18} />
+                    </button>
                   </div>
+
+                  {showIdSuggestions && (
+                    <div className="absolute z-50 mt-1 w-[90%] left-[5%] bg-white border border-gray-100 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] max-h-[300px] overflow-y-auto overflow-x-hidden p-2 hide-scrollbar">
+                      <div className="text-[10px] font-bold text-gray-400 tracking-widest px-3 py-2 uppercase mb-1">Suggested IDs</div>
+                      {['admin', 'marketing', 'crm', 'sales', 'customer', 'purchase', 'vendor', 'inventory', 'lab', 'dispatch', 'production', 'finance', 'hr', 'costing', 'director']
+                        .filter(id => id.includes(loginId.toLowerCase()))
+                        .map((id) => (
+                        <button
+                          key={id}
+                          type="button"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => {
+                            setLoginId(id);
+                            setShowIdSuggestions(false);
+                          }}
+                          className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-50 rounded-lg text-left transition-colors group"
+                        >
+                          <User size={15} className="text-[#4a6b22] group-hover:scale-110 transition-transform" />
+                          <span className="text-[13px] font-semibold text-gray-700 group-hover:text-[#4a6b22] transition-colors">{id}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div>

@@ -18,6 +18,7 @@ import {
   LayoutDashboard,
   Search,
   HelpCircle,
+  Home,
   Sparkles,
   Settings,
   ChevronDown,
@@ -69,7 +70,9 @@ import {
   X,
   PanelLeft,
   Bot,
-  ClipboardCheck
+  ClipboardCheck,
+  Shield,
+  Lightbulb
 } from 'lucide-react';
 import CrmWorkspace from './components/CrmWorkspace';
 import SalesWorkspace from './components/SalesWorkspace';
@@ -543,6 +546,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<'reyo' | 'modules' | 'agents' | 'approvals' | 'reports' | 'my-team'>('modules');
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showCredentialsModal, setShowCredentialsModal] = useState(false);
 
   const [formattedDate, setFormattedDate] = useState('');
 
@@ -749,67 +753,84 @@ export default function App() {
       <header className="bg-white text-gray-900 border-b border-gray-200/80 shadow-xs sticky top-0 z-30 select-none">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-4">
-            
-            {/* Logo Area & Left Tagline */}
-            <div className="flex items-center gap-2">
-
-              <div 
-                className="flex items-center gap-3.5 shrink-0 cursor-pointer"
-                onClick={() => {
-                setShouldAnimate(false);
-                setCurrentView('dashboard');
-                setActiveTab('modules');
-              }}
-            >
-              {/* Graphic Logo (Passary Refractories) */}
-              <div className="flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
-                <svg className="w-8 h-8" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#8a9a5b" />
-                </svg>
-              </div>
-
-              {/* Tagline text: updated size, bold, and split colors */}
-              <span className="font-extrabold text-xl sm:text-2xl tracking-tight leading-normal pb-1 pt-1 ml-2">
-                <span className="text-[#8a9a5b]">Passary Refractories</span>
-                <span className="text-gray-400 mx-2">–</span>
-                <span className="text-[#f05627]">Forging Energy-Efficient Solutions</span>
-              </span>
-            </div>
-            </div>            {/* Right Side Tagline, Notifications, Settings & Logout */}
-            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-              {/* Notification & Settings */}
-
-              {/* Notification & Settings */}
-              <div className="flex items-center gap-3">
-                <button className="relative p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]">
-                  <Bell size={18} strokeWidth={2.2} />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-[#F2642A] rounded-full border border-white animate-pulse"></span>
-                </button>
-                
-                <button 
-                  onClick={() => setCurrentView('director')}
-                  className="p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
-                  title="Settings"
+              <>
+                {/* Logo Area & Left Tagline */}
+                <div className="flex items-center gap-2">
+                  <div 
+                    className="flex items-center gap-3.5 shrink-0 cursor-pointer"
+                    onClick={() => {
+                    setShouldAnimate(false);
+                    setCurrentView('dashboard');
+                    setActiveTab('modules');
+                  }}
                 >
-                  <Settings size={18} strokeWidth={2.2} />
-                </button>
-              </div>
-
-              <div className="h-6 border-l border-gray-200" />
-
-              {/* Logout Button */}
-              <button 
-                onClick={() => {
-                  localStorage.removeItem('isAuthenticated');
-                  setCurrentView('landing');
-                }}
-                className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)] cursor-pointer group tracking-wider"
-              >
-                Logout
-                <svg className="w-4 h-4 text-white/90 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-              </button>
-            </div>
-
+                  {/* Graphic Logo (Passary Refractories) */}
+                  <div className="flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
+                    <svg className="w-8 h-8" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#8a9a5b" />
+                    </svg>
+                  </div>
+    
+                  {/* Tagline text: updated size, bold, and split colors */}
+                  <div className="flex items-center justify-center pb-1 pt-1 ml-2">
+                    <span className="font-extrabold text-xl sm:text-2xl tracking-tight leading-normal text-[#8a9a5b]">Passary Refractories</span>
+                    <span className="text-gray-400 mx-2 font-extrabold text-xl sm:text-2xl">–</span>
+                    <span className="font-extrabold text-[#f05627] text-xl sm:text-2xl tracking-tight leading-normal">Forging Energy-Efficient Solutions</span>
+                  </div>
+                </div>
+                </div>
+                
+                {/* Right Side Tagline, Notifications, Settings & Logout */}
+                <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+                  {/* Notification & Settings */}
+    
+                  {/* Notification & Settings */}
+                  <div className="flex items-center gap-3">
+                    <button className="relative p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]">
+                      <Bell size={18} strokeWidth={2.2} />
+                      <span className="absolute top-1 right-1 w-2 h-2 bg-[#F2642A] rounded-full border border-white animate-pulse"></span>
+                    </button>
+                    
+                    <button 
+                      onClick={() => setShowCredentialsModal(true)}
+                      className="p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
+                      title="Credentials Guide"
+                    >
+                      <Shield size={18} strokeWidth={2.2} />
+                    </button>
+                    
+                    <button 
+                      onClick={() => setCurrentView('settings')}
+                      className="p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
+                      title="Settings"
+                    >
+                      <Settings size={18} strokeWidth={2.2} />
+                    </button>
+                  </div>
+    
+                  <div className="h-6 border-l border-gray-200 mx-1" />
+                  {currentView !== 'dashboard' ? (
+                    <button 
+                      onClick={() => setCurrentView('dashboard')}
+                      className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold bg-[#4a6b22] hover:bg-[#3b5936] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(74,107,34,0.3)] hover:shadow-[0_6px_16px_rgba(74,107,34,0.4)] cursor-pointer group tracking-wider"
+                    >
+                      <Home size={16} className="text-white/90 group-hover:-translate-y-0.5 transition-transform" />
+                      Back to Home
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => {
+                        localStorage.removeItem('isAuthenticated');
+                        setCurrentView('landing');
+                      }}
+                      className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)] cursor-pointer group tracking-wider"
+                    >
+                      Logout
+                      <svg className="w-4 h-4 text-white/90 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                  )}
+                </div>
+              </>
           </div>
         </div>
       </header>
@@ -817,10 +838,9 @@ export default function App() {
       {/* Body Container */}
       <div className="flex flex-1 overflow-hidden relative">
 
-
         {/* Main Content Pane */}
         <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30">
-        <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-4 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-4 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           
           {/* Background Container */}
           <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#eef6e6] via-[#f7ebd9] to-[#ffdbb8]">
@@ -1099,6 +1119,88 @@ export default function App() {
         )}
         </main>
       </div>
+
+      {/* Credentials Guide Modal */}
+      {showCredentialsModal && (
+        <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+          <div className="bg-[#fcfdfa] rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="px-8 py-6 flex items-start justify-between border-b border-gray-100 bg-white">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f4f9ea] text-[#4a6b22] rounded-full text-[11px] font-extrabold tracking-widest mb-3">
+                  <User size={14} /> LOGIN CREDENTIALS GUIDE
+                </div>
+                <p className="text-gray-600 text-[13px] font-medium">Use the following Employee ID and Password to access different modules.</p>
+              </div>
+              <button 
+                onClick={() => setShowCredentialsModal(false)}
+                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content Table */}
+            <div className="overflow-y-auto hide-scrollbar p-6 bg-[#fcfdfa]">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-gray-100/50 text-[11px] text-[#4a6b22] font-bold text-left uppercase tracking-wider">
+                    <th className="pb-3 pl-2">Module</th>
+                    <th className="pb-3 pl-4">Employee ID</th>
+                    <th className="pb-3 text-center">Password</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100/50">
+                  {[
+                    { name: 'Marketing Performance Center', id: 'marketing', icon: Megaphone, color: 'text-pink-500', bg: 'bg-pink-50' },
+                    { name: 'CRM & Customer Management', id: 'crm', icon: Users, color: 'text-purple-500', bg: 'bg-purple-50' },
+                    { name: 'Sales & Revenue Management', id: 'sales', icon: ShoppingCart, color: 'text-green-500', bg: 'bg-green-50' },
+                    { name: 'Customer Master', id: 'customer', icon: UserPlus, color: 'text-fuchsia-500', bg: 'bg-fuchsia-50' },
+                    { name: 'Purchase & Procurement', id: 'purchase', icon: ClipboardList, color: 'text-orange-500', bg: 'bg-orange-50' },
+                    { name: 'Vendor Master', id: 'vendor', icon: Building2, color: 'text-blue-500', bg: 'bg-blue-50' },
+                    { name: 'Inventory Management', id: 'inventory', icon: Warehouse, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+                    { name: 'Laboratory & LIMS', id: 'lab', icon: FlaskConical, color: 'text-cyan-500', bg: 'bg-cyan-50' },
+                    { name: 'Logistics & Dispatch Management', id: 'dispatch', icon: Truck, color: 'text-purple-600', bg: 'bg-purple-100' },
+                    { name: 'Production & Quality Management', id: 'production', icon: Factory, color: 'text-blue-600', bg: 'bg-blue-100' },
+                    { name: 'Finance & Accounting Management', id: 'finance', icon: Landmark, color: 'text-teal-500', bg: 'bg-teal-50' },
+                    { name: 'HR & Administration', id: 'hr', icon: Briefcase, color: 'text-red-500', bg: 'bg-red-50' },
+                    { name: 'Costing & Profitability Management', id: 'costing', icon: FileText, color: 'text-emerald-600', bg: 'bg-emerald-100' },
+                    { name: 'Director Control Center', id: 'director', icon: LayoutGrid, color: 'text-purple-500', bg: 'bg-purple-50' },
+                    { name: 'System Administrator', id: 'admin', icon: Shield, color: 'text-[#4a6b22]', bg: 'bg-[#f4f9ea]' }
+                  ].map((row, index) => (
+                    <tr key={index} className="hover:bg-white transition-colors">
+                      <td className="py-2.5 px-2 flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-lg ${row.bg} flex items-center justify-center ${row.color}`}>
+                          <row.icon size={16} />
+                        </div>
+                        <span className="font-bold text-gray-700 text-[12px]">{row.name}</span>
+                      </td>
+                      <td className="py-2.5 pl-4">
+                        <span className="px-2.5 py-1 bg-[#f4f9ea] text-[#4a6b22] font-extrabold rounded-md text-[11px] tracking-wide">{row.id}</span>
+                      </td>
+                      <td className="py-2.5 text-center">
+                        <span className="px-2.5 py-1 bg-white border border-gray-100 text-gray-500 font-extrabold rounded-md text-[11px] shadow-sm">1234</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Footer */}
+            <div className="p-6 pt-0 bg-[#fcfdfa]">
+              <div className="w-full px-4 py-3 bg-[#f4f9ea] rounded-xl flex items-center gap-3 text-[#4a6b22]">
+                <Lightbulb size={18} />
+                <div className="font-medium text-[13px]">
+                  <span className="font-extrabold mr-2 text-black">Note:</span> 
+                  Password for all accounts is <span className="px-2.5 py-0.5 bg-[#e1ecd0] rounded font-bold text-black ml-1">1234</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
