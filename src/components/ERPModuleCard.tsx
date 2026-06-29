@@ -234,16 +234,9 @@ export default function ERPModuleCard({
       </div>
 
       {/* Mobile View */}
-      <div className={`relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100/50 shadow-sm transition-all active:scale-95 ${cardBg}`}>
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+      <div className="relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100 shadow-sm transition-all active:scale-95 bg-white">
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border border-emerald-100 bg-emerald-50 text-emerald-600">
           <Icon size={16} />
-        </div>
-        
-        {/* Decorative Background Graphic (No Animation) */}
-        <div className={`absolute top-2.5 right-2.5 pointer-events-none opacity-[0.12] overflow-visible ${iconColor.split(' ')[0]}`}>
-          <Icon size={42} />
-          <Sparkles size={14} className="absolute -top-1.5 -right-2.5 opacity-60" />
-          <div className="absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-50 bg-current" />
         </div>
         
         <div className="w-full">
@@ -257,7 +250,7 @@ export default function ERPModuleCard({
           )}
         </div>
 
-        <div className={`absolute bottom-2.5 right-2.5 ${iconColor.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+        <div className="absolute bottom-2.5 right-2.5 text-[#ff5a1f]">
            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
            </svg>
