@@ -23,6 +23,7 @@ import {
 import Layout from './Layout';
 import ERPModuleCard from './ERPModuleCard';
 import GenericDataSheet from './GenericDataSheet';
+import KPICard, { KPICardProps } from './KPICard';
 
 export default function MarketingWorkspace({ onBack, initialMenu, formattedDate, formattedTime }: { onBack: () => void, initialMenu?: string, formattedDate?: string, formattedTime?: string }) {
   const [activeModule, setActiveModule] = useState<string | null>(initialMenu || null);
@@ -42,78 +43,106 @@ export default function MarketingWorkspace({ onBack, initialMenu, formattedDate,
     { name: 'Settings', icon: <Settings size={20} />, onClick: () => setActiveModule('Settings') }
   ];
 
-  const kpis = [
+  const kpis: KPICardProps[] = [
     { 
       title: "TOTAL PARTIES GENERATED", 
       value: "142", 
-      trend: "↑ 12.5% vs last month", 
+      trend: "12.5% vs last month", 
+      trendDirection: "up",
       icon: Users, 
-      bgColor: "bg-blue-100/70",
-      iconColor: "text-blue-700"
+      colorTheme: "purple",
+      status: "Pending",
+      progress: 40
     },
     { 
       title: "NEW LEADS GENERATED", 
       value: "856", 
-      trend: "↑ 24.3% vs last month", 
+      trend: "24.3% vs last month",
+      trendDirection: "up",
       icon: Target, 
-      bgColor: "bg-emerald-100/70",
-      iconColor: "text-emerald-700"
+      colorTheme: "emerald",
+      status: "Active",
+      progress: 30
     },
     { 
       title: "ORDERS GENERATED", 
       value: "89", 
-      trend: "↑ 8.1% vs last month", 
+      trend: "8.1% vs last month", 
+      trendDirection: "up",
       icon: ShoppingCart, 
-      bgColor: "bg-purple-100/70",
-      iconColor: "text-purple-700"
+      colorTheme: "pink",
+      status: "Pending",
+      progress: 50
     },
     { 
       title: "BUSINESS GENERATED", 
       value: "₹45.2L", 
-      trend: "↑ 15.2% vs last month", 
+      trend: "15.2% vs last month", 
+      trendDirection: "up",
       icon: TrendingUp, 
-      bgColor: "bg-amber-100/70",
-      iconColor: "text-amber-700"
+      colorTheme: "orange",
+      status: "In Progress",
+      progress: 60
     },
     { 
       title: "CONVERSION RATE", 
       value: "10.4%", 
-      trend: "↑ 1.2% vs last month", 
+      trend: "1.2% vs last month", 
+      trendDirection: "up",
       icon: Percent, 
-      bgColor: "bg-emerald-100/70",
-      iconColor: "text-emerald-700"
+      colorTheme: "emerald",
+      status: "Active",
+      progress: 25
     },
     { 
       title: "ACTIVE CAMPAIGNS", 
       value: "12", 
       trend: "Running smooth", 
+      trendDirection: "neutral",
       icon: Megaphone, 
-      bgColor: "bg-indigo-100/70",
-      iconColor: "text-black"
+      colorTheme: "blue",
+      status: "Active",
+      progress: 75
     },
     { 
       title: "TOP MARKETING EXEC", 
       value: "Rahul Sharma", 
       trend: "34 Orders Closed", 
+      trendDirection: "neutral",
       icon: Award, 
-      bgColor: "bg-rose-100/70",
-      iconColor: "text-rose-700"
+      colorTheme: "rose",
+      status: "Top Performer",
+      progress: 85
     },
     { 
       title: "FOLLOW-UP SUCCESS", 
       value: "68%", 
-      trend: "↑ 5.4% vs last month", 
+      trend: "5.4% vs last month", 
+      trendDirection: "up",
       icon: ThumbsUp, 
-      bgColor: "bg-teal-100/70",
-      iconColor: "text-teal-700"
+      colorTheme: "cyan",
+      status: "Active",
+      progress: 68
     },
     { 
       title: "LOST OPPORTUNITIES", 
       value: "45", 
-      trend: "↓ 2.1% vs last month", 
+      trend: "2.1% vs last month", 
+      trendDirection: "down",
       icon: XCircle, 
-      bgColor: "bg-red-100/70",
-      iconColor: "text-red-700"
+      colorTheme: "red",
+      status: "Attention",
+      progress: 15
+    },
+    {
+      title: "MONTHLY SCORE",
+      value: "80%",
+      trend: "Excellent Performance",
+      trendDirection: "neutral",
+      icon: Award,
+      colorTheme: "purple",
+      status: "Excellent",
+      progress: 80
     }
   ];
 
@@ -159,52 +188,10 @@ export default function MarketingWorkspace({ onBack, initialMenu, formattedDate,
         </header>
 
         {/* KPI Cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8 font-serif">
-          {kpis.map((kpi) => {
-            const KpiIcon = kpi.icon;
-            return (
-              <div 
-                key={kpi.title} 
-                className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start transition-all hover:shadow-md duration-300 relative overflow-hidden"
-              >
-                <div className="space-y-1">
-                  <p className="text-xs text-black font-black uppercase tracking-widest">
-                    {kpi.title}
-                  </p>
-                  <p className="text-2xl font-black text-gray-900 leading-none pt-1.5">
-                    {kpi.value}
-                  </p>
-                  <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 pt-1">
-                    <span>{kpi.trend}</span>
-                  </div>
-                </div>
-
-                <div className={`p-2 rounded-lg ${kpi.bgColor} flex items-center justify-center shrink-0 shadow-xs ${kpi.iconColor}`}>
-                  <KpiIcon size={18} />
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Monthly Performance Score (Circular progress meter) */}
-          <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-center items-center transition-all hover:shadow-md duration-300 relative overflow-hidden">
-             <p className="text-xs text-black font-black uppercase tracking-widest mb-2 w-full text-left">
-                MONTHLY SCORE
-             </p>
-             <div className="relative w-16 h-16 flex justify-center items-center">
-                <svg className="w-full h-full transform -rotate-90">
-                  <circle cx="32" cy="32" r="28" fill="none" className="stroke-gray-100" strokeWidth="6"></circle>
-                  <circle cx="32" cy="32" r="28" fill="none" className="stroke-emerald-500" strokeWidth="6" strokeDasharray="175" strokeDashoffset="35" strokeLinecap="round"></circle>
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                   <span className="text-lg font-bold text-gray-900">80%</span>
-                </div>
-             </div>
-             <div className="text-[10px] font-semibold text-emerald-600 mt-2">
-               Excellent Performance
-             </div>
-          </div>
-
+        <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-8">
+          {kpis.map((kpi, index) => (
+            <KPICard key={index} {...kpi} />
+          ))}
         </section>
 
         {/* Modules Grid */}
