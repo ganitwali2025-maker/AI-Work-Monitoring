@@ -930,12 +930,12 @@ export default function App() {
               </span>
             </div>
 
-            {/* Banner Search & Quick Controls */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
+            {/* Banner Search & Quick Controls (Desktop Only) */}
+            <div className="hidden md:flex flex-col sm:flex-row items-center gap-3 w-full max-w-md mt-4">
               {/* Elegant Search Bar */}
               <div className="relative w-full sm:flex-1">
                 <input 
-                  id="module-search"
+                  id="module-search-desktop"
                   type="text"
                   placeholder="Search modules..."
                   value={searchQuery}
@@ -954,14 +954,32 @@ export default function App() {
           </div>
           
           {/* Right side illustration */}
-          <div className="relative z-10 hidden md:flex w-full md:w-[35%] justify-end pointer-events-none mix-blend-darken">
+          <div className="z-10 w-full md:w-[35%] flex justify-end pointer-events-none mix-blend-darken absolute md:relative right-0 bottom-0 md:bottom-auto md:right-auto opacity-90 md:opacity-100">
             <img 
               src="/dashboard-illustration-5.png" 
               alt="Working illustration" 
-              className="max-w-[180px] lg:max-w-[220px] object-contain animate-float-slow filter brightness-[1.02] contrast-[1.05]" 
+              className="w-[140px] md:max-w-[180px] lg:max-w-[220px] object-contain animate-float-slow filter brightness-[1.02] contrast-[1.05]" 
             />
           </div>
         </header>
+
+        {/* Mobile Search Bar (Outside Banner) */}
+        <div className="flex md:hidden items-center gap-3 w-full mb-6 px-1">
+          <div className="relative flex-1">
+            <input 
+              id="module-search-mobile"
+              type="text"
+              placeholder="Search modules..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 text-[13px] font-semibold bg-white border border-gray-100 text-gray-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#7C9C54]/30 transition-all placeholder:text-gray-400 font-sans shadow-sm"
+            />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} strokeWidth={2} />
+          </div>
+          <button className="w-12 h-12 shrink-0 bg-white border border-gray-100 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm active:bg-gray-50 transition-colors">
+            <HelpCircle size={20} className="text-gray-600" strokeWidth={2} />
+          </button>
+        </div>
 
 
         {/* Pill-shaped Tabs */}
@@ -1219,8 +1237,8 @@ export default function App() {
               )}
             </div>
 
-            {/* Mobile View: Stacked single-row cards */}
-            <div className="flex flex-col gap-3 md:hidden">
+            {/* Mobile View: 3-column grid cards (Matching screenshot) */}
+            <div className="grid grid-cols-3 gap-3 md:hidden px-1">
               {filteredDepartments.length > 0 ? (
                 filteredDepartments.map((dept) => {
                   const Icon = dept.icon;
@@ -1252,26 +1270,18 @@ export default function App() {
                           setCurrentView(dept.view);
                         }
                       }}
-                      className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 shadow-sm active:bg-gray-100 transition-all cursor-pointer min-h-[72px]"
+                      className="bg-white rounded-[20px] p-3 sm:p-4 border border-gray-100 shadow-sm flex flex-col items-start relative transition-all active:scale-95 cursor-pointer aspect-square max-h-[120px]"
                     >
-                      <div className="flex items-center gap-3 overflow-hidden">
-                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${colorScheme}`}>
-                          <Icon size={20} />
-                        </div>
-                        <div className="overflow-hidden">
-                          <div className="flex items-center gap-2">
-                            <h4 className="text-[13px] font-bold text-gray-900 leading-snug truncate">{dept.name}</h4>
-                            {dept.badge && (
-                              <span className={`text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 border shadow-2xs shrink-0 ${dept.badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
-                                {dept.badge}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-gray-500 truncate mt-0.5">{dept.desc || `Access ${dept.name} module...`}</p>
-                        </div>
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${colorScheme}`}>
+                        <Icon size={16} />
                       </div>
-                      <div className="text-gray-400 pl-2 shrink-0">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      
+                      <h4 className="text-[10px] font-extrabold text-gray-900 leading-tight line-clamp-3 w-full pr-2 break-words text-left">
+                        {dept.name}
+                      </h4>
+                      
+                      <div className="absolute bottom-2.5 right-2.5 text-gray-400">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
                         </svg>
                       </div>
