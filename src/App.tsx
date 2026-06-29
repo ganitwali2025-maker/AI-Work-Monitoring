@@ -77,6 +77,7 @@ import {
 import CrmWorkspace from './components/CrmWorkspace';
 import SalesWorkspace from './components/SalesWorkspace';
 import CustomerMasterWorkspace from './components/CustomerMasterWorkspace';
+import SettingsWorkspace from './components/SettingsWorkspace';
 import ProcurementWorkspace from './components/ProcurementWorkspace';
 import VendorMasterWorkspace from './components/VendorMasterWorkspace';
 import InventoryWorkspace from './components/InventoryWorkspace';
@@ -540,36 +541,62 @@ const departments = [
 ];
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState('admin');
+  const [currentView, setCurrentView] = useState(() => {
+    return localStorage.getItem('isAuthenticated') === 'true' ? 'dashboard' : 'landing';
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('isAuthenticated') === 'true';
+  });
+  const [userRole, setUserRole] = useState(() => {
+    return localStorage.getItem('userRole') || 'admin';
+  });
   const [activeTab, setActiveTab] = useState<'reyo' | 'modules' | 'agents' | 'approvals' | 'reports' | 'my-team'>('modules');
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showCredentialsModal, setShowCredentialsModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [formattedDate, setFormattedDate] = useState('');
+  const [formattedTime, setFormattedTime] = useState('');
 
   useEffect(() => {
-    const now = new Date();
-    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric', weekday: 'long' };
-    const dateStr = now.toLocaleDateString('en-GB', options); // e.g. "Wednesday, 17 Jun 2026"
-    setFormattedDate(dateStr);
+    const updateDateTime = () => {
+      const now = new Date();
+      
+      const dateOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+      setFormattedDate(now.toLocaleDateString('en-GB', dateOptions));
+      
+      const dayOptions: Intl.DateTimeFormatOptions = { weekday: 'long' };
+      const timeOptions: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+      const dayStr = now.toLocaleDateString('en-US', dayOptions);
+      const timeStr = now.toLocaleTimeString('en-US', timeOptions);
+      setFormattedTime(`${dayStr}, ${timeStr}`);
+    };
+
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   const renderContent = () => {
     const [mainView, subView] = currentView.split(':');
 
+    if (mainView === 'settings') {
+      return <SettingsWorkspace onBack={() => setCurrentView('dashboard')} />;
+    }
+
     if (mainView === 'crm') {
-      return <CrmWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView || 'CRM Dashboard'} />;
+      return <CrmWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView || 'CRM Dashboard'} formattedDate={formattedDate} formattedTime={formattedTime} />;
     }
     if (mainView === 'marketing') {
-      return <MarketingWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
+      return <MarketingWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} formattedDate={formattedDate} formattedTime={formattedTime} />;
     }
     if (currentView === 'crm-agent') {
       return (
         <CrmAiAgentWorkspace 
           onBack={() => setCurrentView('dashboard')} 
+          formattedDate={formattedDate}
+          formattedTime={formattedTime}
           onOpenAiAgent={(agentId) => {
             let nextView = 'crm-ai';
             if (agentId === 'autopsy') nextView = 'autopsy-engine';
@@ -647,10 +674,10 @@ export default function App() {
       return <CustomerMasterWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
     }
     if (mainView === 'procurement') {
-      return <ProcurementWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
+      return <ProcurementWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} formattedDate={formattedDate} formattedTime={formattedTime} />;
     }
     if (mainView === 'vendor-master') {
-      return <VendorMasterWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
+      return <VendorMasterWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} formattedDate={formattedDate} formattedTime={formattedTime} />;
     }
     if (mainView === 'inventory') {
       return <InventoryWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
@@ -668,7 +695,7 @@ export default function App() {
       return <HrWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
     }
     if (mainView === 'laboratory') {
-      return <LaboratoryWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
+      return <LaboratoryWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} formattedDate={formattedDate} formattedTime={formattedTime} />;
     }
     if (mainView === 'costing') {
       return <CostingWorkspace onBack={() => setCurrentView('dashboard')} initialMenu={subView} />;
@@ -691,6 +718,8 @@ export default function App() {
 
   if (currentView === 'landing' || !isAuthenticated) {
     return <LandingPage onLoginSuccess={(role) => {
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userRole', role);
       setUserRole(role);
       setIsAuthenticated(true);
       setCurrentView('dashboard');
@@ -755,78 +784,91 @@ export default function App() {
           <div className="flex items-center justify-between h-16 gap-4">
               <>
                 {/* Logo Area & Left Tagline */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 max-w-[70%] overflow-hidden">
+                  {/* Hamburger menu trigger for mobile */}
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="p-2 -ml-2 rounded-lg text-slate-600 hover:text-slate-800 hover:bg-slate-100 md:hidden cursor-pointer shrink-0"
+                  >
+                    <Menu size={20} />
+                  </button>
+
                   <div 
-                    className="flex items-center gap-3.5 shrink-0 cursor-pointer"
+                    className="flex items-center gap-2 sm:gap-3.5 shrink-0 cursor-pointer"
                     onClick={() => {
-                    setShouldAnimate(false);
-                    setCurrentView('dashboard');
-                    setActiveTab('modules');
-                  }}
-                >
-                  {/* Graphic Logo (Passary Refractories) */}
-                  <div className="flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
-                    <svg className="w-8 h-8" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#8a9a5b" />
-                    </svg>
+                      setShouldAnimate(false);
+                      setCurrentView('dashboard');
+                      setActiveTab('modules');
+                    }}
+                  >
+                    {/* Graphic Logo (Passary Refractories) */}
+                    <div className="flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all duration-200">
+                      <svg className="w-8 h-8" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#8a9a5b" />
+                      </svg>
+                    </div>
+      
+                    {/* Desktop Tagline text: updated size, bold, and split colors */}
+                    <div className="hidden md:flex items-center justify-center pb-1 pt-1 ml-2">
+                      <span className="font-extrabold text-xl sm:text-2xl tracking-tight leading-normal text-[#8a9a5b]">Passary Refractories</span>
+                      <span className="text-gray-400 mx-2 font-extrabold text-xl sm:text-2xl">–</span>
+                      <span className="font-extrabold text-[#f05627] text-xl sm:text-2xl tracking-tight leading-normal">Forging Energy-Efficient Solutions</span>
+                    </div>
+
+                    {/* Mobile wrapped branding tagline: prevents name or tagline from ever being cut */}
+                    <div className="flex flex-col justify-center pb-1 pt-1 ml-2 md:hidden overflow-hidden">
+                      <span className="font-extrabold text-xs sm:text-sm tracking-tight leading-none text-[#8a9a5b] truncate">Passary Refractories</span>
+                      <span className="font-bold text-[8px] text-[#f05627] tracking-tight leading-tight mt-0.5 truncate">Forging Energy-Efficient Solutions</span>
+                    </div>
                   </div>
-    
-                  {/* Tagline text: updated size, bold, and split colors */}
-                  <div className="flex items-center justify-center pb-1 pt-1 ml-2">
-                    <span className="font-extrabold text-xl sm:text-2xl tracking-tight leading-normal text-[#8a9a5b]">Passary Refractories</span>
-                    <span className="text-gray-400 mx-2 font-extrabold text-xl sm:text-2xl">–</span>
-                    <span className="font-extrabold text-[#f05627] text-xl sm:text-2xl tracking-tight leading-normal">Forging Energy-Efficient Solutions</span>
-                  </div>
-                </div>
                 </div>
                 
                 {/* Right Side Tagline, Notifications, Settings & Logout */}
-                <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+                <div className="flex items-center gap-2 sm:gap-4 shrink-0">
                   {/* Notification & Settings */}
-    
-                  {/* Notification & Settings */}
-                  <div className="flex items-center gap-3">
-                    <button className="relative p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]">
-                      <Bell size={18} strokeWidth={2.2} />
-                      <span className="absolute top-1 right-1 w-2 h-2 bg-[#F2642A] rounded-full border border-white animate-pulse"></span>
+                  <div className="flex items-center gap-1.5 sm:gap-3">
+                    <button className="relative p-2 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]">
+                      <Bell size={16} strokeWidth={2.2} />
+                      <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#F2642A] rounded-full border border-white animate-pulse"></span>
                     </button>
                     
                     <button 
                       onClick={() => setShowCredentialsModal(true)}
-                      className="p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
+                      className="p-2 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
                       title="Credentials Guide"
                     >
-                      <Shield size={18} strokeWidth={2.2} />
+                      <Shield size={16} strokeWidth={2.2} />
                     </button>
                     
                     <button 
                       onClick={() => setCurrentView('settings')}
-                      className="p-2.5 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
+                      className="hidden sm:inline-block p-2 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)]"
                       title="Settings"
                     >
-                      <Settings size={18} strokeWidth={2.2} />
+                      <Settings size={16} strokeWidth={2.2} />
                     </button>
                   </div>
     
-                  <div className="h-6 border-l border-gray-200 mx-1" />
+                  <div className="h-6 border-l border-gray-200 mx-0.5 sm:mx-1" />
                   {currentView !== 'dashboard' ? (
                     <button 
                       onClick={() => setCurrentView('dashboard')}
-                      className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold bg-[#4a6b22] hover:bg-[#3b5936] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(74,107,34,0.3)] hover:shadow-[0_6px_16px_rgba(74,107,34,0.4)] cursor-pointer group tracking-wider"
+                      className="flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold bg-[#4a6b22] hover:bg-[#3b5936] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(74,107,34,0.3)] hover:shadow-[0_6px_16px_rgba(74,107,34,0.4)] cursor-pointer group tracking-wider"
                     >
-                      <Home size={16} className="text-white/90 group-hover:-translate-y-0.5 transition-transform" />
-                      Back to Home
+                      <Home size={14} className="text-white/90 group-hover:-translate-y-0.5 transition-transform" />
+                      <span className="hidden sm:inline">Back to Home</span>
                     </button>
                   ) : (
                     <button 
-                      onClick={() => {
+                       onClick={() => {
                         localStorage.removeItem('isAuthenticated');
+                        localStorage.removeItem('userRole');
+                        setIsAuthenticated(false);
                         setCurrentView('landing');
                       }}
-                      className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)] cursor-pointer group tracking-wider"
+                      className="flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-full transition-all duration-300 shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)] cursor-pointer group tracking-wider"
                     >
                       Logout
-                      <svg className="w-4 h-4 text-white/90 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                     </button>
                   )}
                 </div>
@@ -839,7 +881,7 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden relative">
 
         {/* Main Content Pane */}
-        <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30">
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30 pb-20 md:pb-8">
             <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-4 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           
           {/* Background Container */}
@@ -1049,7 +1091,8 @@ export default function App() {
               <p className="text-gray-500 text-sm font-medium">Har module ka apna dedicated AI Agent — seedha kaam karo</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Desktop View (grid cols 1 on mobile, but hidden md:grid takes over on tablet/desktop) */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDepartments.map((dept, index) => (
                 <AIAgentCard 
                   key={`agent-${dept.name}`} 
@@ -1077,13 +1120,73 @@ export default function App() {
                 />
               ))}
             </div>
+
+            {/* Mobile View: Stacked single-row cards */}
+            <div className="flex flex-col gap-3 md:hidden">
+              {filteredDepartments.map((dept) => {
+                const Icon = dept.icon;
+                const colorScheme = {
+                  crm: 'bg-purple-50 text-purple-600 border-purple-100',
+                  procurement: 'bg-amber-50 text-amber-600 border-amber-100',
+                  inventory: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                  logistics: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+                  production: 'bg-sky-50 text-sky-600 border-sky-100',
+                  finance: 'bg-teal-50 text-teal-600 border-teal-100',
+                  hr: 'bg-rose-50 text-rose-600 border-rose-100',
+                  director: 'bg-violet-50 text-violet-600 border-violet-100',
+                  'vendor-master': 'bg-blue-50 text-blue-600 border-blue-100',
+                  marketing: 'bg-pink-50 text-pink-600 border-pink-100',
+                  laboratory: 'bg-cyan-50 text-cyan-600 border-cyan-100',
+                  sales: 'bg-blue-50 text-blue-600 border-blue-100',
+                }[dept.variant] || 'bg-gray-50 text-gray-600 border-gray-100';
+
+                return (
+                  <div
+                    key={`mobile-agent-${dept.name}`}
+                    onClick={() => {
+                      if (dept.view) {
+                        setShouldAnimate(false);
+                        if (dept.view === 'crm') {
+                          setCurrentView('crm-agent');
+                        } else if (dept.view === 'sales') {
+                          setCurrentView('sales-agent');
+                        } else {
+                          setCurrentView(dept.view);
+                        }
+                      }
+                    }}
+                    className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 shadow-sm active:bg-gray-100 transition-all cursor-pointer min-h-[72px]"
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${colorScheme}`}>
+                        <Icon size={20} />
+                      </div>
+                      <div className="overflow-hidden">
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-[13px] font-bold text-gray-900 leading-snug truncate">{dept.name} AI</h4>
+                          <span className="text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 bg-emerald-50 text-emerald-600 border border-emerald-100 shrink-0">
+                            LIVE
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-gray-500 truncate mt-0.5">{dept.desc || `Consult the ${dept.name} AI Agent...`}</p>
+                      </div>
+                    </div>
+                    <div className="text-gray-400 pl-2 shrink-0">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
         {activeTab === 'modules' && (
           <div className="mb-12 animate-fade-in-up">
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Desktop View */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDepartments.length > 0 ? (
                 filteredDepartments.map((dept, index) => (
                   <ERPModuleCard 
@@ -1111,6 +1214,72 @@ export default function App() {
                 ))
               ) : (
                 <div className="col-span-full py-12 text-center">
+                  <p className="text-gray-400 text-base font-serif">No modules match your search query.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile View: Stacked single-row cards */}
+            <div className="flex flex-col gap-3 md:hidden">
+              {filteredDepartments.length > 0 ? (
+                filteredDepartments.map((dept) => {
+                  const Icon = dept.icon;
+                  const colorScheme = {
+                    crm: 'bg-purple-50 text-purple-600 border-purple-100',
+                    procurement: 'bg-amber-50 text-amber-600 border-amber-100',
+                    inventory: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                    logistics: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+                    production: 'bg-sky-50 text-sky-600 border-sky-100',
+                    finance: 'bg-teal-50 text-teal-600 border-teal-100',
+                    hr: 'bg-rose-50 text-rose-600 border-rose-100',
+                    director: 'bg-violet-50 text-violet-600 border-violet-100',
+                    'vendor-master': 'bg-blue-50 text-blue-600 border-blue-100',
+                    marketing: 'bg-pink-50 text-pink-600 border-pink-100',
+                    laboratory: 'bg-cyan-50 text-cyan-600 border-cyan-100',
+                    sales: 'bg-blue-50 text-blue-600 border-blue-100',
+                  }[dept.variant] || 'bg-gray-50 text-gray-600 border-gray-100';
+
+                  return (
+                    <div
+                      key={`mobile-module-${dept.name}`}
+                      onClick={() => {
+                        if (dept.view === 'reyo-ai') {
+                          setActiveTab('reyo');
+                          return;
+                        }
+                        if (dept.view) {
+                          setShouldAnimate(false);
+                          setCurrentView(dept.view);
+                        }
+                      }}
+                      className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 shadow-sm active:bg-gray-100 transition-all cursor-pointer min-h-[72px]"
+                    >
+                      <div className="flex items-center gap-3 overflow-hidden">
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${colorScheme}`}>
+                          <Icon size={20} />
+                        </div>
+                        <div className="overflow-hidden">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-[13px] font-bold text-gray-900 leading-snug truncate">{dept.name}</h4>
+                            {dept.badge && (
+                              <span className={`text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 border shadow-2xs shrink-0 ${dept.badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
+                                {dept.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-gray-500 truncate mt-0.5">{dept.desc || `Access ${dept.name} module...`}</p>
+                        </div>
+                      </div>
+                      <div className="text-gray-400 pl-2 shrink-0">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="py-12 text-center">
                   <p className="text-gray-400 text-base font-serif">No modules match your search query.</p>
                 </div>
               )}
@@ -1201,6 +1370,115 @@ export default function App() {
         </div>
       )}
 
+      {/* Mobile Sliding Drawer Menu */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop overlay */}
+          <div 
+            className="fixed inset-0 bg-black/40 z-50 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          {/* Slide-out Panel */}
+          <div className="fixed inset-y-0 left-0 w-[280px] bg-white z-[60] shadow-2xl p-6 flex flex-col justify-between md:hidden animate-in slide-in-from-left duration-200">
+            <div>
+              {/* Header */}
+              <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <svg className="w-6 h-6" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#8a9a5b" />
+                  </svg>
+                  <span className="font-extrabold text-base text-[#8a9a5b]">Passary</span>
+                </div>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-gray-700 cursor-pointer"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Navigation Links */}
+              <nav className="space-y-1">
+                {[
+                  { id: 'reyo', name: 'Passary AI Assistant', icon: Sparkles },
+                  { id: 'modules', name: 'Work Departments', icon: Briefcase },
+                  { id: 'agents', name: 'AI Agents', icon: Bot },
+                  { id: 'approvals', name: 'Approval Center', icon: ClipboardCheck },
+                  { id: 'reports', name: 'Reporting Center', icon: BarChart },
+                  { id: 'my-team', name: 'My Team', icon: Users }
+                ].map((item) => {
+                  const isActive = activeTab === item.id;
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setActiveTab(item.id as any);
+                        setCurrentView('dashboard');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl font-bold text-sm transition-all cursor-pointer ${
+                        isActive 
+                          ? 'bg-[#f4f9ea] text-[#4a6b22]' 
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+                      }`}
+                    >
+                      <Icon size={16} className={isActive ? 'text-[#4a6b22]' : 'text-gray-400'} />
+                      {item.name}
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Logout/Footer */}
+            <div className="border-t border-gray-100 pt-4">
+              <button 
+                onClick={() => {
+                  localStorage.removeItem('isAuthenticated');
+                  localStorage.removeItem('userRole');
+                  setIsAuthenticated(false);
+                  setCurrentView('landing');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold text-sm rounded-xl cursor-pointer transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Sticky Bottom Navigation Bar for Mobile */}
+      <nav className="fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-200 shadow-lg flex items-center justify-around z-40 md:hidden select-none pb-safe">
+        {[
+          { id: 'dashboard', name: 'Dashboard', icon: Home, action: () => { setCurrentView('dashboard'); setActiveTab('modules'); } },
+          { id: 'modules', name: 'Departments', icon: Briefcase, action: () => { setCurrentView('dashboard'); setActiveTab('modules'); } },
+          { id: 'agents', name: 'AI Agents', icon: Bot, action: () => { setCurrentView('dashboard'); setActiveTab('agents'); } },
+          { id: 'reports', name: 'Reports', icon: BarChart, action: () => { setCurrentView('dashboard'); setActiveTab('reports'); } },
+          { id: 'more', name: 'More', icon: Settings, action: () => { setCurrentView('settings'); } }
+        ].map((item) => {
+          const isCurrentTab = currentView === 'dashboard' && activeTab === item.id;
+          const isCurrentViewSetting = currentView === 'settings' && item.id === 'more';
+          const isHomeActive = currentView === 'dashboard' && activeTab === 'modules' && item.id === 'dashboard';
+          const isActive = isCurrentTab || isCurrentViewSetting || isHomeActive;
+          const Icon = item.icon;
+
+          return (
+            <button
+              key={item.id}
+              onClick={item.action}
+              className={`flex flex-col items-center justify-center flex-1 h-full gap-1 transition-colors cursor-pointer ${
+                isActive ? 'text-[#ff5a1f]' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              <Icon size={18} className="shrink-0" />
+              <span className="text-[10px] font-bold leading-none tracking-tight">{item.name}</span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }

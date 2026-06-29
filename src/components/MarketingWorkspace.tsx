@@ -24,29 +24,9 @@ import Layout from './Layout';
 import ERPModuleCard from './ERPModuleCard';
 import GenericDataSheet from './GenericDataSheet';
 
-export default function MarketingWorkspace({ onBack, initialMenu }: { onBack: () => void, initialMenu?: string }) {
+export default function MarketingWorkspace({ onBack, initialMenu, formattedDate, formattedTime }: { onBack: () => void, initialMenu?: string, formattedDate?: string, formattedTime?: string }) {
   const [activeModule, setActiveModule] = useState<string | null>(initialMenu || null);
   React.useEffect(() => { if (initialMenu) setActiveModule(initialMenu); }, [initialMenu]);
-  const [formattedDate, setFormattedDate] = useState('');
-  const [formattedTime, setFormattedTime] = useState('');
-
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const dateOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
-      setFormattedDate(now.toLocaleDateString('en-GB', dateOptions));
-      
-      const dayOptions: Intl.DateTimeFormatOptions = { weekday: 'long' };
-      const timeOptions: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
-      const dayStr = now.toLocaleDateString('en-US', dayOptions);
-      const timeStr = now.toLocaleTimeString('en-US', timeOptions);
-      setFormattedTime(`${dayStr}, ${timeStr}`);
-    };
-
-    updateDateTime();
-    const interval = setInterval(updateDateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
   const sidebarLinks = [
     { name: 'Marketing Dashboard', icon: <LayoutDashboard size={20} />, onClick: () => setActiveModule(null) },

@@ -26,27 +26,7 @@ import {
 } from 'lucide-react';
 import Layout from './Layout';
 
-export default function CrmAiAgentWorkspace({ onBack, onOpenAiAgent = () => {} }: { onBack: () => void, onOpenAiAgent?: (agentId?: string) => void }) {
-  const [formattedDate, setFormattedDate] = useState('');
-  const [formattedTime, setFormattedTime] = useState('');
-
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const dateOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
-      setFormattedDate(now.toLocaleDateString('en-GB', dateOptions));
-      
-      const dayOptions: Intl.DateTimeFormatOptions = { weekday: 'long' };
-      const timeOptions: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
-      const dayStr = now.toLocaleDateString('en-US', dayOptions);
-      const timeStr = now.toLocaleTimeString('en-US', timeOptions);
-      setFormattedTime(`${dayStr}, ${timeStr}`);
-    };
-
-    updateDateTime();
-    const interval = setInterval(updateDateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
+export default function CrmAiAgentWorkspace({ onBack, onOpenAiAgent = () => {}, formattedDate, formattedTime }: { onBack: () => void, onOpenAiAgent?: (agentId?: string) => void, formattedDate?: string, formattedTime?: string }) {
 
   const sidebarLinks = [
     { name: 'Elite CEO AI', icon: <Crown size={20} />, onClick: () => onOpenAiAgent('ceo') },

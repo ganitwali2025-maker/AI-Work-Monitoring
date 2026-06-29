@@ -144,8 +144,8 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                 {/* Circular Progress */}
                 <div className="relative w-32 h-32 mb-8">
                   <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="#f4f9ea" strokeWidth="8" />
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="#729b38" strokeWidth="8" strokeLinecap="round" strokeDasharray="282.7" strokeDashoffset={282.7 - (282.7 * loadingProgress) / 100} className="transition-all duration-300 ease-out" />
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#fff0eb" strokeWidth="8" />
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#ff5a1f" strokeWidth="8" strokeLinecap="round" strokeDasharray="282.7" strokeDashoffset={282.7 - (282.7 * loadingProgress) / 100} className="transition-all duration-300 ease-out" />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center text-[#4a6b22]">
                     <Factory size={40} className="animate-pulse" />

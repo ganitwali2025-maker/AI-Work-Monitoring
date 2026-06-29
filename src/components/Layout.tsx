@@ -124,7 +124,7 @@ const premiumThemes: Record<string, {
 import { useEffect as UseEffectAlias } from 'react';
 
 export default function Layout({ departmentName, onBack, sidebarLinks, children, variant = 'inventory', activeModule, noPadding = false }: Props) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
   const [activeMenuName, setActiveMenuName] = useState(sidebarLinks[0]?.name || '');
 
   React.useEffect(() => {
@@ -172,31 +172,27 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
   return (
     <div className="flex flex-col h-screen bg-[#F5F7FC] text-gray-950 font-sans overflow-hidden">
       {/* Header */}
-      <div className={`shrink-0 h-[80px] bg-gradient-to-r ${theme.headerGradient} text-white border-b border-white/10 shadow-lg shadow-indigo-900/5 z-50 flex items-center justify-between px-6 transition-all duration-300`}>
+      <div className={`shrink-0 h-[80px] bg-gradient-to-r ${theme.headerGradient} text-white border-b border-white/10 shadow-lg shadow-indigo-900/5 z-50 flex items-center justify-between px-4 sm:px-6 transition-all duration-300`}>
         {/* Left section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 max-w-[70%]">
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
             className="p-2 rounded-lg hover:bg-white/10 text-white transition cursor-pointer"
           >
             <Menu size={24} />
           </button>
-          <div className="flex flex-col select-none">
-            <h1 className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-white leading-none uppercase">
+          <div className="flex flex-col select-none overflow-hidden">
+            <h1 className="font-serif text-sm sm:text-2xl font-bold tracking-tight text-white leading-none uppercase truncate">
               {departmentName}
             </h1>
-            <span className={`text-[10px] ${theme.textMuted} font-sans mt-1`}>
+            <span className={`text-[9px] sm:text-[10px] ${theme.textMuted} font-sans mt-1 truncate`}>
               {theme.subtitle}
             </span>
           </div>
         </div>
 
-        {/* Center section removed */}
-
         {/* Right section */}
-        <div className="flex items-center gap-4">
-          {/* Search bar removed */}
-
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Notification bell */}
           <div className="relative p-2 text-white/80 hover:text-white hover:bg-white/15 rounded-lg transition cursor-pointer">
             <Bell size={18} />
@@ -208,27 +204,44 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
             <Settings size={18} />
           </div>
 
-          {/* User profile removed */}
-
           {/* Back to Dashboard */}
           <button 
             onClick={onBack} 
-            className="border border-white/50 text-white bg-white/20 rounded-lg px-4 py-2 hover:bg-white/30 font-bold text-xs flex items-center gap-2 shadow-[0_0_15px_rgba(255,255,255,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] shrink-0 transition-all duration-300 cursor-pointer hover:border-white"
+            className="border border-white/50 text-white bg-white/20 rounded-lg px-3 py-2 sm:px-4 hover:bg-white/30 font-bold text-xs flex items-center gap-2 shadow-[0_0_15px_rgba(255,255,255,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] shrink-0 transition-all duration-300 cursor-pointer hover:border-white"
           >
-            <ArrowLeft size={14} /> Back To Dashboard
+            <ArrowLeft size={14} />
+            <span className="hidden sm:inline">Back To Dashboard</span>
           </button>
         </div>
       </div>
 
       {/* Sidebar & Main */}
-      <div className="flex flex-1 min-h-0 w-full">
+      <div className="flex flex-1 min-h-0 w-full relative">
+        {/* Mobile backdrop overlay */}
+        {isSidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black/40 z-40 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+
         {/* Sidebar */}
-        <aside className={`${isSidebarOpen ? 'w-[280px]' : 'w-22'} bg-gradient-to-b ${theme.sidebarGradient} border-r border-white/10 shadow-lg shadow-indigo-900/5 transition-all duration-300 h-full flex flex-col justify-between py-5 overflow-hidden z-20 shrink-0`}>
+        <aside className={`fixed md:static inset-y-0 left-0 z-50 md:z-20 ${isSidebarOpen ? 'translate-x-0 w-[280px]' : '-translate-x-full md:translate-x-0 md:w-22'} bg-gradient-to-b ${theme.sidebarGradient} border-r border-white/10 shadow-lg shadow-indigo-900/5 transition-all duration-300 h-full flex flex-col justify-between py-5 overflow-hidden shrink-0`}>
+          {/* Mobile Close Button */}
+          <div className="flex justify-end px-4 mb-2 md:hidden">
+            <button 
+              onClick={() => setIsSidebarOpen(false)}
+              className="px-2.5 py-1 text-[11px] font-bold text-white bg-white/10 hover:bg-white/20 rounded-md transition cursor-pointer"
+            >
+              Close ✕
+            </button>
+          </div>
+
           {/* Scrollable menu part */}
           <div className="flex-1 overflow-y-auto px-4 space-y-5 select-none scrollbar-none pb-4">
             {groupedSections.map((section) => (
               <div key={section.title} className="space-y-1.5">
-                {isSidebarOpen && (
+                {(isSidebarOpen || window.innerWidth < 768) && (
                   <h4 className={`px-3 text-xs uppercase tracking-wider font-extrabold ${theme.textMuted} font-sans opacity-80`}>
                     {section.title}
                   </h4>
@@ -242,6 +255,9 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
                         onClick={() => {
                           setActiveMenuName(link.name);
                           link.onClick();
+                          if (window.innerWidth < 768) {
+                            setIsSidebarOpen(false);
+                          }
                         }}
                         className={`flex items-center h-[38px] w-full px-3 py-2 transition-all duration-200 text-sm whitespace-nowrap rounded-lg relative z-10 group cursor-pointer ${
                           isActive 
@@ -259,7 +275,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
                           <span className={`transition-all duration-200 ${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'} shrink-0`}>
                             {link.icon || <div className="w-5 h-5 flex items-center justify-center">●</div>}
                           </span>
-                          {isSidebarOpen && (
+                          {(isSidebarOpen || window.innerWidth < 768) && (
                             <span className="font-sans pl-0.5 tracking-wide text-sm">
                               {link.name}
                             </span>
@@ -275,8 +291,6 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
 
           {/* BOTTOM SIDEBAR AREA */}
           <div className="px-4 pt-3 border-t border-white/10 flex flex-col gap-3 relative select-none">
-            {/* Quick Help Card Removed */}
-
             {/* Floating Action Button + Collapse button */}
             <div className="flex items-center justify-between select-none">
               {/* Collapse button */}
@@ -290,14 +304,12 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
                 </span>
                 {isSidebarOpen && <span className="font-sans">Collapse Sidebar</span>}
               </button>
-
-              {/* Floating Action Button removed */}
             </div>
           </div>
         </aside>
 
         {/* Content */}
-        <main className={`flex-1 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth ${noPadding ? '' : 'p-8'}`}>
+        <main className={`flex-1 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth ${noPadding ? '' : 'p-4 sm:p-8'}`}>
           {children}
         </main>
       </div>

@@ -245,6 +245,328 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
   let specificColumns: string[] = [];
   let specificData: any[][] = [];
 
+  const genericSchemas: Record<string, { columns: string[], data: any[][] }> = {
+    // CRM
+    'Inquiry Management': {
+      columns: ['Inquiry ID', 'Date', 'Client Name', 'Requirement', 'Budget', 'Status', 'Assigned To'],
+      data: [
+        ['INQ-101', '24-Jun-2026', 'Apex Corp', 'High-temp Firebricks', '₹5,00,000', 'Active', 'Ravi Sharma'],
+        ['INQ-102', '22-Jun-2026', 'Metalloy Industries', 'Insulation Boards', '₹2,50,000', 'Pending', 'Sneha Patel'],
+        ['INQ-103', '20-Jun-2026', 'PowerGrid Ltd', 'Silica Bricks', '₹12,00,000', 'Converted', 'Amit Kumar']
+      ]
+    },
+    'Quotation Management': {
+      columns: ['Quote ID', 'Date', 'Client Name', 'Items Required', 'Quoted Value', 'Valid Until', 'Status'],
+      data: [
+        ['QT-301', '25-Jun-2026', 'Apex Corp', 'Firebricks (x500)', '₹4,85,000', '31-Jul-2026', 'Sent'],
+        ['QT-302', '21-Jun-2026', 'Tata Steel', 'Refractory Castables', '₹15,20,000', '15-Jul-2026', 'Approved'],
+        ['QT-303', '19-Jun-2026', 'Jindal Power', 'Acid Resistant Bricks', '₹6,40,000', '10-Jul-2026', 'Revised']
+      ]
+    },
+    'Follow-up Management': {
+      columns: ['Follow-up ID', 'Date', 'Contact Name', 'Mode', 'Discussion Points', 'Next Date', 'Status'],
+      data: [
+        ['FOL-201', '26-Jun-2026', 'Karan Johar', 'Phone Call', 'Pricing negotiation completed', '30-Jun-2026', 'Pending'],
+        ['FOL-202', '25-Jun-2026', 'Meera Rajput', 'Email', 'Sent product catalogues', '02-Jul-2026', 'Completed'],
+        ['FOL-203', '24-Jun-2026', 'Sanjay Dutt', 'In-Person', 'Site inspection completed', '29-Jun-2026', 'Completed']
+      ]
+    },
+    'Customer Registration': {
+      columns: ['Customer ID', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Credit Limit', 'GSTIN Status'],
+      data: [
+        ['CUST-801', 'Shyam Refractories', 'Shyam Lal', 'shyam@refractory.com', '9876543210', '₹15,00,000', 'Verified'],
+        ['CUST-802', 'Birla Cements Ltd', 'Ramesh Birla', 'ramesh@birla.com', '9876543211', '₹50,00,000', 'Verified'],
+        ['CUST-803', 'Adani Power', 'Gautam Adani', 'gautam@adani.com', '9876543212', '₹2,00,00,000', 'Verified']
+      ]
+    },
+    'Customer Support': {
+      columns: ['Ticket ID', 'Date', 'Customer Name', 'Issue Description', 'Priority', 'SLA Status', 'Assigned To'],
+      data: [
+        ['TKT-401', '25-Jun-2026', 'Tata Steel', 'Delay in dispatch order #502', 'High', 'Within SLA', 'Rahul Sen'],
+        ['TKT-402', '23-Jun-2026', 'Apex Corp', 'Incorrect dimension of brick samples', 'Medium', 'Breached', 'Siddharth Roy'],
+        ['TKT-403', '22-Jun-2026', 'Jindal Power', 'Billing query on Invoice #901', 'Low', 'Within SLA', 'Kriti Sharma']
+      ]
+    },
+    // Sales
+    'Customer Purchase Orders': {
+      columns: ['PO Number', 'PO Date', 'Customer Name', 'Ordered Item', 'Amount', 'Approval Status', 'Expected Delivery'],
+      data: [
+        ['PO-4101', '24-Jun-2026', 'Tata Steel', 'High Alumina Bricks', '₹8,50,000', 'Approved', '05-Jul-2026'],
+        ['PO-4102', '22-Jun-2026', 'Jindal Steel', 'Magnesite Bricks', '₹12,40,000', 'Pending', '12-Jul-2026'],
+        ['PO-4103', '20-Jun-2026', 'Ultratech Cement', 'Fireclay Mortar', '₹3,80,000', 'Approved', '01-Jul-2026']
+      ]
+    },
+    'Sales Order Management': {
+      columns: ['SO Number', 'SO Date', 'Customer Name', 'Total Value', 'Dispatch Date', 'Status'],
+      data: [
+        ['SO-5001', '25-Jun-2026', 'Tata Steel', '₹8,50,000', '02-Jul-2026', 'Open'],
+        ['SO-5002', '21-Jun-2026', 'Ultratech Cement', '₹3,80,000', '28-Jun-2026', 'Completed'],
+        ['SO-5003', '19-Jun-2026', 'Essar Steel', '₹5,60,000', '08-Jul-2026', 'Open']
+      ]
+    },
+    'Customer Verification': {
+      columns: ['Customer ID', 'Company Name', 'Credit Score', 'Credit Limit', 'GST Status', 'Verification Status'],
+      data: [
+        ['CUST-801', 'Shyam Refractories', '720', '₹15,00,000', 'Active', 'Verified'],
+        ['CUST-802', 'Birla Cements Ltd', '810', '₹50,00,000', 'Active', 'Verified'],
+        ['CUST-803', 'Adani Power', '840', '₹2,00,00,000', 'Active', 'Verified']
+      ]
+    },
+    'Production Requirement': {
+      columns: ['Req ID', 'Date', 'Item', 'Quantity', 'Sales Order Link', 'Priority', 'Status'],
+      data: [
+        ['PROD-REQ-01', '26-Jun-2026', 'High Alumina Bricks', '10,000 Pcs', 'SO-5001', 'High', 'Pending'],
+        ['PROD-REQ-02', '24-Jun-2026', 'Magnesite Bricks', '5,000 Pcs', 'SO-5003', 'Medium', 'In Production'],
+        ['PROD-REQ-03', '23-Jun-2026', 'Refractory Castables', '25 Tons', 'SO-5002', 'High', 'Completed']
+      ]
+    },
+    'Purchase Requirement': {
+      columns: ['Req ID', 'Date', 'Material Needed', 'Quantity Required', 'Indent Status'],
+      data: [
+        ['PUR-REQ-01', '26-Jun-2026', 'Bauxite (Calcined)', '50 Tons', 'Approved'],
+        ['PUR-REQ-02', '24-Jun-2026', 'Silica Fume', '15 Tons', 'Pending'],
+        ['PUR-REQ-03', '22-Jun-2026', 'Kyanite Concentrate', '8 Tons', 'Approved']
+      ]
+    },
+    'Inventory Verification': {
+      columns: ['Item ID', 'Item Name', 'Available Stock', 'Reserved Stock', 'Reorder Point', 'Status'],
+      data: [
+        ['RAW-101', 'Calcined Clay', '120 MT', '40 MT', '50 MT', 'On Track'],
+        ['FG-201', 'High Alumina Bricks 70%', '15,000 Pcs', '8,000 Pcs', '5,000 Pcs', 'On Track'],
+        ['RAW-105', 'Silicon Carbide Powder', '2 MT', '0 MT', '5 MT', 'Low Stock']
+      ]
+    },
+    'Dispatch Management': {
+      columns: ['Dispatch ID', 'Date', 'Sales Order', 'Customer Name', 'Transporter', 'Status'],
+      data: [
+        ['DSP-901', '26-Jun-2026', 'SO-5002', 'Ultratech Cement', 'Vikas Roadlines', 'Delivered'],
+        ['DSP-902', '25-Jun-2026', 'SO-5001', 'Tata Steel', 'Speed Logistics', 'Dispatched'],
+        ['DSP-903', '24-Jun-2026', 'SO-5003', 'Essar Steel', 'Cargo Carriers', 'Pending']
+      ]
+    },
+    'Transport Allocation': {
+      columns: ['Allocation ID', 'Vehicle No', 'Driver Name', 'Route', 'Freight Charges', 'Allocation Status'],
+      data: [
+        ['TR-301', 'OD-02-Y-5521', 'Raju Yadav', 'Rourkela to Kolkata', '₹45,000', 'Allocated'],
+        ['TR-302', 'OD-02-Z-9932', 'Satish Singh', 'Rourkela to Mumbai', '₹1,20,000', 'In Transit'],
+        ['TR-303', 'JH-01-A-4432', 'Gopal Das', 'Rourkela to Jamshedpur', '₹18,000', 'Allocated']
+      ]
+    },
+    'Delivery Tracking': {
+      columns: ['Tracking ID', 'Dispatch ID', 'Destination', 'Current Location', 'Expected Arrival', 'Delivery Status'],
+      data: [
+        ['TRK-801', 'DSP-902', 'Kolkata', 'Kharagpur Bypass', '27-Jun-2026', 'In Transit'],
+        ['TRK-802', 'DSP-901', 'Jamshedpur', 'Delivered', '26-Jun-2026', 'Delivered'],
+        ['TRK-803', 'DSP-903', 'Mumbai', 'Loading Bay', '29-Jun-2026', 'Pending']
+      ]
+    },
+    'POD Management': {
+      columns: ['POD ID', 'SO Number', 'Customer Name', 'Received Date', 'Verification Status'],
+      data: [
+        ['POD-601', 'SO-5002', 'Ultratech Cement', '26-Jun-2026', 'Verified'],
+        ['POD-602', 'SO-5004', 'Birla Cement', '25-Jun-2026', 'Pending Approval'],
+        ['POD-603', 'SO-5005', 'Dalmia Cement', '24-Jun-2026', 'Verified']
+      ]
+    },
+    'Invoice Management': {
+      columns: ['Invoice No', 'Date', 'Customer Name', 'Total Amount', 'Due Date', 'Status'],
+      data: [
+        ['INV-9001', '25-Jun-2026', 'Tata Steel', '₹8,50,000', '25-Jul-2026', 'Unpaid'],
+        ['INV-9002', '21-Jun-2026', 'Ultratech Cement', '₹3,80,000', '21-Jul-2026', 'Paid'],
+        ['INV-9003', '19-Jun-2026', 'Essar Steel', '₹5,60,000', '19-Jul-2026', 'Unpaid']
+      ]
+    },
+    'Accounts Receivable': {
+      columns: ['Invoice No', 'Customer Name', 'Outstanding', 'Overdue Days', 'Status'],
+      data: [
+        ['INV-8812', 'Tata Steel', '₹8,50,000', '15 Days', 'Active'],
+        ['INV-8756', 'Ultratech Cement', '₹1,20,000', '45 Days', 'Critical Overdue'],
+        ['INV-8910', 'JSW Steel', '₹15,60,000', '5 Days', 'Active']
+      ]
+    },
+    'Payment Collection': {
+      columns: ['Receipt No', 'Date', 'Customer Name', 'Amount Received', 'Payment Mode', 'Status'],
+      data: [
+        ['REC-401', '25-Jun-2026', 'Ultratech Cement', '₹3,80,000', 'NEFT', 'Cleared'],
+        ['REC-402', '24-Jun-2026', 'JSW Steel', '₹5,00,000', 'RTGS', 'Cleared'],
+        ['REC-403', '22-Jun-2026', 'Birla Cement', '₹2,50,000', 'Cheque', 'Pending Clearing']
+      ]
+    },
+    'Material Return Management': {
+      columns: ['Return ID', 'Date', 'Customer Name', 'Item Returned', 'Value', 'Reason', 'Status'],
+      data: [
+        ['RET-101', '20-Jun-2026', 'Apex Corp', 'Firebricks (x50)', '₹48,500', 'Dimensions out of specs', 'Approved'],
+        ['RET-102', '18-Jun-2026', 'Jindal Steel', 'Magnesite Bricks (x10)', '₹24,800', 'Transit cracks', 'Pending']
+      ]
+    },
+    'Tally Integration': {
+      columns: ['Sync ID', 'Sync Type', 'Records Synced', 'Last Sync Time', 'Status'],
+      data: [
+        ['SYNC-701', 'Sales Invoices', '12 Records', 'Today 05:30 PM', 'Success'],
+        ['SYNC-702', 'Payment Receipts', '8 Records', 'Today 05:30 PM', 'Success'],
+        ['SYNC-703', 'Stock Journals', '15 Records', 'Yesterday 06:00 PM', 'Success']
+      ]
+    },
+    // Procurement
+    'Indent Management': {
+      columns: ['Indent ID', 'Date', 'Department', 'Item Requested', 'Qty', 'Purpose', 'Status'],
+      data: [
+        ['IND-201', '24-Jun-2026', 'Production', 'Refractory Binding Clay', '20 Tons', 'BOM Requirement', 'Approved'],
+        ['IND-202', '23-Jun-2026', 'Maintenance', 'Furnace Thermocouples', '10 Pcs', 'Spares replacement', 'Pending'],
+        ['IND-203', '21-Jun-2026', 'Laboratory', 'Chemical Testing Reagents', '5 Litres', 'Raw material audit', 'Approved']
+      ]
+    },
+    'Purchase Requisition': {
+      columns: ['PR ID', 'Date', 'Requested Item', 'Estimated Cost', 'Priority', 'Status'],
+      data: [
+        ['PR-401', '25-Jun-2026', 'Refractory Binding Clay', '₹4,00,000', 'High', 'Approved'],
+        ['PR-402', '24-Jun-2026', 'Furnace Thermocouples', '₹1,50,000', 'Medium', 'Pending Approval'],
+        ['PR-403', '22-Jun-2026', 'Chemical Testing Reagents', '₹25,000', 'Low', 'Approved']
+      ]
+    },
+    'Vendor Selection': {
+      columns: ['Bid ID', 'PR Link', 'Vendor Name', 'Quotation Amount', 'Rating', 'Selection Status'],
+      data: [
+        ['BID-801', 'PR-401', 'Hindalco Industries', '₹3,80,000', '4.8/5', 'Selected'],
+        ['BID-802', 'PR-401', 'Mineral Supply Co', '₹4,10,000', '4.2/5', 'Rejected'],
+        ['BID-803', 'PR-402', 'Toshniwal Instruments', '₹1,45,000', '4.5/5', 'Under Review']
+      ]
+    },
+    'RFQ Management': {
+      columns: ['RFQ ID', 'Date', 'Item Description', 'Vendors Invited', 'Responses Received', 'Status'],
+      data: [
+        ['RFQ-301', '25-Jun-2026', 'Refractory Binding Clay', '5 Vendors', '3 Received', 'Closed'],
+        ['RFQ-302', '24-Jun-2026', 'Furnace Thermocouples', '3 Vendors', '2 Received', 'Active'],
+        ['RFQ-303', '22-Jun-2026', 'Insulation Blanket', '6 Vendors', '4 Received', 'Closed']
+      ]
+    },
+    'Purchase Orders': {
+      columns: ['PO No', 'Date', 'Vendor Name', 'Total Amount', 'Expected Delivery', 'Status'],
+      data: [
+        ['PO-7001', '26-Jun-2026', 'Hindalco Industries', '₹3,80,000', '10-Jul-2026', 'Open'],
+        ['PO-7002', '22-Jun-2026', 'Toshniwal Instruments', '₹1,45,000', '02-Jul-2026', 'Approved'],
+        ['PO-7003', '20-Jun-2026', 'Global Minerals', '₹6,80,000', '01-Jul-2026', 'Completed']
+      ]
+    },
+    'PO Approvals': {
+      columns: ['PO No', 'Date', 'Vendor Name', 'Total Amount', 'Pending Approvals', 'Status'],
+      data: [
+        ['PO-7001', '26-Jun-2026', 'Hindalco Industries', '₹3,80,000', 'Finance Head', 'Pending'],
+        ['PO-7002', '22-Jun-2026', 'Toshniwal Instruments', '₹1,45,000', 'Approved', 'Approved'],
+        ['PO-7004', '25-Jun-2026', 'Apex Chemicals', '₹28,000', 'Director', 'Pending']
+      ]
+    },
+    'Vendor Follow-up': {
+      columns: ['Follow-up ID', 'Vendor Name', 'PO Link', 'Scheduled Date', 'Discussion', 'Status'],
+      data: [
+        ['VFL-101', 'Hindalco Industries', 'PO-7001', '28-Jun-2026', 'Confirming transport dispatch details', 'Pending'],
+        ['VFL-102', 'Toshniwal Instruments', 'PO-7002', '24-Jun-2026', 'Calibration reports checked', 'Completed']
+      ]
+    },
+    'Transport Tracking': {
+      columns: ['PO Link', 'Transporter', 'Vehicle No', 'Source', 'Current Location', 'Status'],
+      data: [
+        ['PO-7003', 'Vikas Roadlines', 'OD-02-A-5432', 'Katni Minerals', 'Rourkela Gate', 'Received'],
+        ['PO-7001', 'Super Fast Cargo', 'MP-09-H-7762', 'Katni Minerals', 'Sambalpur Highway', 'In Transit']
+      ]
+    },
+    'Material Receipt': {
+      columns: ['Receipt ID', 'Date', 'PO Number', 'Received Qty', 'Inspected Qty', 'Status'],
+      data: [
+        ['MR-501', '25-Jun-2026', 'PO-7003', '50 Tons', '50 Tons', 'Inspected'],
+        ['MR-502', '24-Jun-2026', 'PO-7002', '10 Pcs', '10 Pcs', 'Approved']
+      ]
+    },
+    'Quality Inspection': {
+      columns: ['Inspection ID', 'Date', 'Material', 'Batch No', 'Accepted Qty', 'Rejected Qty', 'Status'],
+      data: [
+        ['QC-801', '25-Jun-2026', 'Calcined Bauxite', 'B-1082', '48 Tons', '2 Tons', 'Pass with Waiver'],
+        ['QC-802', '24-Jun-2026', 'Refractory Binding Clay', 'C-9912', '20 Tons', '0 Tons', 'Approved']
+      ]
+    },
+    'GRN Management': {
+      columns: ['GRN No', 'Date', 'Vendor Name', 'Invoice Value', 'Status'],
+      data: [
+        ['GRN-9001', '25-Jun-2026', 'Global Minerals', '₹6,80,000', 'Approved'],
+        ['GRN-9002', '24-Jun-2026', 'Toshniwal Instruments', '₹1,45,000', 'Approved']
+      ]
+    },
+    'Vendor Bills': {
+      columns: ['Bill No', 'Date', 'Vendor Name', 'Total Value', 'Due Date', 'Status'],
+      data: [
+        ['VBL-2001', '25-Jun-2026', 'Global Minerals', '₹6,80,000', '25-Jul-2026', 'Unpaid'],
+        ['VBL-2002', '24-Jun-2026', 'Toshniwal Instruments', '₹1,45,000', '24-Jul-2026', 'Approved']
+      ]
+    },
+    'Vendor Payments': {
+      columns: ['Payment ID', 'Date', 'Vendor Name', 'Paid Amount', 'Mode', 'Status'],
+      data: [
+        ['VPM-101', '20-Jun-2026', 'Global Minerals', '₹6,80,000', 'RTGS', 'Success'],
+        ['VPM-102', '18-Jun-2026', 'Shyam Refractories', '₹1,25,000', 'NEFT', 'Success']
+      ]
+    },
+    // Vendor Master
+    'Vendor Registration': {
+      columns: ['Vendor ID', 'Name', 'Contact Person', 'Phone', 'Email', 'Verification Status'],
+      data: [
+        ['VND-501', 'Global Minerals Co', 'Rajeev Gupta', '9876543001', 'rajeev@global.com', 'Verified'],
+        ['VND-502', 'Katni Clay Suppliers', 'Satish Katni', '9876543002', 'satish@katniclay.com', 'Pending'],
+        ['VND-503', 'Toshniwal Instruments', 'Anupam Toshniwal', '9876543003', 'anupam@toshniwal.com', 'Verified']
+      ]
+    },
+    'Company Profile': {
+      columns: ['Vendor ID', 'Company Name', 'Industry', 'Turnover', 'GSTIN', 'Compliance Status'],
+      data: [
+        ['VND-501', 'Global Minerals Co', 'Raw Minerals mining', '₹12 Crores', '21AAAAA1111A1Z1', 'Compliant'],
+        ['VND-503', 'Toshniwal Instruments', 'Process Calibration', '₹5 Crores', '21BBBBB2222B2Z2', 'Compliant']
+      ]
+    },
+    // Inventory
+    'Item Master': {
+      columns: ['Item ID', 'Item Name', 'Category', 'Unit', 'Unit Cost', 'Stock Level'],
+      data: [
+        ['RAW-001', 'Calcined Bauxite', 'Raw Materials', 'MT', '₹8,500', '125 Tons'],
+        ['RAW-002', 'Fused Magnesite', 'Raw Materials', 'MT', '₹22,000', '48 Tons'],
+        ['FG-501', 'High Alumina Bricks 70%', 'Finished Goods', 'Pcs', '₹65', '18,500 Pcs'],
+        ['FG-502', 'Magnesite Bricks', 'Finished Goods', 'Pcs', '₹180', '8,200 Pcs']
+      ]
+    },
+    // Laboratory
+    'Sample Registration': {
+      columns: ['Sample ID', 'Date', 'Source', 'Material Name', 'Batch No', 'Status'],
+      data: [
+        ['SMP-301', '26-Jun-2026', 'Vendor Receipt (PO-7001)', 'Calcined Bauxite', 'B-1082', 'Under Analysis'],
+        ['SMP-302', '25-Jun-2026', 'Production Run (Line 2)', 'Finished Bricks 70%', 'FG-9921', 'Completed'],
+        ['SMP-303', '24-Jun-2026', 'Vendor Receipt (PO-7003)', 'Clay Binder', 'C-8821', 'Completed']
+      ]
+    },
+    'Test Management': {
+      columns: ['Sample ID', 'Test Name', 'Specification Range', 'Observed Value', 'Compliance Status'],
+      data: [
+        ['SMP-302', 'Alumina content (Al2O3 %)', '68.0% - 72.0%', '70.2%', 'Compliant'],
+        ['SMP-302', 'Cold Crushing Strength (CCS)', 'Min 600 kg/cm²', '645 kg/cm²', 'Compliant'],
+        ['SMP-303', 'Moisture content', 'Max 2.0%', '2.8%', 'Out of Range (Fail)']
+      ]
+    },
+    // HR
+    'Employee Master': {
+      columns: ['Emp ID', 'Full Name', 'Designation', 'Department', 'Date of Joining', 'Email', 'Status'],
+      data: [
+        ['EMP-101', 'Ravi Sharma', 'CRM Manager', 'CRM', '12-Jan-2024', 'ravi@passary.com', 'Active'],
+        ['EMP-102', 'Sneha Gupta', 'Sales Coordinator', 'Sales', '18-Mar-2024', 'sneha@passary.com', 'Active'],
+        ['EMP-103', 'Amit Patel', 'Purchase Manager', 'Procurement', '01-Jul-2023', 'amit@passary.com', 'Active']
+      ]
+    },
+    // Settings
+    'Settings': {
+      columns: ['Setting ID', 'Parameter', 'Description', 'Config Value', 'Updated Date', 'Status'],
+      data: [
+        ['SET-001', 'SMTP Server', 'Outgoing transaction emails setup', 'smtp.passary.com', '12-May-2026', 'Active'],
+        ['SET-002', 'Backup Interval', 'Weekly automated database backup', '7 Days', '01-Jun-2026', 'Active']
+      ]
+    }
+  };
+
   if (variant === 'marketing') {
     if (cleanModuleName === 'Lead Pipeline') {
       specificColumns = ['Lead ID', 'Lead Date', 'Company Name', 'Contact Person', 'Mobile Number', 'Email', 'City', 'State', 'Industry Type', 'Product Requirement', 'Lead Source', 'Executive Name', 'Marketing Head', 'Remarks', 'Lead Status'];
@@ -252,64 +574,29 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
     } else if (cleanModuleName === 'Approval Center') {
       specificColumns = ['Lead ID', 'Company Name', 'Executive Name', 'Marketing Head', 'Approval Status', 'Approval Date', 'Approval Time', 'Remarks'];
       specificData = liveData || [];
-    } else if (cleanModuleName === 'Customer CRM') {
+    } else if (genericSchemas[cleanModuleName]) {
+      specificColumns = genericSchemas[cleanModuleName].columns;
+      specificData = genericSchemas[cleanModuleName].data;
+    } else {
       specificColumns = ['Customer ID', 'Name', 'Company', 'Industry', 'Last Contact', 'Status', 'LTV'];
       specificData = [
         ['CUS-001', 'Ankit Verma', 'TechCorp', 'IT', '19-Jun-2026', 'Active', '₹1,50,000'],
         ['CUS-002', 'Meera Reddy', 'DesignStudio', 'Media', '18-Jun-2026', 'Inactive', '₹45,000'],
         ['CUS-003', 'Vikram Singh', 'BuildIt', 'Construction', '15-Jun-2026', 'Active', '₹2,10,000'],
       ];
-    } else if (cleanModuleName === 'Quotation Hub') {
-      specificColumns = ['Quote ID', 'Vendor/Client', 'Service', 'Amount', 'Valid Until', 'Created By', 'Status'];
-      specificData = [
-        ['QT-501', 'AdSense Media', 'Billboards', '₹1,20,000', '30-Jun-2026', 'Amit Patel', 'Sent'],
-        ['QT-502', 'PrintWorks', 'Brochures', '₹35,000', '25-Jun-2026', 'Sneha Gupta', 'Approved'],
-        ['QT-503', 'DigitalBoost', 'SEO Services', '₹80,000', '28-Jun-2026', 'Rahul Sharma', 'Pending'],
-      ];
-    } else if (cleanModuleName === 'Workflow Approval') {
-      specificColumns = ['Workflow ID', 'Process Name', 'Current Step', 'Pending With', 'Time Elapsed', 'Priority', 'Status'];
-      specificData = [
-        ['WF-101', 'New Product Launch', 'Budget Review', 'Director', '2 Days', 'High', 'In Progress'],
-        ['WF-102', 'Q3 Social Media Plan', 'Content Approval', 'Marketing Head', '4 Hours', 'Medium', 'In Progress'],
-        ['WF-103', 'Event Sponsorship', 'Legal Review', 'Legal Dept', '1 Day', 'High', 'In Progress'],
-      ];
-    } else if (cleanModuleName === 'Response Center') {
-      specificColumns = ['Ticket ID', 'Channel', 'Customer Name', 'Query Type', 'Received Time', 'SLA Status', 'Assigned To'];
-      specificData = [
-        ['RC-201', 'Email', 'Rajesh Kumar', 'Pricing Inquiry', '10:30 AM', 'Within SLA', 'Rahul Sharma'],
-        ['RC-202', 'WhatsApp', 'Priya Singh', 'Demo Request', '11:15 AM', 'Breached', 'Amit Patel'],
-        ['RC-203', 'Website Chat', 'Manoj Desai', 'Support', '01:45 PM', 'Within SLA', 'Sneha Gupta'],
-      ];
-    } else if (cleanModuleName === 'PO Management') {
-      specificColumns = ['PO Number', 'Vendor', 'Description', 'Total Amount', 'PO Date', 'Expected Delivery', 'Status'];
-      specificData = [
-        ['PO-9001', 'AdSense Media', 'Q3 Billboard Ads', '₹1,20,000', '15-Jun-2026', '01-Jul-2026', 'Approved'],
-        ['PO-9002', 'PrintWorks', 'Marketing Collaterals', '₹35,000', '18-Jun-2026', '25-Jun-2026', 'Pending'],
-        ['PO-9003', 'EventPro', 'Trade Show Booth', '₹2,50,000', '10-Jun-2026', '20-Jul-2026', 'Approved'],
-      ];
-    } else if (cleanModuleName === 'Performance Dashboard') {
-      specificColumns = ['Metric', 'Current Value', 'Target', 'Variance', 'MoM Growth', 'Status'];
-      specificData = [
-        ['Total Leads', '856', '1,000', '-144', '+24.3%', 'On Track'],
-        ['Conversion Rate', '10.4%', '12.0%', '-1.6%', '+1.2%', 'Needs Improvement'],
-        ['CPA', '₹1,056', '₹1,000', '+₹56', '-5.4%', 'On Track'],
-        ['Total Revenue', '₹8,50,000', '₹10,00,000', '-₹1,50,000', '+15.2%', 'On Track'],
-      ];
-    } else if (cleanModuleName === 'Work Tracker') {
-      specificColumns = ['Task ID', 'Task Name', 'Assignee', 'Due Date', 'Project', 'Priority', 'Status'];
-      specificData = [
-        ['TSK-301', 'Finalize Q3 Ads', 'Rahul Sharma', '25-Jun-2026', 'Q3 Campaign', 'High', 'In Progress'],
-        ['TSK-302', 'Update Email Templates', 'Sneha Gupta', '22-Jun-2026', 'Retention', 'Medium', 'Pending'],
-        ['TSK-303', 'Vendor Contract Renewal', 'Amit Patel', '30-Jun-2026', 'Admin', 'High', 'Completed'],
-      ];
-    } else if (cleanModuleName === 'Team Operations') {
-      specificColumns = ['Emp ID', 'Name', 'Role', 'Active Tasks', 'Performance Score', 'Attendance', 'Status'];
-      specificData = [
-        ['EMP-101', 'Rahul Sharma', 'Campaign Manager', '12', '95%', 'Present', 'Active'],
-        ['EMP-102', 'Sneha Gupta', 'Content Strategist', '8', '88%', 'On Leave', 'Inactive'],
-        ['EMP-103', 'Amit Patel', 'SEO Specialist', '15', '92%', 'Present', 'Active'],
-      ];
     }
+  } else {
+    // Look up dynamically in genericSchemas
+    const matchedSchema = genericSchemas[cleanModuleName] || {
+      columns: [`${cleanModuleName} ID`, 'Date', 'Description', 'Value', 'Status', 'Updated By'],
+      data: [
+        [`${cleanModuleName.slice(0, 3).toUpperCase()}-101`, '26-Jun-2026', `Sample entry for ${cleanModuleName} #1`, '₹1,50,000', 'Active', 'Admin'],
+        [`${cleanModuleName.slice(0, 3).toUpperCase()}-102`, '25-Jun-2026', `Sample entry for ${cleanModuleName} #2`, '₹4,20,000', 'Pending', 'Admin'],
+        [`${cleanModuleName.slice(0, 3).toUpperCase()}-103`, '24-Jun-2026', `Sample entry for ${cleanModuleName} #3`, '₹85,000', 'Completed', 'Admin']
+      ]
+    };
+    specificColumns = matchedSchema.columns;
+    specificData = matchedSchema.data;
   }
 
   const hasSpecificData = specificColumns.length > 0;
@@ -399,7 +686,7 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
         </div>
 
         {/* Dynamic Table Structure */}
-        <div className="flex-1 overflow-auto scrollbar-none">
+        <div className="flex-1 overflow-auto">
           <table className="w-max min-w-full text-center text-sm whitespace-nowrap border-separate border-spacing-0">
             <thead className={`text-white font-extrabold text-[13px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
               <tr>

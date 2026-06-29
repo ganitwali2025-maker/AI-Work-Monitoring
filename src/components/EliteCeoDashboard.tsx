@@ -1,10 +1,41 @@
 import React, { useState } from 'react';
 import { 
-  ArrowLeft, Crown, TrendingUp, AlertTriangle, ShieldAlert, BarChart3, Target, Briefcase, Zap, ArrowUpRight, Bot
+  ArrowLeft, Crown, TrendingUp, AlertTriangle, ShieldAlert, BarChart3, Target, Briefcase, Zap, ArrowUpRight, Bot, Send
 } from 'lucide-react';
 
 export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
   const [chatInput, setChatInput] = useState('');
+  const [messages, setMessages] = useState<Array<{ sender: 'user' | 'bot'; text: string }>>([
+    { sender: 'bot', text: 'I have generated your daily CEO briefing. Your business health is at 92/100. Would you like me to automate the recovery of the 12 hot leads currently at risk?' }
+  ]);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const handleSendMessage = (text: string) => {
+    if (!text.trim()) return;
+    setMessages(prev => [...prev, { sender: 'user', text }]);
+    setChatInput('');
+    setIsTyping(true);
+
+    setTimeout(() => {
+      setIsTyping(false);
+      let replyText = '';
+      const prompt = text.toLowerCase();
+      if (prompt.includes('health') || prompt.includes('score')) {
+        replyText = 'Current Business Health is 92/100. Strengths: Order Conversion Rate (+18% MoM), Lead Volume. Weaknesses: Lead Aging in CRM (average 6.2 days response lag).';
+      } else if (prompt.includes('recover') || prompt.includes('risk') || prompt.includes('opportunities')) {
+        replyText = 'Processing recovery flow. Auto-reassigned 12 stalled leads to Priority Team B. Sent notifications to Account Directors. Expected recovery value: ₹8.2 Lakh.';
+      } else if (prompt.includes('campaign') || prompt.includes('deploy')) {
+        replyText = 'Deploying Q3 Customer Retention Campaign. Target group size: 142 clients. Dispatching email vouchers and automated WhatsApp reminders.';
+      } else {
+        replyText = `Understood. Analyzing corporate operational metrics for "${text}". I recommend launching a cost review on transport log contracts (Route: Kolkata) where variance exceeds 12%.`;
+      }
+      setMessages(prev => [...prev, { sender: 'bot', text: replyText }]);
+    }, 1000);
+  };
+
+  const handleRecommendationClick = (recName: string) => {
+    alert(`AI CEO Execution: "${recName}" workflow has been initiated. Directing to the corresponding workspace...`);
+  };
 
   return (
     <div className="min-h-screen bg-[#F5F7FC] text-gray-900 font-sans p-6 sm:p-8 flex flex-col">
@@ -122,7 +153,7 @@ export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
                   </div>
                   <p className="text-[10px] text-gray-500 mb-2 uppercase tracking-wider">Process Failure</p>
                   <p className="text-xs text-gray-600 mb-1"><strong>Impact:</strong> ₹8.2 Lakh At Risk</p>
-                  <p className="text-xs text-rose-600"><strong>Corrective Action:</strong> Auto-assign to backup team.</p>
+                  <button onClick={() => alert('Assigned backup task to CRM team to contact leads.')} className="text-[10px] bg-rose-600 text-white font-bold px-3 py-1.5 rounded hover:bg-rose-700 transition-colors mt-2 cursor-pointer">Auto-assign to backup team</button>
                 </div>
               </div>
             </div>
@@ -138,13 +169,13 @@ export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
                 <p className="text-xs font-bold text-purple-700 mb-1">Recover Stuck Quotations</p>
                 <p className="text-[10px] text-gray-500 mb-2">Priority: High | Success Rate: 60%</p>
                 <p className="text-xs text-gray-700 mb-2">Impact: <strong className="text-emerald-600">+₹3.5L Expected</strong></p>
-                <button className="text-[10px] bg-purple-600 text-white px-3 py-1.5 rounded font-bold hover:bg-purple-700 transition-colors w-full">Execute Recovery Flow</button>
+                <button onClick={() => handleRecommendationClick('Recover Stuck Quotations')} className="text-[10px] bg-purple-600 text-white px-3 py-1.5 rounded font-bold hover:bg-purple-700 transition-colors w-full cursor-pointer">Execute Recovery Flow</button>
               </div>
               <div className="border border-gray-100 rounded-lg p-4 bg-gray-50">
                 <p className="text-xs font-bold text-purple-700 mb-1">Launch Retention Campaign</p>
                 <p className="text-[10px] text-gray-500 mb-2">Priority: Medium | Success Rate: 45%</p>
                 <p className="text-xs text-gray-700 mb-2">Impact: <strong className="text-emerald-600">+₹1.2L Expected</strong></p>
-                <button className="text-[10px] bg-purple-600 text-white px-3 py-1.5 rounded font-bold hover:bg-purple-700 transition-colors w-full">Deploy Campaign</button>
+                <button onClick={() => handleRecommendationClick('Launch Retention Campaign')} className="text-[10px] bg-purple-600 text-white px-3 py-1.5 rounded font-bold hover:bg-purple-700 transition-colors w-full cursor-pointer">Deploy Campaign</button>
               </div>
             </div>
           </div>
@@ -152,7 +183,7 @@ export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
         </div>
 
         {/* Right: AI Chat Workplace (1/3 width) */}
-        <div className="lg:col-span-1 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col h-[800px] lg:h-auto overflow-hidden">
+        <div className="lg:col-span-1 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col h-[600px] lg:h-auto overflow-hidden">
           <div className="p-4 border-b border-gray-100 bg-purple-50/50 flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 border border-purple-200">
               <Crown size={20} />
@@ -160,47 +191,62 @@ export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
             <div>
               <h3 className="text-sm font-bold text-gray-900">Elite CEO AI</h3>
               <p className="text-[10px] text-gray-500 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online
               </p>
             </div>
           </div>
 
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50/50">
-            {/* System Greeting */}
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-0.5">
-                <Crown size={12} />
-              </div>
-              <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-xs">
-                <div className="text-[11px] text-gray-700 leading-relaxed space-y-2">
-                  <p><strong>You are an Elite CEO Dashboard AI inside a CRM & Business Operating System.</strong></p>
-                  <p>Your responsibility is to provide real-time executive intelligence, strategic insights, business health analysis, revenue forecasting, risk assessment, and actionable recommendations for business growth.</p>
-                  
-                  <div className="bg-gray-50 p-2 rounded border border-gray-100">
-                    <p className="font-bold text-purple-700 uppercase mb-1">CEO Command Center</p>
-                    <p>Analyze all CRM data: Leads, Inquiries, Quotations, Orders, Customers, Follow-ups, Support Tickets, Sales Team Performance, Revenue Data, Customer Activities.</p>
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50/50 flex flex-col justify-between">
+            <div className="space-y-4">
+              {/* System Greeting */}
+              <div className="flex items-start gap-2">
+                <div className="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-0.5">
+                  <Crown size={12} />
+                </div>
+                <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-xs">
+                  <div className="text-[11px] text-gray-700 leading-relaxed space-y-2">
+                    <p><strong>CEO Command Center:</strong> Real-time executive intelligence, strategic insights, business health analysis, and revenue forecasting.</p>
                   </div>
-
-                  <p><strong>Revenue Overview:</strong> Total, Monthly, Quarterly, Yearly, Growth %, Trend, Forecast, Growth Opportunities.</p>
-                  <p><strong>Revenue At Risk:</strong> Identify Pending Quotations, Unattended Leads, Missed Follow-ups. Calculate Loss & Risk %. Provide Risk Level (🔴 Critical to 🟢 Low) & Recovery Actions.</p>
-                  <p><strong>Business Health Score:</strong> 0-100 Score. Evaluate Lead Mgmt, Sales Performance, Customer Support, etc.</p>
-                  <p><strong>Top Opportunities & Risks:</strong> Prioritize High Value & Fast Conversion. Identify Revenue Leakage, Churn, Process Failures.</p>
-                  
-                  <div className="bg-purple-50 p-2 rounded border border-purple-100">
-                    <p className="font-bold text-purple-700 mb-1">Rules</p>
-                    <ul className="list-decimal pl-4 space-y-0.5">
-                      <li>Think like a CEO.</li>
-                      <li>Focus on revenue growth & efficiency.</li>
-                      <li>Always explain WHY and quantify impact.</li>
-                      <li>Never show raw data only. Convert data into intelligence.</li>
-                      <li>Recommend automation wherever possible.</li>
-                    </ul>
-                  </div>
-
-                  <hr className="my-2 border-gray-100" />
-                  <p className="text-purple-700"><strong>System:</strong> I have generated your daily CEO briefing. Your business health is at 92/100. Would you like me to automate the recovery of the 12 hot leads currently at risk?</p>
                 </div>
               </div>
+
+              {messages.map((msg, index) => (
+                <div key={index} className={`flex items-start gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${msg.sender === 'user' ? 'bg-indigo-600 text-white font-bold text-[10px]' : 'bg-purple-100 text-purple-600'}`}>
+                    {msg.sender === 'user' ? 'U' : <Crown size={12} />}
+                  </div>
+                  <div className={`border rounded-2xl p-3 shadow-xs text-xs leading-relaxed max-w-[85%] ${msg.sender === 'user' ? 'bg-indigo-600 border-indigo-700 text-white rounded-tr-sm' : 'bg-white border-gray-100 text-gray-700 rounded-tl-sm'}`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+
+              {isTyping && (
+                <div className="flex items-start gap-2">
+                  <div className="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-0.5">
+                    <Crown size={12} />
+                  </div>
+                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-xs text-xs text-gray-400 italic">
+                    AI is thinking...
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Prompts */}
+            <div className="flex flex-col gap-2 pt-4">
+              <button 
+                onClick={() => handleSendMessage('Give me a detailed business health analysis')}
+                className="text-left text-[11px] font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-2 rounded-lg border border-purple-100 transition-colors cursor-pointer"
+              >
+                Detailed Business Health Analysis
+              </button>
+              <button 
+                onClick={() => handleSendMessage('Automate recovery of Leads At Risk')}
+                className="text-left text-[11px] font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-2 rounded-lg border border-purple-100 transition-colors cursor-pointer"
+              >
+                Automate recovery of Leads At Risk
+              </button>
             </div>
           </div>
 
@@ -209,12 +255,20 @@ export default function EliteCeoDashboard({ onBack }: { onBack: () => void }) {
               <input 
                 type="text" 
                 placeholder="Ask Elite CEO AI..." 
-                className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
+                className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-gray-900"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSendMessage(chatInput);
+                  }
+                }}
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors">
-                <ArrowUpRight size={14} />
+              <button 
+                onClick={() => handleSendMessage(chatInput)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors cursor-pointer"
+              >
+                <Send size={14} />
               </button>
             </div>
           </div>

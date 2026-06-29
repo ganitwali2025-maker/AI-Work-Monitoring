@@ -1,14 +1,38 @@
 import React, { useState } from 'react';
 import { 
-  ArrowLeft, Activity, ArrowUpRight, ShieldAlert, Bot, Stethoscope, Briefcase, DollarSign, TrendingDown, ClipboardList
+  ArrowLeft, Activity, ArrowUpRight, ShieldAlert, Bot, Stethoscope, Briefcase, DollarSign, TrendingDown, ClipboardList, Send
 } from 'lucide-react';
 
 export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void }) {
   const [chatInput, setChatInput] = useState('');
+  const [messages, setMessages] = useState<Array<{ sender: 'user' | 'bot'; text: string }>>([
+    { sender: 'bot', text: 'I have performed the autopsy on the TechNova deal. Would you like me to draft the Win-back email to their CTO?' }
+  ]);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const handleSendMessage = (text: string) => {
+    if (!text.trim()) return;
+    setMessages(prev => [...prev, { sender: 'user', text }]);
+    setChatInput('');
+    setIsTyping(true);
+
+    setTimeout(() => {
+      setIsTyping(false);
+      let replyText = '';
+      const prompt = text.toLowerCase();
+      if (prompt.includes('email') || prompt.includes('win-back') || prompt.includes('draft')) {
+        replyText = 'Win-back email draft created successfully. Subject: "Technical review and special pricing on ERP Enterprise License". It has been queued in your draft folder for approval.';
+      } else if (prompt.includes('competitor') || prompt.includes('xyz')) {
+        replyText = 'Searching pipeline history... Found 3 other deals lost to Competitor XYZ this quarter, totaling ₹18.5 Lakh in lost revenue. Common reason: Faster demo delivery times (average 2 days vs our 6 days).';
+      } else {
+        replyText = `Analyzing query: "${text}". The root-cause weight analysis suggests that pricing represents the highest threat vector for future renewals in this sector.`;
+      }
+      setMessages(prev => [...prev, { sender: 'bot', text: replyText }]);
+    }, 1000);
+  };
 
   return (
     <div className="min-h-screen bg-[#F5F7FC] text-gray-900 font-sans p-6 sm:p-8 flex flex-col">
-      
       {/* Header */}
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <div className="flex items-center gap-4">
@@ -32,7 +56,6 @@ export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void 
         
         {/* Left: Autopsy Analysis (2/3 width) */}
         <div className="lg:col-span-2 space-y-6">
-          
           {/* Lost Deal Summary */}
           <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-rose-50 rounded-bl-full -z-0"></div>
@@ -74,7 +97,6 @@ export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void 
 
           {/* Root Cause Analysis & Prevention */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             {/* 7-Point Analysis */}
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm flex flex-col h-full">
               <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider flex items-center gap-2">
@@ -101,38 +123,37 @@ export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void 
               </div>
             </div>
 
-            {/* Strategic Outcomes */}
-            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm flex flex-col h-full">
-              <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
-                  <ShieldAlert size={16} className="text-emerald-600" /> Recovery Probability
+            {/* Recovery and Prevention Plan */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm flex flex-col h-full justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider flex items-center gap-2">
+                  <ShieldAlert size={16} className="text-purple-600" /> Recovery & Prevention Plan
                 </h3>
-                <span className="text-2xl font-black text-emerald-600">22%</span>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-xs font-bold text-gray-700">Win-Back Strategy</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Deploy customized email to TechNova CTO highlighting specialized custom refractory integrations.</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-xs font-bold text-gray-700">Sales Enablement Correction</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Update quotation playbook to enable dynamic margins matching competitors instantly.</p>
+                  </div>
+                </div>
               </div>
 
-              <div className="mb-6">
-                <p className="text-[11px] font-bold text-purple-600 uppercase tracking-wider mb-2">Recovery Plan (Immediate)</p>
-                <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
-                  <li>Deploy automated 'Win-back' pricing tier directly to the CTO.</li>
-                  <li>Schedule a technical deep-dive bypassing middle-management.</li>
-                  <li>Send comparison sheet highlighting XYZ software's gaps.</li>
-                </ul>
-              </div>
-
-              <div className="mt-auto pt-4 border-t border-gray-100 bg-gray-50 p-4 rounded-lg">
-                <p className="text-[11px] font-bold text-indigo-600 uppercase tracking-wider mb-2">Prevention Strategy (Systemic)</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  Implement an SLA rule: Any quote &gt; ₹5L requires immediate CTO introduction within 24 hours. Create alert for 12+ hour response delays.
-                </p>
-              </div>
+              <button 
+                onClick={() => alert('Win-Back email campaign launched successfully.')}
+                className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs py-3 rounded-lg shadow-sm transition-colors cursor-pointer text-center"
+              >
+                Execute Recovery Campaign
+              </button>
             </div>
-
           </div>
         </div>
 
         {/* Right: AI Chat Workplace (1/3 width) */}
         <div className="lg:col-span-1 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col h-[600px] lg:h-auto overflow-hidden">
-          
           <div className="p-4 border-b border-gray-100 bg-purple-50/50 flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 border border-purple-200">
               <Bot size={20} />
@@ -140,37 +161,61 @@ export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void 
             <div>
               <h3 className="text-sm font-bold text-gray-900">AI Autopsy Engine</h3>
               <p className="text-[10px] text-gray-500 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online
               </p>
             </div>
           </div>
 
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50/50">
-            {/* System Greeting */}
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-0.5">
-                <Bot size={12} />
-              </div>
-              <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-xs">
-                <div className="text-xs text-gray-700 leading-relaxed space-y-2">
-                  <p><strong>You are an AI Autopsy Engine inside a CRM.</strong></p>
-                  <p>Whenever a lead, quotation, customer, or deal is lost: Perform a complete business autopsy.</p>
-                  <p><strong>Analyze:</strong> Follow-up History, Response Time, Pricing Competitiveness, Customer Engagement, Decision Maker Involvement, Competitor Influence, Communication Quality.</p>
-                  <p><strong>Generate:</strong> 1. Lost Deal Summary, 2. Root Cause Analysis, 3. Revenue Lost, 4. Recovery Probability, 5. Recovery Plan, 6. Prevention Strategy.</p>
-                  <p className="text-rose-600 font-bold">Output must include percentage contribution for every loss reason.</p>
-                  <hr className="my-2 border-gray-100" />
-                  <p className="text-purple-700"><strong>System:</strong> I have performed the autopsy on the TechNova deal. Would you like me to draft the Win-back email to their CTO?</p>
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50/50 flex flex-col justify-between">
+            <div className="space-y-4">
+              {/* System Greeting */}
+              <div className="flex items-start gap-2">
+                <div className="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-0.5">
+                  <Bot size={12} />
+                </div>
+                <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-xs">
+                  <div className="text-xs text-gray-700 leading-relaxed space-y-2">
+                    <p><strong>Autopsy Engine Active:</strong> Analyzing follow-up logs, competitor presence, response latency, and pricing variances to calculate deal loss vectors.</p>
+                  </div>
                 </div>
               </div>
+
+              {messages.map((msg, index) => (
+                <div key={index} className={`flex items-start gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${msg.sender === 'user' ? 'bg-indigo-600 text-white font-bold text-[10px]' : 'bg-purple-100 text-purple-600'}`}>
+                    {msg.sender === 'user' ? 'U' : <Bot size={12} />}
+                  </div>
+                  <div className={`border rounded-2xl p-3 shadow-xs text-xs leading-relaxed max-w-[85%] ${msg.sender === 'user' ? 'bg-indigo-600 border-indigo-700 text-white rounded-tr-sm' : 'bg-white border-gray-100 text-gray-700 rounded-tl-sm'}`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+
+              {isTyping && (
+                <div className="flex items-start gap-2">
+                  <div className="w-6 h-6 rounded bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-0.5">
+                    <Bot size={12} />
+                  </div>
+                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-xs text-xs text-gray-400 italic">
+                    AI is thinking...
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Quick Prompts */}
-            <div className="flex flex-col gap-2 pl-8">
-              <button className="text-left text-[11px] font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-2 rounded-lg border border-purple-100 transition-colors">
-                Yes, draft the Win-back email.
+            <div className="flex flex-col gap-2 pt-4">
+              <button 
+                onClick={() => handleSendMessage('Yes, draft the Win-back email.')}
+                className="text-left text-[11px] font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-2 rounded-lg border border-purple-100 transition-colors cursor-pointer"
+              >
+                Draft the Win-back email.
               </button>
-              <button className="text-left text-[11px] font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-2 rounded-lg border border-purple-100 transition-colors">
-                Show me other deals lost to Competitor XYZ.
+              <button 
+                onClick={() => handleSendMessage('Show me other deals lost to Competitor XYZ')}
+                className="text-left text-[11px] font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-2 rounded-lg border border-purple-100 transition-colors cursor-pointer"
+              >
+                Show other deals lost to Competitor XYZ
               </button>
             </div>
           </div>
@@ -180,12 +225,20 @@ export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void 
               <input 
                 type="text" 
                 placeholder="Ask Autopsy Engine..." 
-                className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
+                className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-gray-900"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSendMessage(chatInput);
+                  }
+                }}
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors">
-                <ArrowUpRight size={14} />
+              <button 
+                onClick={() => handleSendMessage(chatInput)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors cursor-pointer"
+              >
+                <Send size={14} />
               </button>
             </div>
           </div>
