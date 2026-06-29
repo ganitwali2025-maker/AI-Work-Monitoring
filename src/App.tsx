@@ -1276,6 +1276,13 @@ export default function App() {
                         <Icon size={16} />
                       </div>
                       
+                      {/* Animated Decorative Background Graphic */}
+                      <div className="absolute top-2.5 right-2.5 pointer-events-none opacity-[0.15] overflow-visible">
+                        <Icon size={42} className={`animate-float-slow ${colorScheme.split(' ')[1]}`} />
+                        <Sparkles size={14} className={`absolute -top-1.5 -right-2.5 opacity-60 animate-pulse ${colorScheme.split(' ')[1]}`} />
+                        <div className={`absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-50 animate-ping ${colorScheme.split(' ')[0].replace('bg-', 'bg-').replace('-50', '-500')}`} />
+                      </div>
+                      
                       <h4 className="text-[10px] font-extrabold text-gray-900 leading-tight line-clamp-3 w-full pr-2 break-words text-left">
                         {dept.name}
                       </h4>

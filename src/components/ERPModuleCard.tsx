@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface Props {
@@ -234,6 +234,13 @@ export default function ERPModuleCard({
       <div className={`relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100/50 shadow-sm transition-all active:scale-95 ${cardBg}`}>
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
           <Icon size={16} />
+        </div>
+        
+        {/* Animated Decorative Background Graphic */}
+        <div className="absolute top-2.5 right-2.5 pointer-events-none opacity-[0.15] overflow-visible">
+          <Icon size={42} className={`animate-float-slow ${iconColor.split(' ')[0]}`} />
+          <Sparkles size={14} className={`absolute -top-1.5 -right-2.5 opacity-60 animate-pulse ${iconColor.split(' ')[0]}`} />
+          <div className={`absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-50 animate-ping ${bgColor.split(' ')[0].replace('bg-', 'bg-').replace('-50', '-500')}`} />
         </div>
         
         <div className="w-full">
