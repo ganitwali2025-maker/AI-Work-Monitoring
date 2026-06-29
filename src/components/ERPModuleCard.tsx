@@ -181,10 +181,6 @@ export default function ERPModuleCard({
   const hoverShadow = variantHoverShadows[variant];
 
   const iconContainerClass = `${bgColor} ${iconColor}`;
-
-  const iconContainerClass = `${bgColor} ${iconColor}`;
-
-
   return (
     <motion.div 
       initial={shouldAnimate ? { opacity: 0, rotateY: 90, scale: 0.8 } : false}
