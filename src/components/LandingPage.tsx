@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, User, Leaf, Settings, Users, Activity, Zap, Shield, BarChart2, Phone, Mail, MapPin, Send, Home, CheckCircle2, Box, Database, Bot, PieChart, Brain, LayoutDashboard, RefreshCw, TrendingUp, Target, ArrowUpRight, IndianRupee, Clock, Headset, MessageSquare, Lock, FileText, PenLine, ChevronRight } from 'lucide-react';
+import { Bell, User, Leaf, Settings, Users, Activity, Zap, Shield, BarChart2, Phone, Mail, MapPin, Send, Home, CheckCircle2, Box, Database, Bot, PieChart, Brain, LayoutDashboard, RefreshCw, TrendingUp, Target, ArrowUpRight, IndianRupee, Clock, Headset, MessageSquare, Lock, FileText, PenLine, ChevronRight, Eye, Cloud, Factory } from 'lucide-react';
 
 interface LandingPageProps {
   onLoginSuccess: (role: string) => void;
@@ -7,7 +7,36 @@ interface LandingPageProps {
 
 export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
   const [activeSection, setActiveSection] = useState('home');
-  
+  const [showLogin, setShowLogin] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loginId, setLoginId] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loginId.toLowerCase() === 'admin' && loginPassword === '1234') {
+      setIsAuthenticating(true);
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 15) + 5;
+        if (progress >= 100) {
+          progress = 100;
+          setLoadingProgress(100);
+          clearInterval(interval);
+          setTimeout(() => {
+            onLoginSuccess('admin');
+          }, 400);
+        } else {
+          setLoadingProgress(progress);
+        }
+      }, 300);
+    } else {
+      setLoginError('Invalid ID or Password');
+    }
+  };
+
   // Smooth scroll and active section tracking
   useEffect(() => {
     const handleSmoothScroll = (e: MouseEvent) => {
@@ -40,6 +69,186 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
       sections.forEach((section) => observer.unobserve(section));
     };
   }, []);
+
+  if (showLogin) {
+    return (
+      <div className="min-h-screen text-gray-900 relative flex flex-col font-sans bg-white overflow-x-hidden">
+        {/* Decorative Background blobs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[50rem] h-[50rem] bg-[#f4f9ea] rounded-full blur-[100px] pointer-events-none z-0"></div>
+        <div className="absolute bottom-[-10%] left-[-5%] w-[50rem] h-[50rem] bg-[#fff0ea] rounded-full blur-[100px] pointer-events-none z-0"></div>
+        <div className="absolute top-[30%] left-[20%] w-[30rem] h-[30rem] bg-[#f4f9ea] rounded-full blur-[80px] pointer-events-none z-0 opacity-60"></div>
+        
+        {/* Header */}
+        <header className="relative z-50 w-full flex items-center justify-between px-8 md:px-16 py-4 bg-white border-b border-gray-100 shadow-sm">
+          {/* Logo */}
+          <div className="flex items-center">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center">
+                <svg width="42" height="42" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#4a6b22" />
+                </svg>
+              </div>
+              <div className="flex flex-col justify-center h-[42px]">
+                <span className="font-extrabold text-[#4a6b22] text-[19px] leading-[1.05] tracking-tight mt-1">
+                  Passary<br/>Refractories
+                </span>
+              </div>
+            </div>
+            
+            <div className="hidden xl:flex items-center ml-4 pl-4 border-l-2 border-gray-200 h-[32px]">
+              <span className="font-extrabold text-[#ff5a1f] text-[18px] tracking-tight whitespace-nowrap">
+                Forging Energy-Efficient Solutions
+              </span>
+            </div>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-8 ml-8">
+            <button onClick={() => setShowLogin(false)} className="text-[15px] font-extrabold tracking-widest text-[#4a6b22]">HOME</button>
+            <button className="text-[15px] font-extrabold tracking-widest text-[#334155] hover:text-[#4a6b22]">ABOUT US</button>
+            <button className="text-[15px] font-extrabold tracking-widest text-[#334155] hover:text-[#4a6b22]">SERVICES</button>
+            <button className="text-[15px] font-extrabold tracking-widest text-[#334155] hover:text-[#4a6b22]">CONTACT</button>
+          </nav>
+
+          {/* Action Button */}
+          <div className="flex items-center">
+             <button onClick={() => setShowLogin(false)} className="px-6 py-3 text-[13px] font-extrabold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-[4px] transition-all duration-300 tracking-widest shadow-md flex items-center gap-2">
+               <span>&larr;</span> BACK TO HOME
+             </button>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <div className="relative flex-1 flex flex-col items-center justify-center px-4 md:px-8 lg:px-12 py-10 w-full max-w-[1400px] mx-auto">
+          
+          {isAuthenticating ? (
+            <div className="w-full flex items-center justify-center min-h-[500px] relative z-20">
+              <div className="bg-white rounded-[24px] p-10 md:p-14 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#e1ebd5] flex flex-col items-center justify-center max-w-[450px] w-full animate-in fade-in zoom-in duration-500">
+                
+                {/* Logo */}
+                <div className="flex items-center gap-3 mb-10">
+                  <svg width="36" height="36" viewBox="25 25 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25 75 L 25 45 A 25 18 0 0 1 75 45 L 75 75 L 43 75 L 43 63 L 63 63 L 63 45 A 13 6 0 0 0 37 45 L 37 75 Z" fill="#4a6b22" />
+                  </svg>
+                  <div className="flex flex-col justify-center h-[36px]">
+                    <span className="font-extrabold text-[#4a6b22] text-[17px] leading-[1.05] tracking-tight mt-1">
+                      Passary<br/>Refractories
+                    </span>
+                  </div>
+                </div>
+
+                {/* Circular Progress */}
+                <div className="relative w-32 h-32 mb-8">
+                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#f4f9ea" strokeWidth="8" />
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#729b38" strokeWidth="8" strokeLinecap="round" strokeDasharray="282.7" strokeDashoffset={282.7 - (282.7 * loadingProgress) / 100} className="transition-all duration-300 ease-out" />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center text-[#4a6b22]">
+                    <Factory size={40} className="animate-pulse" />
+                  </div>
+                </div>
+
+                {/* Text */}
+                <h2 className="text-[22px] font-extrabold text-[#2b3a1a] mb-2">Loading...</h2>
+                <p className="text-[13px] text-gray-500 font-medium mb-8 text-center">Please wait while we prepare your dashboard</p>
+
+                {/* Linear Progress */}
+                <div className="w-full flex items-center gap-4 mb-8">
+                  <div className="flex-1 h-3 bg-[#f4f9ea] rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-[#4a6b22] to-[#729b38] rounded-full transition-all duration-300 ease-out" style={{ width: `${loadingProgress}%` }}></div>
+                  </div>
+                  <span className="text-[13px] font-bold text-[#4a6b22] min-w-[32px]">{loadingProgress}%</span>
+                </div>
+
+                {/* Footer tags */}
+                <div className="text-[11px] font-bold text-[#4a6b22] tracking-widest uppercase">
+                  Secure &bull; Smart &bull; Efficient
+                </div>
+
+              </div>
+            </div>
+          ) : (
+          <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 xl:gap-32">
+            {/* Login Card */}
+            <div className="w-full lg:w-[40%] max-w-[500px] bg-white rounded-[24px] p-8 md:p-10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#e1ebd5] relative z-20">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#f4f9ea] text-[#4a6b22] text-[11px] font-extrabold tracking-widest mb-6">
+                <Shield size={14} /> SECURE LOGIN
+              </div>
+              <h1 className="text-[36px] font-black text-[#2b3a1a] tracking-tight mb-3">Welcome Back</h1>
+              <p className="text-[#5c6b4a] text-[14px] leading-relaxed mb-8 font-medium">
+                Securely sign in to access ERP, AI tools, Factory Drawings, Reports, Production Management, and Smart Business Operations.
+              </p>
+
+              <form onSubmit={handleLoginSubmit} className="flex flex-col gap-5">
+                <div>
+                  <label className="block text-[13px] font-extrabold text-[#2b3a1a] mb-2">Employee ID / Email</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                      <User size={18} />
+                    </div>
+                    <input 
+                      type="text" 
+                      value={loginId}
+                      onChange={(e) => setLoginId(e.target.value)}
+                      placeholder="Enter your Employee ID or Email" 
+                      className="w-full bg-white border border-[#e1ebd5] rounded-xl pl-12 pr-4 py-3.5 outline-none focus:border-[#4a6b22] focus:ring-2 focus:ring-[#4a6b22]/20 transition-all text-[14px] placeholder-gray-400"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[13px] font-extrabold text-[#2b3a1a] mb-2">Password</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                      <Lock size={18} />
+                    </div>
+                    <input 
+                      type="password" 
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      placeholder="Enter your password" 
+                      className="w-full bg-white border border-[#e1ebd5] rounded-xl pl-12 pr-12 py-3.5 outline-none focus:border-[#4a6b22] focus:ring-2 focus:ring-[#4a6b22]/20 transition-all text-[14px] placeholder-gray-400"
+                    />
+                    <button type="button" className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600">
+                       <Eye size={18} />
+                    </button>
+                  </div>
+                </div>
+
+                {loginError && <p className="text-red-500 text-xs font-semibold">{loginError}</p>}
+
+                <div className="flex items-center justify-between mt-1">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-[#4a6b22] focus:ring-[#4a6b22]" />
+                    <span className="text-[13px] font-semibold text-[#5c6b4a]">Remember Me</span>
+                  </label>
+                  <a href="#" className="text-[13px] font-extrabold text-[#4a6b22] hover:underline">Forgot Password?</a>
+                </div>
+
+                <button 
+                  type="submit" 
+                  className="w-full bg-[#ff5a1f] hover:bg-[#e64a14] text-white py-4 rounded-xl text-[14px] font-extrabold tracking-widest transition-all mt-4 shadow-md hover:-translate-y-0.5"
+                >
+                  LOGIN
+                </button>
+              </form>
+
+
+            </div>
+
+            {/* Illustration */}
+            <div className="w-full lg:w-[50%] relative flex items-center justify-center lg:justify-end z-20 mix-blend-multiply">
+              <img src="/illustration_v2.png" alt="Login Illustration" className="w-full max-w-[600px] object-contain relative z-20" />
+            </div>
+          </div>
+          )}
+
+
+
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen text-gray-900 relative overflow-hidden flex flex-col font-sans bg-transparent">
@@ -122,7 +331,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
         {/* Action Button */}
         <div className="flex items-center">
            <button 
-             onClick={() => onLoginSuccess('admin')}
+             onClick={() => setShowLogin(true)}
              className="px-8 py-3.5 text-[13px] font-extrabold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-[4px] transition-all duration-300 cursor-pointer tracking-widest shadow-md hover:-translate-y-0.5"
            >
              LOGIN
