@@ -309,7 +309,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
         </aside>
 
         {/* Content */}
-        <main className={`flex-1 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth ${noPadding ? '' : 'p-4 sm:p-8'}`}>
+        <main className={`flex-1 bg-[#F5F7FC] min-w-0 overflow-y-auto scroll-smooth ${noPadding ? 'pb-24 md:pb-0' : 'p-4 sm:p-8 pb-24 md:pb-8'}`}>
           {children}
         </main>
       </div>

@@ -806,7 +806,7 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
                         placeholder={`Enter ${col}...`}
                         value={formData[col] || ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, [col]: e.target.value }))}
-                        className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4A3B69]/20 focus:border-[#4A3B69] transition-all text-gray-900 shadow-sm"
+                        className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4A3B69]/20 focus:border-[#4A3B69] transition-all text-gray-900 shadow-sm"
                       />
                     </div>
                   );
@@ -821,10 +821,10 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
           </div>
           
           <div className="p-6 border-t border-gray-100 bg-white shrink-0 flex justify-end gap-3">
-            <button onClick={() => setIsFormOpen(false)} disabled={isSubmitting} className="px-6 py-2.5 border border-gray-300 bg-white rounded-xl text-gray-700 font-bold hover:bg-gray-100 transition-colors shadow-sm cursor-pointer disabled:opacity-50">
+            <button onClick={() => setIsFormOpen(false)} disabled={isSubmitting} className="px-6 py-3 md:py-2.5 border border-gray-300 bg-white rounded-xl text-gray-700 font-bold hover:bg-gray-100 transition-colors shadow-sm cursor-pointer disabled:opacity-50">
               Cancel
             </button>
-            <button onClick={handleSaveForm} disabled={isSubmitting} className={`px-8 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer ${theme.tableHead} hover:opacity-90 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2`}>
+            <button onClick={handleSaveForm} disabled={isSubmitting} className={`px-8 py-3 md:py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer ${theme.tableHead} hover:opacity-90 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2`}>
               {isSubmitting ? <Activity size={16} className="animate-spin" /> : null}
               {isSubmitting ? 'Saving...' : `Save ${singularName}`}
             </button>
@@ -857,14 +857,14 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
           </div>
           
           <div className="p-5 border-t border-gray-100 bg-white shrink-0 flex justify-end gap-3">
-            <button onClick={() => setIsApprovalModalOpen(false)} disabled={isSubmitting} className="px-5 py-2.5 border border-gray-300 bg-white rounded-xl text-gray-700 font-bold hover:bg-gray-100 transition-colors shadow-sm cursor-pointer disabled:opacity-50">
+            <button onClick={() => setIsApprovalModalOpen(false)} disabled={isSubmitting} className="px-5 py-3 md:py-2.5 border border-gray-300 bg-white rounded-xl text-gray-700 font-bold hover:bg-gray-100 transition-colors shadow-sm cursor-pointer disabled:opacity-50">
               Cancel
             </button>
-            <button onClick={() => handleSubmitApproval('Approved')} disabled={isSubmitting} className="px-6 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2">
+            <button onClick={() => handleSubmitApproval('Approved')} disabled={isSubmitting} className="px-6 py-3 md:py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2">
               {isSubmitting ? <Activity size={16} className="animate-spin" /> : <CheckCircle size={16} />}
               {isSubmitting ? 'Processing...' : 'Approve'}
             </button>
-            <button onClick={() => handleSubmitApproval('Rejected')} disabled={isSubmitting} className="px-6 py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer bg-red-500 hover:bg-red-600 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2">
+            <button onClick={() => handleSubmitApproval('Rejected')} disabled={isSubmitting} className="px-6 py-3 md:py-2.5 rounded-xl text-white font-bold transition-all shadow-sm cursor-pointer bg-red-500 hover:bg-red-600 active:scale-[0.98] disabled:opacity-50 flex items-center gap-2">
               {isSubmitting ? <Activity size={16} className="animate-spin" /> : <XCircle size={16} />}
               {isSubmitting ? 'Processing...' : 'Reject'}
             </button>

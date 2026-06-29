@@ -114,7 +114,7 @@ export default function LeadManagementSheet() {
               <input 
                 type="text" 
                 placeholder="Search leads..." 
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4A3B69]/20 focus:border-[#4A3B69] transition-all bg-gray-50 hover:bg-white text-gray-800"
+                className="w-full pl-10 pr-4 py-3 md:py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4A3B69]/20 focus:border-[#4A3B69] transition-all bg-gray-50 hover:bg-white text-gray-800"
               />
             </div>
           </div>

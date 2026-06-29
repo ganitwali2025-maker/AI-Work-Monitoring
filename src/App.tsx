@@ -816,9 +816,9 @@ export default function App() {
                     </div>
 
                     {/* Mobile wrapped branding tagline: prevents name or tagline from ever being cut */}
-                    <div className="flex flex-col justify-center pb-1 pt-1 ml-2 md:hidden overflow-hidden">
-                      <span className="font-extrabold text-xs sm:text-sm tracking-tight leading-none text-[#8a9a5b] truncate">Passary Refractories</span>
-                      <span className="font-bold text-[8px] text-[#f05627] tracking-tight leading-tight mt-0.5 truncate">Forging Energy-Efficient Solutions</span>
+                    <div className="flex flex-col justify-center pb-1 pt-1 ml-2 md:hidden">
+                      <span className="font-extrabold text-xs sm:text-sm tracking-tight leading-tight text-[#8a9a5b] whitespace-normal">Passary Refractories</span>
+                      <span className="font-bold text-[9px] text-[#f05627] tracking-tight leading-tight mt-0.5 whitespace-normal">Forging Energy-Efficient Solutions</span>
                     </div>
                   </div>
                 </div>
@@ -881,8 +881,8 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden relative">
 
         {/* Main Content Pane */}
-        <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30 pb-20 md:pb-8">
-            <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-4 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30 pb-24 md:pb-8">
+            <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-6 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           
           {/* Background Container */}
           <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#eef6e6] via-[#f7ebd9] to-[#ffdbb8]">
@@ -940,14 +940,14 @@ export default function App() {
                   placeholder="Search modules..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 text-[11px] font-semibold bg-white/95 border-none text-gray-700 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C9C54]/30 transition-all placeholder:text-gray-400 font-sans shadow-sm"
+                  className="w-full pl-10 pr-4 py-3 sm:py-2.5 text-[13px] sm:text-[11px] font-semibold bg-white/95 border-none text-gray-700 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C9C54]/30 transition-all placeholder:text-gray-400 font-sans shadow-sm"
                 />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#244f24]" size={13} strokeWidth={2.5} />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#244f24]" size={16} strokeWidth={2.5} />
               </div>
 
               {/* Help Button */}
-              <button className="w-full sm:w-auto py-2.5 px-4 bg-white/95 border-none text-gray-800 rounded-[12px] hover:bg-gray-50 transition-all duration-200 flex items-center justify-center gap-1.5 text-[11px] font-bold shadow-sm cursor-pointer">
-                <HelpCircle size={14} className="text-[#244f24]" strokeWidth={2.5} />
+              <button className="w-full sm:w-auto py-3 sm:py-2.5 px-4 bg-white/95 border-none text-gray-800 rounded-[12px] hover:bg-gray-50 transition-all duration-200 flex items-center justify-center gap-1.5 text-[13px] sm:text-[11px] font-bold shadow-sm cursor-pointer">
+                <HelpCircle size={16} className="text-[#244f24] sm:w-[14px] sm:h-[14px]" strokeWidth={2.5} />
                 <span>Help Guide</span>
               </button>
             </div>

@@ -91,11 +91,11 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Company Name *</label>
-                  <input name="companyName" required type="text" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="Enter company name" />
+                  <input name="companyName" required type="text" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="Enter company name" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Industry Type</label>
-                  <select name="industryType" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
+                  <select name="industryType" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
                     <option value="">Select Industry</option>
                     <option value="Manufacturing">Manufacturing</option>
                     <option value="IT Services">IT Services</option>
@@ -115,31 +115,31 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                  <input name="contactPerson" required type="text" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="Contact person name" />
+                  <input name="contactPerson" required type="text" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="Contact person name" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Designation</label>
-                  <input name="designation" type="text" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="e.g. Director, Manager" />
+                  <input name="designation" type="text" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="e.g. Director, Manager" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number *</label>
                   <div className="relative">
                     <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                    <input name="mobileNumber" required type="tel" className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="+91" />
+                    <input name="mobileNumber" required type="tel" className="w-full pl-10 pr-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="+91" />
                   </div>
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                   <div className="relative">
                     <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                    <input name="emailAddress" type="email" className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="email@example.com" />
+                    <input name="emailAddress" type="email" className="w-full pl-10 pr-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="email@example.com" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">City / State</label>
                   <div className="relative">
                     <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                    <input name="cityState" type="text" className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="City, State" />
+                    <input name="cityState" type="text" className="w-full pl-10 pr-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="City, State" />
                   </div>
                 </div>
               </div>
@@ -153,18 +153,18 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Product Interest</label>
-                  <input name="productInterest" type="text" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="What are they looking for?" />
+                  <input name="productInterest" type="text" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="What are they looking for?" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Lead Value (₹)</label>
                   <div className="relative">
                     <IndianRupee size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                    <input name="leadValue" type="number" className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="0.00" />
+                    <input name="leadValue" type="number" className="w-full pl-10 pr-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all" placeholder="0.00" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Lead Source</label>
-                  <select name="leadSource" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
+                  <select name="leadSource" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
                     <option value="">Select Source</option>
                     <option value="Website">Website</option>
                     <option value="Referral">Referral</option>
@@ -175,7 +175,7 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Priority Level</label>
-                  <select name="priorityLevel" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
+                  <select name="priorityLevel" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
                     <option value="Low">Low</option>
                     <option value="Medium" selected>Medium</option>
                     <option value="High">High</option>
@@ -183,7 +183,7 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Assigned To</label>
-                  <select name="assignedTo" className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
+                  <select name="assignedTo" className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all text-gray-700">
                     <option value="">Unassigned</option>
                     <option value="Rajesh K">Rajesh K</option>
                     <option value="Priya M">Priya M</option>
@@ -192,7 +192,7 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
                 </div>
                 <div className="md:col-span-3">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Remarks / Notes</label>
-                  <textarea name="remarks" rows={3} className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all resize-none" placeholder="Any additional details..."></textarea>
+                  <textarea name="remarks" rows={3} className="w-full px-4 py-3 md:py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#7A28CB]/20 focus:border-[#7A28CB] outline-none transition-all resize-none" placeholder="Any additional details..."></textarea>
                 </div>
               </div>
             </div>
@@ -205,14 +205,14 @@ export default function NewLeadModal({ isOpen, onClose, onAddLead }: NewLeadModa
           <button 
             type="button"
             onClick={onClose}
-            className="px-6 py-2.5 text-gray-700 font-medium hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+            className="px-6 py-3 md:py-2.5 text-gray-700 font-medium hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
           >
             Cancel
           </button>
           <button 
             type="submit"
             form="new-lead-form"
-            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors shadow-sm cursor-pointer"
+            className="px-6 py-3 md:py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition-colors shadow-sm cursor-pointer"
           >
             Save Lead
           </button>

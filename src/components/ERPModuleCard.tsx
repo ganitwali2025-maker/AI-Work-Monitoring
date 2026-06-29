@@ -201,7 +201,8 @@ export default function ERPModuleCard({
       {/* Sharp Border Gradient Glow Layer */}
       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
       
-      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[15px] border-none transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${cardBg} ${hoverShadow}`}>
+      {/* Desktop/Tablet View */}
+      <div className={`relative z-10 h-full hidden md:flex flex-col justify-between p-6 rounded-[15px] border-none transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${cardBg} ${hoverShadow}`}>
         <div className={`inline-block w-fit p-3 rounded-xl ${iconContainerClass} mb-4 transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
           <Icon size={24} />
         </div>
@@ -226,6 +227,31 @@ export default function ERPModuleCard({
           <button className={`flex items-center gap-2 text-sm font-semibold transition-colors duration-300 ${hoverTextColor}`}>
              Access <span>→</span>
           </button>
+        </div>
+      </div>
+
+      {/* Mobile View */}
+      <div className={`relative z-10 min-h-[72px] flex md:hidden items-center justify-between p-4 rounded-[15px] border border-gray-100/50 shadow-sm transition-all active:bg-gray-50 ${cardBg}`}>
+        <div className="flex items-center gap-3 overflow-hidden">
+          <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+            <Icon size={20} />
+          </div>
+          <div className="overflow-hidden">
+            <div className="flex items-center gap-2">
+              <h4 className="text-[13px] font-bold text-gray-900 leading-snug truncate">{name}</h4>
+              {badge && (
+                <span className={`text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 border shadow-2xs shrink-0 ${badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
+                  {badge}
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-gray-500 truncate mt-0.5">{desc || `Access ${name} module...`}</p>
+          </div>
+        </div>
+        <div className={`pl-2 shrink-0 ${iconColor.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
+           </svg>
         </div>
       </div>
     </motion.div>
