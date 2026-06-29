@@ -902,22 +902,19 @@ export default function App() {
         </header>
 
 
-        {/* Text Toggle Tabs (Acting as Titles) */}
-        <div className="flex gap-6 sm:gap-8 mb-8 border-b border-gray-200/80 bg-gradient-to-r from-[#edf4e8] via-[#f6f9f2] to-transparent px-4 sm:px-6 pt-4 overflow-x-auto hide-scrollbar rounded-t-2xl">
+        {/* Pill-shaped Tabs */}
+        <div className="flex items-center gap-2 sm:gap-3 mb-8 px-4 sm:px-6 pt-2 pb-2 overflow-x-auto hide-scrollbar">
           <button
             onClick={() => {
               setActiveTab('reyo');
               setShouldAnimate(true);
             }}
-            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
-              activeTab === 'reyo' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
+            className={`px-5 py-2.5 text-sm sm:text-[14px] font-bold font-serif flex items-center gap-2 transition-all duration-300 cursor-pointer whitespace-nowrap rounded-full ${
+              activeTab === 'reyo' ? 'bg-[#ff5a1f] text-white shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)]' : 'bg-white/80 hover:bg-white text-slate-600 hover:text-slate-800 border border-gray-200/60 shadow-sm'
             }`}
           >
             <Sparkles size={16} strokeWidth={2.5} />
             PASSARY AI ASSISTANT
-            {activeTab === 'reyo' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
-            )}
           </button>
           
           <button
@@ -925,15 +922,12 @@ export default function App() {
               setActiveTab('modules');
               setShouldAnimate(true);
             }}
-            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
-              activeTab === 'modules' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
+            className={`px-5 py-2.5 text-sm sm:text-[14px] font-bold font-serif flex items-center gap-2 transition-all duration-300 cursor-pointer whitespace-nowrap rounded-full ${
+              activeTab === 'modules' ? 'bg-[#ff5a1f] text-white shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)]' : 'bg-white/80 hover:bg-white text-slate-600 hover:text-slate-800 border border-gray-200/60 shadow-sm'
             }`}
           >
             <Briefcase size={16} strokeWidth={2.5} />
             Work Departments
-            {activeTab === 'modules' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
-            )}
           </button>
           
           <button
@@ -941,15 +935,12 @@ export default function App() {
               setActiveTab('agents');
               setShouldAnimate(true);
             }}
-            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
-              activeTab === 'agents' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
+            className={`px-5 py-2.5 text-sm sm:text-[14px] font-bold font-serif flex items-center gap-2 transition-all duration-300 cursor-pointer whitespace-nowrap rounded-full ${
+              activeTab === 'agents' ? 'bg-[#ff5a1f] text-white shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)]' : 'bg-white/80 hover:bg-white text-slate-600 hover:text-slate-800 border border-gray-200/60 shadow-sm'
             }`}
           >
             <Bot size={16} strokeWidth={2.5} />
             AI Agents
-            {activeTab === 'agents' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
-            )}
           </button>
           
           <button
@@ -957,15 +948,12 @@ export default function App() {
               setActiveTab('approvals');
               setShouldAnimate(true);
             }}
-            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
-              activeTab === 'approvals' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
+            className={`px-5 py-2.5 text-sm sm:text-[14px] font-bold font-serif flex items-center gap-2 transition-all duration-300 cursor-pointer whitespace-nowrap rounded-full ${
+              activeTab === 'approvals' ? 'bg-[#ff5a1f] text-white shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)]' : 'bg-white/80 hover:bg-white text-slate-600 hover:text-slate-800 border border-gray-200/60 shadow-sm'
             }`}
           >
             <ClipboardCheck size={16} strokeWidth={2.5} />
             Approval Center
-            {activeTab === 'approvals' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
-            )}
           </button>
 
           <button
@@ -973,15 +961,12 @@ export default function App() {
               setActiveTab('reports');
               setShouldAnimate(true);
             }}
-            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
-              activeTab === 'reports' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
+            className={`px-5 py-2.5 text-sm sm:text-[14px] font-bold font-serif flex items-center gap-2 transition-all duration-300 cursor-pointer whitespace-nowrap rounded-full ${
+              activeTab === 'reports' ? 'bg-[#ff5a1f] text-white shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)]' : 'bg-white/80 hover:bg-white text-slate-600 hover:text-slate-800 border border-gray-200/60 shadow-sm'
             }`}
           >
             <BarChart size={16} strokeWidth={2.5} />
             Reporting Center
-            {activeTab === 'reports' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
-            )}
           </button>
           
           <button
@@ -989,15 +974,12 @@ export default function App() {
               setActiveTab('my-team');
               setShouldAnimate(true);
             }}
-            className={`pb-3 text-sm sm:text-[15px] font-bold font-serif flex items-center gap-2 transition-all cursor-pointer relative whitespace-nowrap ${
-              activeTab === 'my-team' ? 'text-[#4a6b22]' : 'text-slate-500 hover:text-slate-700'
+            className={`px-5 py-2.5 text-sm sm:text-[14px] font-bold font-serif flex items-center gap-2 transition-all duration-300 cursor-pointer whitespace-nowrap rounded-full ${
+              activeTab === 'my-team' ? 'bg-[#ff5a1f] text-white shadow-[0_4px_12px_rgba(255,90,31,0.3)] hover:shadow-[0_6px_16px_rgba(255,90,31,0.4)]' : 'bg-white/80 hover:bg-white text-slate-600 hover:text-slate-800 border border-gray-200/60 shadow-sm'
             }`}
           >
             <Users size={16} strokeWidth={2.5} />
             My Team
-            {activeTab === 'my-team' && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#4a6b22] rounded-t-sm shadow-[0_0_8px_rgba(74,107,34,0.4)]" />
-            )}
           </button>
         </div>
 
