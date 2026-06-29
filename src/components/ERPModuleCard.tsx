@@ -182,37 +182,8 @@ export default function ERPModuleCard({
 
   const iconContainerClass = `${bgColor} ${iconColor}`;
 
-  const mobileGradient = {
-    crm: 'bg-gradient-to-br from-purple-500 to-purple-600 shadow-purple-500/20',
-    procurement: 'bg-gradient-to-br from-orange-400 to-orange-500 shadow-orange-500/20',
-    inventory: 'bg-gradient-to-br from-green-500 to-green-600 shadow-green-500/20',
-    logistics: 'bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-indigo-500/20',
-    production: 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/20',
-    finance: 'bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-emerald-500/20',
-    hr: 'bg-gradient-to-br from-rose-500 to-rose-600 shadow-rose-500/20',
-    director: 'bg-gradient-to-br from-violet-500 to-violet-600 shadow-violet-500/20',
-    'vendor-master': 'bg-gradient-to-br from-sky-400 to-sky-500 shadow-sky-500/20',
-    marketing: 'bg-gradient-to-br from-pink-500 to-pink-600 shadow-pink-500/20',
-    laboratory: 'bg-gradient-to-br from-cyan-400 to-cyan-500 shadow-cyan-500/20',
-    sales: 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/20',
-    dashboard: 'bg-gradient-to-br from-rose-500 to-rose-600 shadow-rose-500/20',
-  }[variant] || 'bg-gradient-to-br from-gray-400 to-gray-500 shadow-gray-500/20';
+  const iconContainerClass = `${bgColor} ${iconColor}`;
 
-  const mobileIconColor = {
-    crm: 'text-purple-600',
-    procurement: 'text-orange-500',
-    inventory: 'text-green-600',
-    logistics: 'text-indigo-600',
-    production: 'text-blue-600',
-    finance: 'text-emerald-600',
-    hr: 'text-rose-600',
-    director: 'text-violet-600',
-    'vendor-master': 'text-sky-500',
-    marketing: 'text-pink-600',
-    laboratory: 'text-cyan-500',
-    sales: 'text-blue-600',
-    dashboard: 'text-rose-600',
-  }[variant] || 'text-gray-600';
 
   return (
     <motion.div 
@@ -263,21 +234,21 @@ export default function ERPModuleCard({
       </div>
 
       {/* Mobile View */}
-      <div className={`relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] shadow-lg transition-all active:scale-95 overflow-hidden border-none ${mobileGradient}`}>
-        <div className={`w-8 h-8 rounded-full bg-white/95 flex items-center justify-center shrink-0 mb-2 shadow-sm ${mobileIconColor}`}>
-          <Icon size={16} strokeWidth={2.5} />
+      <div className={`relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100/50 shadow-sm transition-all active:scale-95 ${cardBg}`}>
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
+          <Icon size={16} />
         </div>
         
-        {/* Animated Decorative Background Graphic */}
-        <div className="absolute top-2.5 right-2.5 pointer-events-none opacity-[0.25] text-white overflow-visible">
-          <Icon size={42} className="animate-float-slow" />
-          <Sparkles size={14} className="absolute -top-1.5 -right-2.5 opacity-80 animate-pulse text-white" />
-          <div className="absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-60 animate-ping bg-white" />
+        {/* Decorative Background Graphic (No Animation) */}
+        <div className={`absolute top-2.5 right-2.5 pointer-events-none opacity-[0.12] overflow-visible ${iconColor.split(' ')[0]}`}>
+          <Icon size={42} />
+          <Sparkles size={14} className="absolute -top-1.5 -right-2.5 opacity-60" />
+          <div className="absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-50 bg-current" />
         </div>
         
         <div className="w-full">
           <div className="flex items-start gap-1">
-            <h4 className="text-[10px] font-extrabold text-white leading-tight line-clamp-3 w-full pr-2 break-words text-left drop-shadow-sm">{name}</h4>
+            <h4 className="text-[10px] font-extrabold text-gray-900 leading-tight line-clamp-3 w-full pr-2 break-words text-left">{name}</h4>
           </div>
           {badge && (
             <span className={`inline-block mt-1 text-[8px] font-bold tracking-wider rounded px-1.5 py-0.5 border shadow-2xs ${badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
@@ -286,7 +257,7 @@ export default function ERPModuleCard({
           )}
         </div>
 
-        <div className="absolute bottom-2.5 right-2.5 text-white/90">
+        <div className={`absolute bottom-2.5 right-2.5 ${iconColor.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
            </svg>

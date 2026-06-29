@@ -1242,35 +1242,20 @@ export default function App() {
               {filteredDepartments.length > 0 ? (
                 filteredDepartments.map((dept) => {
                   const Icon = dept.icon;
-                  const mobileGradient = {
-                    crm: 'bg-gradient-to-br from-purple-500 to-purple-600 shadow-purple-500/20',
-                    procurement: 'bg-gradient-to-br from-orange-400 to-orange-500 shadow-orange-500/20',
-                    inventory: 'bg-gradient-to-br from-green-500 to-green-600 shadow-green-500/20',
-                    logistics: 'bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-indigo-500/20',
-                    production: 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/20',
-                    finance: 'bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-emerald-500/20',
-                    hr: 'bg-gradient-to-br from-rose-500 to-rose-600 shadow-rose-500/20',
-                    director: 'bg-gradient-to-br from-violet-500 to-violet-600 shadow-violet-500/20',
-                    'vendor-master': 'bg-gradient-to-br from-sky-400 to-sky-500 shadow-sky-500/20',
-                    marketing: 'bg-gradient-to-br from-pink-500 to-pink-600 shadow-pink-500/20',
-                    laboratory: 'bg-gradient-to-br from-cyan-400 to-cyan-500 shadow-cyan-500/20',
-                    sales: 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/20',
-                  }[dept.variant] || 'bg-gradient-to-br from-gray-400 to-gray-500 shadow-gray-500/20';
-
-                  const iconColorClass = {
-                    crm: 'text-purple-600',
-                    procurement: 'text-orange-500',
-                    inventory: 'text-green-600',
-                    logistics: 'text-indigo-600',
-                    production: 'text-blue-600',
-                    finance: 'text-emerald-600',
-                    hr: 'text-rose-600',
-                    director: 'text-violet-600',
-                    'vendor-master': 'text-sky-500',
-                    marketing: 'text-pink-600',
-                    laboratory: 'text-cyan-500',
-                    sales: 'text-blue-600',
-                  }[dept.variant] || 'text-gray-600';
+                  const colorScheme = {
+                    crm: 'bg-purple-50 text-purple-600 border-purple-100',
+                    procurement: 'bg-amber-50 text-amber-600 border-amber-100',
+                    inventory: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                    logistics: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+                    production: 'bg-sky-50 text-sky-600 border-sky-100',
+                    finance: 'bg-teal-50 text-teal-600 border-teal-100',
+                    hr: 'bg-rose-50 text-rose-600 border-rose-100',
+                    director: 'bg-violet-50 text-violet-600 border-violet-100',
+                    'vendor-master': 'bg-blue-50 text-blue-600 border-blue-100',
+                    marketing: 'bg-pink-50 text-pink-600 border-pink-100',
+                    laboratory: 'bg-cyan-50 text-cyan-600 border-cyan-100',
+                    sales: 'bg-blue-50 text-blue-600 border-blue-100',
+                  }[dept.variant] || 'bg-gray-50 text-gray-600 border-gray-100';
 
                   return (
                     <div
@@ -1285,24 +1270,24 @@ export default function App() {
                           setCurrentView(dept.view);
                         }
                       }}
-                      className={`${mobileGradient} rounded-[20px] p-3 sm:p-4 shadow-lg flex flex-col justify-between items-start relative transition-all active:scale-95 cursor-pointer h-[120px] overflow-hidden border-none`}
+                      className="bg-white rounded-[20px] p-3 sm:p-4 border border-gray-100 shadow-sm flex flex-col justify-between items-start relative transition-all active:scale-95 cursor-pointer h-[120px]"
                     >
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mb-2 bg-white/95 shadow-sm ${iconColorClass}`}>
-                        <Icon size={16} strokeWidth={2.5} />
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${colorScheme}`}>
+                        <Icon size={16} />
                       </div>
                       
-                      {/* Animated Decorative Background Graphic */}
-                      <div className="absolute top-2.5 right-2.5 pointer-events-none opacity-[0.25] text-white overflow-visible">
-                        <Icon size={42} className="animate-float-slow" />
-                        <Sparkles size={14} className="absolute -top-1.5 -right-2.5 opacity-80 animate-pulse text-white" />
-                        <div className="absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-60 animate-ping bg-white" />
+                      {/* Decorative Background Graphic (No Animation) */}
+                      <div className={`absolute top-2.5 right-2.5 pointer-events-none opacity-[0.12] overflow-visible ${colorScheme.split(' ')[1]}`}>
+                        <Icon size={42} />
+                        <Sparkles size={14} className="absolute -top-1.5 -right-2.5 opacity-60" />
+                        <div className="absolute bottom-1 -left-1.5 w-2 h-2 rounded-full opacity-50 bg-current" />
                       </div>
                       
-                      <h4 className="text-[10px] font-extrabold text-white leading-tight line-clamp-3 w-full pr-2 break-words text-left drop-shadow-sm">
+                      <h4 className="text-[10px] font-extrabold text-gray-900 leading-tight line-clamp-3 w-full pr-2 break-words text-left">
                         {dept.name}
                       </h4>
                       
-                      <div className="absolute bottom-2.5 right-2.5 text-white/90">
+                      <div className="absolute bottom-2.5 right-2.5 text-gray-400">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
                         </svg>
