@@ -882,7 +882,7 @@ export default function App() {
 
         {/* Main Content Pane */}
         <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gray-50/30 pb-24 md:pb-8">
-            <header className="mb-6 select-none relative overflow-hidden rounded-[24px] border border-gray-100/50 shadow-sm px-6 py-6 lg:px-8 lg:py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <header className="mb-8 select-none relative overflow-hidden rounded-[28px] border border-gray-100/50 shadow-sm px-8 py-10 lg:px-12 lg:py-12 flex flex-col md:flex-row justify-between items-center gap-6">
           
           {/* Background Container */}
           <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#eef6e6] via-[#f7ebd9] to-[#ffdbb8]">
@@ -905,7 +905,7 @@ export default function App() {
           </div>
 
           <div className="relative z-10 flex flex-col items-start w-full md:w-[65%]">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#113a1a] tracking-tight leading-tight mb-2 font-serif">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#113a1a] tracking-tight leading-tight mb-3 font-serif">
               {activeTab === 'reyo' && 'How can PASSARY AI ASSISTANT assist you today?'}
               {activeTab === 'modules' && 'What would you like to work on today?'}
               {activeTab === 'agents' && 'Which AI Agent would you like to consult?'}
@@ -958,7 +958,7 @@ export default function App() {
             <img 
               src="/dashboard-illustration-5.png" 
               alt="Working illustration" 
-              className="w-[140px] md:max-w-[180px] lg:max-w-[220px] object-contain animate-float-slow filter brightness-[1.02] contrast-[1.05]" 
+              className="w-[160px] md:max-w-[220px] lg:max-w-[280px] object-contain animate-float-slow filter brightness-[1.02] contrast-[1.05]" 
             />
           </div>
         </header>

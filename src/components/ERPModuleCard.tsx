@@ -201,36 +201,40 @@ export default function ERPModuleCard({
       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
       
       {/* Desktop/Tablet View */}
-      <div className={`relative z-10 h-full hidden md:flex flex-col justify-between p-6 rounded-[15px] border-none transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${cardBg} ${hoverShadow}`}>
-        <div className={`inline-block w-fit p-3 rounded-xl ${iconContainerClass} mb-4 transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
-          <Icon size={24} />
+      <div className={`relative z-10 h-full hidden md:flex flex-col justify-between p-6 rounded-[15px] border border-gray-100/60 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.08)] bg-white bg-gradient-to-br from-white via-[#7C9C54]/[0.04] to-[#F2642A]/[0.04] ${hoverShadow} overflow-hidden`}>
+        {/* Colorful Animated Background Blobs based on variant gradient */}
+        <div className={`absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br ${gradient} rounded-full blur-[30px] opacity-0 group-hover:opacity-15 transition-all duration-700 ease-in-out group-hover:scale-125 z-0`} />
+        <div className={`absolute -left-10 -bottom-10 w-32 h-32 bg-gradient-to-tr ${gradient} rounded-full blur-[40px] opacity-0 group-hover:opacity-20 transition-all duration-700 ease-in-out group-hover:scale-150 delay-150 z-0`} />
+
+        <div className={`relative z-10 inline-block w-fit p-4 rounded-full ${iconContainerClass} mb-4 transition-all duration-500 group-hover:scale-110 shadow-sm`}>
+          <Icon size={26} strokeWidth={1.5} className="transition-transform duration-700 group-hover:rotate-[360deg]" />
         </div>
         
-        <div>
-           <h3 className={`font-serif text-lg font-semibold text-gray-950 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
+        <div className="relative z-10">
+           <h3 className={`font-serif text-lg font-bold text-gray-900 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
              {name}
            </h3>
-           <p className="text-sm text-gray-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+           <p className="text-[13px] text-gray-500 font-medium leading-relaxed opacity-90 group-hover:opacity-100 transition-opacity duration-300">
              {desc || `Access module functionalities for ${name}...`}
            </p>
         </div>
         
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between relative z-10">
           {badge ? (
-            <span className={`text-[10px] font-bold tracking-wider rounded px-2.5 py-1 border shadow-xs ${badgeColorClass || 'bg-gray-50 text-gray-400 border-gray-150'}`}>
+            <span className={`text-[11px] font-bold tracking-wide rounded px-3 py-1.5 ${badgeColorClass || 'bg-gray-50 text-gray-400'}`}>
               {badge}
             </span>
           ) : (
             <span className="text-xs font-medium text-gray-400">MODULE</span>
           )}
-          <button className={`flex items-center gap-2 text-sm font-semibold transition-colors duration-300 ${hoverTextColor}`}>
-             Access <span>→</span>
+          <button className={`flex items-center gap-1.5 text-sm font-bold transition-colors duration-300 ${iconColor.split(' ')[0]}`}>
+             Access <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
         </div>
       </div>
 
       {/* Mobile View */}
-      <div className="relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100 shadow-sm transition-all active:scale-95 bg-white">
+      <div className="relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border border-gray-100 shadow-md transition-all active:scale-95 bg-white bg-gradient-to-br from-white via-[#7C9C54]/[0.04] to-[#F2642A]/[0.04] overflow-hidden">
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 border ${iconContainerClass.split(' ').filter(c => !c.includes('hover')).join(' ')}`}>
           <Icon size={16} />
         </div>
