@@ -131,7 +131,7 @@ export default function SettingsWorkspace({ onBack }: Props) {
             {/* Page Header */}
             <div className="flex items-start justify-between mb-8">
               <div>
-                <h1 className="text-2xl font-black text-gray-900 mb-1">System Settings</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-1">System Settings</h1>
                 <p className="text-[13px] text-gray-500 font-medium">Manage and configure all core system preferences and application settings.</p>
               </div>
               <button className="flex items-center gap-2 bg-[#4a6b22] hover:bg-[#3b591b] text-white px-5 py-2.5 rounded-lg text-[13px] font-bold shadow-md transition-all">

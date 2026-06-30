@@ -1,165 +1,42 @@
 import React from 'react';
 import { LucideIcon, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useThemeContext } from '../context/ThemeContext';
 
-interface AIAgentCardProps {
+interface Props {
+  key?: any;
   name: string;
   icon: LucideIcon;
   desc: string;
-  badge: string;
-  badgeColorClass: string;
-  onClick: () => void;
+  badge?: string;
+  badgeColorClass?: string;
+  onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   variant: 'crm' | 'procurement' | 'inventory' | 'logistics' | 'production' | 'finance' | 'hr' | 'director' | 'vendor-master' | 'marketing' | 'dashboard' | 'laboratory' | 'sales';
   isInner?: boolean;
   hideAgentText?: boolean;
+  status?: 'active' | 'learning' | 'idle';
+  metrics?: { label: string; value: string }[];
 }
 
-const variantGradients: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'from-purple-400 to-purple-600',
-  procurement: 'from-amber-400 to-amber-600',
-  inventory: 'from-emerald-400 to-emerald-600',
-  logistics: 'from-indigo-400 to-indigo-600',
-  production: 'from-sky-500 to-blue-600',
-  finance: 'from-teal-400 to-teal-600',
-  hr: 'from-rose-400 to-rose-600',
-  director: 'from-violet-500 to-fuchsia-600',
-  'vendor-master': 'from-[#2F3FBF] to-[#5B6FFF]',
-  marketing: 'from-[#C026D3] to-[#86198F]',
-  dashboard: 'from-[#ff5a7d] to-[#ff8e53]',
-  laboratory: 'from-[#06B6D4] to-[#0891B2]',
-  sales: 'from-blue-500 to-blue-700',
-};
-
-const variantBgColors: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'bg-purple-100',
-  procurement: 'bg-amber-100',
-  inventory: 'bg-emerald-100',
-  logistics: 'bg-indigo-100',
-  production: 'bg-sky-100',
-  finance: 'bg-teal-100',
-  hr: 'bg-rose-100',
-  director: 'bg-violet-100',
-  'vendor-master': 'bg-[#EAEDFF]',
-  marketing: 'bg-fuchsia-100',
-  dashboard: 'bg-rose-100',
-  laboratory: 'bg-cyan-100',
-  sales: 'bg-blue-100',
-};
-
-const variantIconColors: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'text-purple-600',
-  procurement: 'text-amber-700',
-  inventory: 'text-emerald-600',
-  logistics: 'text-indigo-600',
-  production: 'text-sky-600',
-  finance: 'text-teal-700',
-  hr: 'text-rose-600',
-  director: 'text-violet-600',
-  'vendor-master': 'text-[#2F3FBF]',
-  marketing: 'text-fuchsia-600',
-  dashboard: 'text-rose-600',
-  laboratory: 'text-cyan-600',
-  sales: 'text-blue-600',
-};
-
-const innerIconBgs: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'bg-purple-50/70 group-hover:bg-purple-100',
-  procurement: 'bg-amber-50/70 group-hover:bg-amber-100',
-  inventory: 'bg-emerald-50/70 group-hover:bg-emerald-100',
-  logistics: 'bg-indigo-50/70 group-hover:bg-indigo-100',
-  production: 'bg-sky-50/70 group-hover:bg-sky-100',
-  finance: 'bg-teal-50/70 group-hover:bg-teal-100',
-  hr: 'bg-rose-50/70 group-hover:bg-rose-100',
-  director: 'bg-violet-50/70 group-hover:bg-violet-100',
-  'vendor-master': 'bg-[#EAEDFF]/60 group-hover:bg-[#EAEDFF]',
-  marketing: 'bg-fuchsia-50/70 group-hover:bg-fuchsia-100',
-  dashboard: 'bg-rose-50/70 group-hover:bg-rose-100',
-  laboratory: 'bg-cyan-50/70 group-hover:bg-cyan-100',
-  sales: 'bg-blue-50/70 group-hover:bg-blue-100',
-};
-
-const innerIconColors: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'text-purple-500 group-hover:text-purple-600',
-  procurement: 'text-amber-600 group-hover:text-amber-700',
-  inventory: 'text-emerald-500 group-hover:text-emerald-600',
-  logistics: 'text-indigo-500 group-hover:text-indigo-600',
-  production: 'text-sky-500 group-hover:text-sky-600',
-  finance: 'text-teal-600 group-hover:text-teal-700',
-  hr: 'text-rose-500 group-hover:text-rose-600',
-  director: 'text-violet-500 group-hover:text-violet-600',
-  'vendor-master': 'text-[#2F3FBF]/80 group-hover:text-[#2F3FBF]',
-  marketing: 'text-fuchsia-500 group-hover:text-fuchsia-600',
-  dashboard: 'text-rose-500 group-hover:text-rose-600',
-  laboratory: 'text-cyan-500 group-hover:text-cyan-600',
-  sales: 'text-blue-500 group-hover:text-blue-600',
-};
-
-const variantCardBgs: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'bg-white',
-  procurement: 'bg-white',
-  inventory: 'bg-white',
-  logistics: 'bg-white',
-  production: 'bg-white',
-  finance: 'bg-white',
-  hr: 'bg-white',
-  director: 'bg-white',
-  'vendor-master': 'bg-white',
-  marketing: 'bg-white',
-  dashboard: 'bg-white',
-  laboratory: 'bg-white',
-  sales: 'bg-white',
-};
-
-const innerCardBgs: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'bg-white',
-  procurement: 'bg-white',
-  inventory: 'bg-white',
-  logistics: 'bg-white',
-  production: 'bg-white',
-  finance: 'bg-white',
-  hr: 'bg-white',
-  director: 'bg-white',
-  'vendor-master': 'bg-white',
-  marketing: 'bg-white',
-  dashboard: 'bg-white',
-  laboratory: 'bg-white',
-  sales: 'bg-white',
-};
-
-const variantHoverShadows: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'group-hover:shadow-[0_8px_30px_rgba(168,85,247,0.3)]',
-  procurement: 'group-hover:shadow-[0_8px_30px_rgba(245,158,11,0.3)]',
-  inventory: 'group-hover:shadow-[0_8px_30px_rgba(16,185,129,0.3)]',
-  logistics: 'group-hover:shadow-[0_8px_30px_rgba(99,102,241,0.3)]',
-  production: 'group-hover:shadow-[0_8px_30px_rgba(14,165,233,0.3)]',
-  finance: 'group-hover:shadow-[0_8px_30px_rgba(20,184,166,0.3)]',
-  hr: 'group-hover:shadow-[0_8px_30px_rgba(244,63,94,0.3)]',
-  director: 'group-hover:shadow-[0_8px_30px_rgba(139,92,246,0.3)]',
-  'vendor-master': 'group-hover:shadow-[0_8px_30px_rgba(47,63,191,0.3)]',
-  marketing: 'group-hover:shadow-[0_8px_30px_rgba(217,70,239,0.3)]',
-  dashboard: 'group-hover:shadow-[0_8px_30px_rgba(255,90,125,0.3)]',
-  laboratory: 'group-hover:shadow-[0_8px_30px_rgba(6,182,212,0.3)]',
-  sales: 'group-hover:shadow-[0_8px_30px_rgba(59,130,246,0.3)]',
-};
-
-const variantHoverTextColors: Record<AIAgentCardProps['variant'], string> = {
-  crm: 'group-hover:text-purple-700',
-  procurement: 'group-hover:text-amber-700',
-  inventory: 'group-hover:text-emerald-700',
-  logistics: 'group-hover:text-indigo-700',
-  production: 'group-hover:text-sky-700',
-  finance: 'group-hover:text-teal-700',
-  hr: 'group-hover:text-rose-700',
-  director: 'group-hover:text-violet-700',
-  'vendor-master': 'group-hover:text-[#2F3FBF]',
-  marketing: 'group-hover:text-fuchsia-700',
-  dashboard: 'group-hover:text-rose-700',
-  laboratory: 'group-hover:text-cyan-700',
-  sales: 'group-hover:text-blue-700',
-};
-
-const AIAgentCard: React.FC<AIAgentCardProps & { index?: number, shouldAnimate?: boolean }> = ({ name, icon: Icon, desc, badge, badgeColorClass, variant, isInner = true, hideAgentText = false, onClick, index = 0, shouldAnimate = true }) => {
-  // Derive agent name and short desc
+export default function AIAgentCard({ 
+  name, 
+  icon: Icon, 
+  desc, 
+  badge,
+  onClick, 
+  onMouseEnter, 
+  onMouseLeave, 
+  variant, 
+  isInner = true,
+  hideAgentText = false,
+  status = 'active',
+  metrics,
+  index = 0,
+  shouldAnimate = true
+}: Props & { index?: number, shouldAnimate?: boolean }) {
+  
   let agentName = name
     .replace(' & Customer Management', '')
     .replace(' & Revenue Management', '')
@@ -176,69 +53,195 @@ const AIAgentCard: React.FC<AIAgentCardProps & { index?: number, shouldAnimate?:
     agentName = agentName === 'Director' ? 'Director Agent' : `${agentName} Agent`;
   }
 
+  // Format description
   let shortDesc = desc.replace(/^Manage\s+/i, '').replace(/^Monitor\s+/i, '').replace(/^Executive\s+/i, 'Executive ');
   shortDesc = shortDesc.charAt(0).toUpperCase() + shortDesc.slice(1);
 
-  const gradient = variantGradients[variant];
-  const bgColor = isInner ? innerIconBgs[variant] : variantBgColors[variant];
-  const iconColor = isInner ? innerIconColors[variant] : variantIconColors[variant];
-  const cardBg = isInner ? innerCardBgs[variant] : variantCardBgs[variant];
-  const hoverTextColor = variantHoverTextColors[variant];
-  const hoverShadow = variantHoverShadows[variant];
-  const iconContainerClass = `${bgColor} ${iconColor}`;
+  const { themeMode } = useThemeContext();
+
+  const getTheme = (v: string) => {
+    if (themeMode === 'dual') {
+      const isGreenTheme = ['marketing', 'procurement', 'inventory', 'production', 'hr', 'laboratory'].includes(v);
+      if (isGreenTheme) {
+        return {
+          gradient: 'from-[#e0e8cf]', iconBg: 'bg-[#eef2e6]', iconColor: 'text-[#6a7c41]',
+          borderColor: 'border-[#d3e0b8]', badgeBg: 'bg-[#e0e8cf]', badgeText: 'text-[#5a6a35]',
+          glow: 'hover:shadow-[0_0_20px_rgba(106,124,65,0.4)]'
+        };
+      } else {
+        return {
+          gradient: 'from-[#fce6d7]', iconBg: 'bg-[#fdf3ec]', iconColor: 'text-[#b8673b]',
+          borderColor: 'border-[#f7d6c1]', badgeBg: 'bg-[#fce6d7]', badgeText: 'text-[#9c5329]',
+          glow: 'hover:shadow-[0_0_20px_rgba(184,103,59,0.4)]'
+        };
+      }
+    }
+
+    // Colorful mode
+    switch (v) {
+      case 'crm': return {
+        gradient: 'from-purple-100', iconBg: 'bg-purple-50', iconColor: 'text-purple-600',
+        borderColor: 'border-purple-300', badgeBg: 'bg-purple-100', badgeText: 'text-purple-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(168,85,247,0.45)]'
+      };
+      case 'marketing': return {
+        gradient: 'from-red-100', iconBg: 'bg-red-50', iconColor: 'text-red-600',
+        borderColor: 'border-red-300', badgeBg: 'bg-red-100', badgeText: 'text-red-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(239,68,68,0.45)]'
+      };
+      case 'sales': return {
+        gradient: 'from-blue-100', iconBg: 'bg-blue-50', iconColor: 'text-blue-600',
+        borderColor: 'border-blue-300', badgeBg: 'bg-blue-100', badgeText: 'text-blue-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(59,130,246,0.45)]'
+      };
+      case 'procurement': return {
+        gradient: 'from-amber-100', iconBg: 'bg-amber-50', iconColor: 'text-amber-600',
+        borderColor: 'border-amber-300', badgeBg: 'bg-amber-100', badgeText: 'text-amber-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(245,158,11,0.45)]'
+      };
+      case 'inventory': return {
+        gradient: 'from-emerald-100', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600',
+        borderColor: 'border-emerald-300', badgeBg: 'bg-emerald-100', badgeText: 'text-emerald-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(16,185,129,0.45)]'
+      };
+      case 'logistics': return {
+        gradient: 'from-indigo-100', iconBg: 'bg-indigo-50', iconColor: 'text-indigo-600',
+        borderColor: 'border-indigo-300', badgeBg: 'bg-indigo-100', badgeText: 'text-indigo-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(99,102,241,0.45)]'
+      };
+      case 'production': return {
+        gradient: 'from-sky-100', iconBg: 'bg-sky-50', iconColor: 'text-sky-600',
+        borderColor: 'border-sky-300', badgeBg: 'bg-sky-100', badgeText: 'text-sky-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(14,165,233,0.45)]'
+      };
+      case 'finance': return {
+        gradient: 'from-teal-100', iconBg: 'bg-teal-50', iconColor: 'text-teal-600',
+        borderColor: 'border-teal-300', badgeBg: 'bg-teal-100', badgeText: 'text-teal-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(20,184,166,0.45)]'
+      };
+      case 'hr': return {
+        gradient: 'from-rose-100', iconBg: 'bg-rose-50', iconColor: 'text-rose-600',
+        borderColor: 'border-rose-300', badgeBg: 'bg-rose-100', badgeText: 'text-rose-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(244,63,94,0.45)]'
+      };
+      case 'director': return {
+        gradient: 'from-fuchsia-100', iconBg: 'bg-fuchsia-50', iconColor: 'text-fuchsia-600',
+        borderColor: 'border-fuchsia-300', badgeBg: 'bg-fuchsia-100', badgeText: 'text-fuchsia-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(217,70,239,0.45)]'
+      };
+      case 'vendor-master': return {
+        gradient: 'from-violet-100', iconBg: 'bg-violet-50', iconColor: 'text-violet-600',
+        borderColor: 'border-violet-300', badgeBg: 'bg-violet-100', badgeText: 'text-violet-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(139,92,246,0.45)]'
+      };
+      case 'laboratory': return {
+        gradient: 'from-cyan-100', iconBg: 'bg-cyan-50', iconColor: 'text-cyan-600',
+        borderColor: 'border-cyan-300', badgeBg: 'bg-cyan-100', badgeText: 'text-cyan-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(6,182,212,0.45)]'
+      };
+      default: return {
+        gradient: 'from-gray-100', iconBg: 'bg-gray-50', iconColor: 'text-gray-600',
+        borderColor: 'border-gray-300', badgeBg: 'bg-gray-100', badgeText: 'text-gray-700',
+        glow: 'hover:shadow-[0_0_25px_rgba(156,163,175,0.45)]'
+      };
+    }
+  };
+
+  const theme = getTheme(variant);
 
   return (
     <motion.div 
       initial={shouldAnimate ? { opacity: 0, rotateY: 90, scale: 0.8 } : false}
       animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-      whileHover={{ y: -6, scale: 1.02 }}
+      whileHover={{ y: -6, scale: 1.01 }}
       transition={{ 
         delay: index * 0.08,
         type: 'spring', 
         stiffness: 260, 
         damping: 20 
       }}
-      className="group relative h-full rounded-2xl p-[1px] cursor-pointer"
+      className="group relative h-full cursor-pointer font-serif"
       onClick={onClick}
     >
-      {/* Sharp Border Gradient Glow Layer */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
-      
-      <div className={`relative z-10 h-full flex flex-col justify-between p-6 rounded-[15px] border-none transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${cardBg} ${hoverShadow}`}>
-        <div className="flex justify-between items-start mb-4">
-          <div className={`inline-block w-fit p-3 rounded-xl ${iconContainerClass} transition-all duration-300 group-hover:scale-115 group-hover:rotate-3 shadow-sm`}>
-            <Icon size={24} />
+      {/* Desktop/Tablet View */}
+      <div className={`relative z-10 h-full min-h-[220px] hidden md:flex flex-col justify-between p-6 rounded-[16px] border ${theme.borderColor} bg-white shadow-sm ${theme.glow} transition-all duration-300 overflow-hidden`}>
+        {/* Top Right Curved Background Swoosh */}
+        <div className={`absolute top-0 right-0 w-[55%] h-[60%] bg-gradient-to-bl ${theme.gradient} to-transparent opacity-60 rounded-bl-[100%] pointer-events-none transition-all duration-500 group-hover:opacity-80 group-hover:scale-105 origin-top-right`} />
+
+        <div className="relative z-10">
+          <div className="flex justify-between items-start mb-4">
+            {/* Top Icon Container */}
+            <div className={`inline-flex items-center justify-center shrink-0 w-[52px] h-[52px] rounded-full ${theme.iconBg} ${theme.iconColor} transition-transform duration-500 group-hover:scale-110`}>
+              <Icon size={24} strokeWidth={2} className="transition-transform duration-700 group-hover:rotate-[360deg]" />
+            </div>
+            {!hideAgentText && (
+              <div className="flex items-center gap-1 bg-emerald-50 rounded-full px-1.5 py-0.5 border border-emerald-100 shadow-sm">
+                <div className={`w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse`} />
+                <span className={`text-[8px] font-bold text-emerald-600 tracking-wider uppercase`}>Live</span>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-1.5 bg-white rounded-full px-2.5 py-1 shadow-sm border border-gray-100">
-            <div className={`w-2 h-2 rounded-full bg-emerald-500 animate-pulse`} />
-            <span className={`text-[10px] font-bold text-emerald-600 tracking-wide uppercase`}>Live</span>
+
+          {/* Text Content */}
+          <div>
+             <h3 className="text-[17px] leading-snug font-bold mb-1.5 text-[#113a1a]">
+               {agentName}
+             </h3>
+             <p className="text-[13px] text-gray-500 leading-relaxed pr-2 font-medium">
+               {shortDesc}
+             </p>
           </div>
         </div>
         
-        <div>
-           <h3 className={`font-serif text-lg font-semibold text-gray-950 mb-2 transition-colors duration-300 ${hoverTextColor}`}>
-             {agentName}
-           </h3>
-           <p className="text-sm text-gray-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-             {shortDesc}
-           </p>
-        </div>
-        
-        <div className="mt-4 flex items-center justify-between">
+        {/* Bottom Section */}
+        <div className="mt-5 flex items-end justify-between relative z-10 w-full">
+          {/* Badge */}
           {badge ? (
-            <span className={`text-[10px] font-bold tracking-wider rounded px-2.5 py-1 border shadow-xs ${badgeColorClass}`}>
+            <div className={`flex items-center text-[11px] font-bold tracking-wide rounded-[4px] px-2.5 py-1 ${theme.badgeBg} ${theme.badgeText}`}>
+              {badge}
+            </div>
+          ) : (
+            <div className="text-[11px] font-medium text-gray-400">{hideAgentText ? 'MODULE' : 'AI AGENT'}</div>
+          )}
+          
+          {/* Access Link */}
+          <button className={`flex items-center gap-1.5 text-[13px] font-bold transition-all duration-300 ${theme.iconColor} group-hover:translate-x-1`}>
+             Open <span className="font-bold">→</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile View */}
+      <div className={`relative z-10 h-[120px] flex md:hidden flex-col justify-between items-start p-3 sm:p-4 rounded-[20px] border ${theme.borderColor} shadow-sm ${theme.glow} transition-all active:scale-95 bg-white overflow-hidden`}>
+        <div className="flex items-center justify-between w-full">
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mb-2 ${theme.iconBg} ${theme.iconColor}`}>
+            <Icon size={16} />
+          </div>
+          {!hideAgentText && (
+            <div className="flex items-center gap-1.5 bg-emerald-50 rounded-full px-2 py-0.5 border border-emerald-100 mt-[-8px]">
+              <div className={`w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse`} />
+              <span className={`text-[8px] font-bold text-emerald-600 tracking-wider uppercase`}>Live</span>
+            </div>
+          )}
+        </div>
+        
+        <div className="w-full">
+          <div className="flex items-start gap-1">
+            <h4 className="text-[11px] font-bold text-[#113a1a] leading-tight line-clamp-3 w-full pr-2 break-words text-left">{agentName}</h4>
+          </div>
+          {badge && (
+            <span className={`inline-block mt-1 text-[9px] font-bold tracking-wider rounded px-1.5 py-0.5 ${theme.badgeBg} ${theme.badgeText}`}>
               {badge}
             </span>
-          ) : (
-            <div />
           )}
-          <button className={`flex items-center gap-1.5 text-sm font-semibold transition-colors duration-300 ${bgColor} ${iconColor} px-3 py-1.5 rounded-lg shadow-sm group-hover:shadow-md hover:opacity-80`}>
-            <ExternalLink size={14} /> Open
-          </button>
+        </div>
+
+        <div className={`absolute bottom-2.5 right-2.5 ${theme.iconColor}`}>
+           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
+           </svg>
         </div>
       </div>
     </motion.div>
   );
-};
-
-export default AIAgentCard;
+}

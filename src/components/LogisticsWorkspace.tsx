@@ -166,10 +166,10 @@ export default function LogisticsWorkspace({ onBack, initialMenu }: { onBack: ()
                 className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start transition-all hover:shadow-md duration-300 relative overflow-hidden"
               >
                 <div className="space-y-1">
-                  <p className="text-xs text-black font-black uppercase tracking-widest">
+                  <p className="text-xs text-black font-bold uppercase tracking-wider">
                     {kpi.title}
                   </p>
-                  <p className="text-2xl font-black text-gray-900 leading-none pt-1.5">
+                  <p className="text-2xl font-bold text-gray-900 leading-none pt-1.5">
                     {kpi.value}
                   </p>
                   <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 pt-1">

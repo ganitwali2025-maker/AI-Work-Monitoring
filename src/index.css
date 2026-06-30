@@ -15,6 +15,13 @@
   background-attachment: fixed;
 }
 
+/* HD / 4K Crisp Text Rendering */
+body, html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 /* Custom Premium Scrollbar Styling */
 * {
   scrollbar-width: thin;

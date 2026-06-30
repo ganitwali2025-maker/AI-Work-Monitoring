@@ -23,109 +23,130 @@ interface Props {
   noPadding?: boolean;
 }
 
-const premiumThemes: Record<string, {
-  subtitle: string;
-  headerGradient: string;
-  sidebarGradient: string;
-  activeBg: string;
-  accent: string;
-  textMuted: string;
-}> = {
-  crm: {
-    subtitle: 'Customer Relationship & Sales System',
-    headerGradient: 'from-[#A855F7] to-[#7E22CE]',
-    sidebarGradient: 'from-[#7E22CE] to-[#6B21A8]',
-    activeBg: 'bg-[#A855F7] shadow-[0_0_15px_rgba(168,85,247,0.4)]',
-    accent: '#A855F7',
-    textMuted: 'text-purple-100',
-  },
-  procurement: {
-    subtitle: 'Purchase & Procurement Management System',
-    headerGradient: 'from-[#F59E0B] to-[#D97706]',
-    sidebarGradient: 'from-[#D97706] to-[#B45309]',
-    activeBg: 'bg-[#F59E0B] shadow-[0_0_15px_rgba(245,158,11,0.4)]',
-    accent: '#F59E0B',
-    textMuted: 'text-amber-100',
-  },
-  'vendor-master': {
-    subtitle: 'Vendor Management & Compliance System',
-    headerGradient: 'from-[#5B6FFF] to-[#4055D8]',
-    sidebarGradient: 'from-[#4055D8] to-[#2F3FBF]',
-    activeBg: 'bg-[#5B6FFF] shadow-[0_0_15px_rgba(91,111,255,0.4)]',
-    accent: '#5B6FFF',
-    textMuted: 'text-blue-100',
-  },
-  inventory: {
-    subtitle: 'Warehouse & Stock Control System',
-    headerGradient: 'from-[#10B981] to-[#047857]',
-    sidebarGradient: 'from-[#047857] to-[#065F46]',
-    activeBg: 'bg-[#10B981] shadow-[0_0_15px_rgba(16,185,129,0.4)]',
-    accent: '#10B981',
-    textMuted: 'text-emerald-100',
-  },
-  logistics: {
-    subtitle: 'Logistics, Transport & Dispatch Tracking',
-    headerGradient: 'from-[#6366F1] to-[#4338CA]',
-    sidebarGradient: 'from-[#4338CA] to-[#3730A3]',
-    activeBg: 'bg-[#6366F1] shadow-[0_0_15px_rgba(99,102,241,0.4)]',
-    accent: '#6366F1',
-    textMuted: 'text-indigo-100',
-  },
-  production: {
-    subtitle: 'Manufacturing, Quality & Finished Goods Management',
-    headerGradient: 'from-[#0EA5E9] to-[#0369A1]',
-    sidebarGradient: 'from-[#0369A1] to-[#075985]',
-    activeBg: 'bg-[#0EA5E9] shadow-[0_0_15px_rgba(14,165,233,0.4)]',
-    accent: '#0EA5E9',
-    textMuted: 'text-sky-100',
-  },
-  finance: {
-    subtitle: 'Finance, Accounts, GST & Billing Management',
-    headerGradient: 'from-[#14B8A6] to-[#0F766E]',
-    sidebarGradient: 'from-[#0F766E] to-[#115E59]',
-    activeBg: 'bg-[#14B8A6] shadow-[0_0_15px_rgba(20,184,166,0.4)]',
-    accent: '#14B8A6',
-    textMuted: 'text-teal-100',
-  },
-  hr: {
-    subtitle: 'HR, Payroll, Attendance & Employee Management',
-    headerGradient: 'from-[#F43F5E] to-[#BE123C]',
-    sidebarGradient: 'from-[#BE123C] to-[#9F1239]',
-    activeBg: 'bg-[#F43F5E] shadow-[0_0_15px_rgba(244,63,94,0.4)]',
-    accent: '#F43F5E',
-    textMuted: 'text-rose-100',
-  },
-  director: {
-    subtitle: 'Director Control Center & Strategic Monitoring',
-    headerGradient: 'from-[#D946EF] to-[#A21CAF]',
-    sidebarGradient: 'from-[#A21CAF] to-[#86198F]',
-    activeBg: 'bg-[#D946EF] shadow-[0_0_15px_rgba(217,70,239,0.4)]',
-    accent: '#D946EF',
-    textMuted: 'text-fuchsia-100',
-  },
-  marketing: {
-    subtitle: 'Marketing Performance & Lead Generation Center',
-    headerGradient: 'from-[#C026D3] to-[#86198F]',
-    sidebarGradient: 'from-[#A21CAF] to-[#4A044E]',
-    activeBg: 'bg-[#E879F9] shadow-[0_0_15px_rgba(232,121,249,0.4)]',
-    accent: '#E879F9',
-    textMuted: 'text-fuchsia-100',
-  },
-  laboratory: {
-    subtitle: 'LIMS & Quality Control Management',
-    headerGradient: 'from-[#06B6D4] to-[#0891B2]',
-    sidebarGradient: 'from-[#0891B2] to-[#164E63]',
-    activeBg: 'bg-[#22D3EE] shadow-[0_0_15px_rgba(34,211,238,0.4)]',
-    accent: '#22D3EE',
-    textMuted: 'text-cyan-100',
+import { useThemeContext } from '../context/ThemeContext';
+
+export const getPremiumTheme = (variant: string, themeMode: 'colorful' | 'dual') => {
+  const isGreenTheme = ['marketing', 'procurement', 'inventory', 'production', 'hr', 'laboratory'].includes(variant);
+  
+  if (themeMode === 'dual') {
+    if (isGreenTheme) {
+      return {
+        subtitle: 'Module Management System',
+        headerGradient: 'from-[#8a9e59] to-[#6a7c41]',
+        sidebarGradient: 'from-[#6a7c41] to-[#4c5c2d]',
+        activeBg: 'bg-[#98af65] shadow-md border border-[#98af65]/50',
+        accent: '#8a9e59',
+        textMuted: 'text-[#e5edce]',
+      };
+    } else {
+      return {
+        subtitle: 'Module Management System',
+        headerGradient: 'from-[#e09163] to-[#c2703f]',
+        sidebarGradient: 'from-[#c2703f] to-[#9c5329]',
+        activeBg: 'bg-[#ed9b6b] shadow-md border border-[#ed9b6b]/50',
+        accent: '#e09163',
+        textMuted: 'text-[#ffe8db]',
+      };
+    }
+  }
+
+  // Colorful Mode
+  switch (variant) {
+    case 'sales': return {
+      subtitle: 'Sales & Revenue Management System',
+      headerGradient: 'from-[#3B82F6] to-[#2563EB]',
+      sidebarGradient: 'from-[#2563EB] to-[#1D4ED8]',
+      activeBg: 'bg-[#3B82F6] shadow-md border border-[#3B82F6]/50',
+      accent: '#3B82F6', textMuted: 'text-blue-100',
+    };
+    case 'procurement': return {
+      subtitle: 'Purchase & Procurement Management System',
+      headerGradient: 'from-[#F59E0B] to-[#D97706]',
+      sidebarGradient: 'from-[#D97706] to-[#B45309]',
+      activeBg: 'bg-[#F59E0B] shadow-md border border-[#F59E0B]/50',
+      accent: '#F59E0B', textMuted: 'text-amber-100',
+    };
+    case 'vendor-master': return {
+      subtitle: 'Vendor Management & Compliance System',
+      headerGradient: 'from-[#5B6FFF] to-[#4055D8]',
+      sidebarGradient: 'from-[#4055D8] to-[#2F3FBF]',
+      activeBg: 'bg-[#5B6FFF] shadow-md border border-[#5B6FFF]/50',
+      accent: '#5B6FFF', textMuted: 'text-blue-100',
+    };
+    case 'inventory': return {
+      subtitle: 'Warehouse & Stock Control System',
+      headerGradient: 'from-[#10B981] to-[#047857]',
+      sidebarGradient: 'from-[#047857] to-[#065F46]',
+      activeBg: 'bg-[#10B981] shadow-md border border-[#10B981]/50',
+      accent: '#10B981', textMuted: 'text-emerald-100',
+    };
+    case 'logistics': return {
+      subtitle: 'Logistics, Transport & Dispatch Tracking',
+      headerGradient: 'from-[#6366F1] to-[#4338CA]',
+      sidebarGradient: 'from-[#4338CA] to-[#3730A3]',
+      activeBg: 'bg-[#6366F1] shadow-md border border-[#6366F1]/50',
+      accent: '#6366F1', textMuted: 'text-indigo-100',
+    };
+    case 'production': return {
+      subtitle: 'Manufacturing, Quality & Finished Goods Management',
+      headerGradient: 'from-[#0EA5E9] to-[#0369A1]',
+      sidebarGradient: 'from-[#0369A1] to-[#075985]',
+      activeBg: 'bg-[#0EA5E9] shadow-md border border-[#0EA5E9]/50',
+      accent: '#0EA5E9', textMuted: 'text-sky-100',
+    };
+    case 'finance': return {
+      subtitle: 'Finance, Accounts, GST & Billing Management',
+      headerGradient: 'from-[#14B8A6] to-[#0F766E]',
+      sidebarGradient: 'from-[#0F766E] to-[#115E59]',
+      activeBg: 'bg-[#14B8A6] shadow-md border border-[#14B8A6]/50',
+      accent: '#14B8A6', textMuted: 'text-teal-100',
+    };
+    case 'hr': return {
+      subtitle: 'HR, Payroll, Attendance & Employee Management',
+      headerGradient: 'from-[#F43F5E] to-[#BE123C]',
+      sidebarGradient: 'from-[#BE123C] to-[#9F1239]',
+      activeBg: 'bg-[#F43F5E] shadow-md border border-[#F43F5E]/50',
+      accent: '#F43F5E', textMuted: 'text-rose-100',
+    };
+    case 'director': return {
+      subtitle: 'Director Control Center & Strategic Monitoring',
+      headerGradient: 'from-[#D946EF] to-[#A21CAF]',
+      sidebarGradient: 'from-[#A21CAF] to-[#86198F]',
+      activeBg: 'bg-[#D946EF] shadow-md border border-[#D946EF]/50',
+      accent: '#D946EF', textMuted: 'text-fuchsia-100',
+    };
+    case 'laboratory': return {
+      subtitle: 'LIMS & Quality Control Management',
+      headerGradient: 'from-[#06B6D4] to-[#0891B2]',
+      sidebarGradient: 'from-[#0891B2] to-[#164E63]',
+      activeBg: 'bg-[#22D3EE] shadow-md border border-[#22D3EE]/50',
+      accent: '#22D3EE', textMuted: 'text-cyan-100',
+    };
+    case 'marketing': return {
+      subtitle: 'Marketing Performance & Lead Generation Center',
+      headerGradient: 'from-[#EF4444] to-[#B91C1C]',
+      sidebarGradient: 'from-[#B91C1C] to-[#7F1D1D]',
+      activeBg: 'bg-[#EF4444] shadow-md border border-[#EF4444]/50',
+      accent: '#EF4444', textMuted: 'text-red-100',
+    };
+    case 'crm':
+    default: return {
+      subtitle: 'Customer Relationship & Sales System',
+      headerGradient: 'from-[#8B5CF6] to-[#6D28D9]',
+      sidebarGradient: 'from-[#6D28D9] to-[#4C1D95]',
+      activeBg: 'bg-[#8B5CF6] shadow-md border border-[#8B5CF6]/50',
+      accent: '#8B5CF6', textMuted: 'text-purple-100',
+    };
   }
 };
 
 import { useEffect as UseEffectAlias } from 'react';
+import ThemeToggleButton from './ThemeToggleButton';
 
 export default function Layout({ departmentName, onBack, sidebarLinks, children, variant = 'inventory', activeModule, noPadding = false }: Props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
   const [activeMenuName, setActiveMenuName] = useState(sidebarLinks[0]?.name || '');
+  const { themeMode } = useThemeContext();
 
   React.useEffect(() => {
     if (activeModule !== undefined) {
@@ -138,7 +159,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
   }, [activeModule, sidebarLinks]);
 
   // Resolve theme dynamically
-  const theme = premiumThemes[variant] || premiumThemes.inventory;
+  const theme = getPremiumTheme(variant, themeMode);
 
   // Dynamically group links into standard enterprise sections
   const getLinkSection = (linkName: string): string => {
@@ -170,7 +191,7 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
   }).filter(sec => sec.links.length > 0);
 
   return (
-    <div className="flex flex-col h-screen bg-[#F5F7FC] text-gray-950 font-sans overflow-hidden">
+    <div className="flex flex-col h-screen bg-white text-gray-950 font-sans overflow-hidden antialiased">
       {/* Header */}
       <div className={`shrink-0 h-[80px] bg-gradient-to-r ${theme.headerGradient} text-white border-b border-white/10 shadow-lg shadow-indigo-900/5 z-50 flex items-center justify-between px-4 sm:px-6 transition-all duration-300`}>
         {/* Left section */}
@@ -200,9 +221,11 @@ export default function Layout({ departmentName, onBack, sidebarLinks, children,
           </div>
 
           {/* Settings icon */}
-          <div className="p-2 text-white/80 hover:text-white hover:bg-white/15 rounded-lg transition cursor-pointer">
+          <div className="p-2 text-white/80 hover:text-white hover:bg-white/15 rounded-lg transition cursor-pointer flex items-center">
             <Settings size={18} />
           </div>
+
+          <ThemeToggleButton className="p-2 text-white/80 hover:text-white hover:bg-white/15 rounded-lg transition cursor-pointer relative" iconSize={18} />
 
           {/* Back to Dashboard */}
           <button 

@@ -50,7 +50,7 @@ export default function CrmAiAgentWorkspace({ onBack, onOpenAiAgent = () => {}, 
 
         {/* AI Action Center Launchpad */}
         <section>
-          <h3 className="text-[11px] font-bold text-purple-600 uppercase tracking-widest mb-4">ACTIVE AI AGENTS</h3>
+          <h3 className="text-[11px] font-bold text-purple-600 uppercase tracking-wider mb-4">ACTIVE AI AGENTS</h3>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 items-stretch">
             

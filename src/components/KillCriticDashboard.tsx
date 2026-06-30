@@ -38,7 +38,7 @@ export default function KillCriticDashboard({ onBack }: { onBack: () => void }) 
               <div className="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-bl-full -z-0"></div>
               <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider mb-2 relative z-10">Business Health Score</p>
               <div className="relative z-10 flex items-baseline gap-1">
-                <span className="text-6xl font-black text-red-600">42</span>
+                <span className="text-6xl font-bold text-red-600">42</span>
                 <span className="text-xl font-bold text-gray-400">/100</span>
               </div>
               <p className="text-xs text-red-600 font-bold mt-2 bg-red-50 px-3 py-1 rounded-full relative z-10">CRITICAL CONDITION</p>
@@ -83,7 +83,7 @@ export default function KillCriticDashboard({ onBack }: { onBack: () => void }) 
               ].map(dept => (
                 <div key={dept.name} className="p-4 border border-gray-100 rounded-lg bg-gray-50 flex flex-col">
                   <span className="text-[10px] font-bold text-gray-500 uppercase mb-2">{dept.name}</span>
-                  <span className={`text-2xl font-black ${dept.color}`}>{dept.score}%</span>
+                  <span className={`text-2xl font-bold ${dept.color}`}>{dept.score}%</span>
                 </div>
               ))}
             </div>

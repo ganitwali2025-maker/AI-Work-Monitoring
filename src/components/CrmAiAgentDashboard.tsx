@@ -132,7 +132,7 @@ export default function CrmAiAgentDashboard({ onBack }: { onBack: () => void }) 
                   <div className="flex flex-row md:flex-col gap-4 md:gap-1 text-left md:text-right w-full md:w-auto shrink-0 bg-gray-50 md:bg-transparent p-3 md:p-0 rounded-lg">
                     <div>
                       <p className="text-[9px] text-gray-400 uppercase tracking-wider font-bold mb-0.5">Revenue Impact</p>
-                      <p className="text-lg font-black text-gray-900 leading-none">{issue.revenue}</p>
+                      <p className="text-lg font-bold text-gray-900 leading-none">{issue.revenue}</p>
                     </div>
                     <div className="w-px bg-gray-200 md:hidden"></div>
                     <div>

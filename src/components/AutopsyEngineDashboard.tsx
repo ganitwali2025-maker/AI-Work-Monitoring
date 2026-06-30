@@ -67,12 +67,12 @@ export default function AutopsyEngineDashboard({ onBack }: { onBack: () => void 
                     <span className="text-[10px] font-bold bg-rose-100 text-rose-700 px-2 py-0.5 rounded uppercase tracking-wider">Lost Deal Autopsy</span>
                     <span className="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-0.5 rounded uppercase tracking-wider">TechNova Pvt Ltd</span>
                   </div>
-                  <h2 className="text-2xl font-black text-gray-900">ERP Enterprise Licence</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">ERP Enterprise Licence</h2>
                   <p className="text-sm text-gray-500 mt-1">Deal closed as 'Lost' on 12 June 2026 after 45 days in pipeline.</p>
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Revenue Lost</p>
-                  <p className="text-3xl font-black text-rose-600">₹8.5L</p>
+                  <p className="text-3xl font-bold text-rose-600">₹8.5L</p>
                 </div>
               </div>
 

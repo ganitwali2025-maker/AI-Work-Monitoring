@@ -76,12 +76,13 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
 
   if (showLogin) {
     return (
-      <div className="min-h-screen text-gray-900 relative flex flex-col font-sans bg-white overflow-x-hidden">
-        {/* Decorative Background blobs */}
-        <div className="absolute top-[-10%] right-[-5%] w-[50rem] h-[50rem] bg-[#f4f9ea] rounded-full blur-[100px] pointer-events-none z-0"></div>
-        <div className="absolute bottom-[-10%] left-[-5%] w-[50rem] h-[50rem] bg-[#fff0ea] rounded-full blur-[100px] pointer-events-none z-0"></div>
-        <div className="absolute top-[30%] left-[20%] w-[30rem] h-[30rem] bg-[#f4f9ea] rounded-full blur-[80px] pointer-events-none z-0 opacity-60"></div>
-        
+      <div className="min-h-screen text-gray-900 relative flex flex-col font-sans bg-[#fbfdf9] overflow-x-hidden">
+        {/* Animated Green & Orange Background Blobs */}
+        <div className="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#7C9C54]/25 rounded-full blur-[120px] pointer-events-none animate-pulse z-0" style={{ animationDuration: '8s' }}></div>
+        <div className="fixed bottom-[-10%] right-[-5%] w-[45vw] h-[45vw] max-w-[550px] max-h-[550px] bg-[#ff5a1f]/15 rounded-full blur-[120px] pointer-events-none animate-pulse z-0" style={{ animationDuration: '10s', animationDelay: '2s' }}></div>
+        <div className="fixed top-[20%] left-[60%] w-[35vw] h-[35vw] max-w-[400px] max-h-[400px] bg-[#7C9C54]/15 rounded-full blur-[100px] pointer-events-none animate-pulse z-0" style={{ animationDuration: '12s', animationDelay: '4s' }}></div>
+        <div className="fixed bottom-[20%] left-[10%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-[#ff5a1f]/10 rounded-full blur-[100px] pointer-events-none animate-pulse z-0" style={{ animationDuration: '9s', animationDelay: '1s' }}></div>
+
         {/* Header */}
         <header className="relative z-50 w-full flex items-center justify-between px-8 md:px-16 py-4 bg-white border-b border-gray-100 shadow-sm">
           {/* Logo */}
@@ -108,15 +109,15 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
 
           {/* Navigation Links */}
           <nav className="hidden lg:flex items-center gap-8 ml-8">
-            <button onClick={() => setShowLogin(false)} className="text-[15px] font-extrabold tracking-widest text-[#4a6b22]">HOME</button>
-            <button className="text-[15px] font-extrabold tracking-widest text-[#334155] hover:text-[#4a6b22]">ABOUT US</button>
-            <button className="text-[15px] font-extrabold tracking-widest text-[#334155] hover:text-[#4a6b22]">SERVICES</button>
-            <button className="text-[15px] font-extrabold tracking-widest text-[#334155] hover:text-[#4a6b22]">CONTACT</button>
+            <button onClick={() => setShowLogin(false)} className="text-[15px] font-extrabold tracking-wider text-[#4a6b22]">HOME</button>
+            <button className="text-[15px] font-extrabold tracking-wider text-[#334155] hover:text-[#4a6b22]">ABOUT US</button>
+            <button className="text-[15px] font-extrabold tracking-wider text-[#334155] hover:text-[#4a6b22]">SERVICES</button>
+            <button className="text-[15px] font-extrabold tracking-wider text-[#334155] hover:text-[#4a6b22]">CONTACT</button>
           </nav>
 
           {/* Action Button */}
           <div className="flex items-center">
-             <button onClick={() => setShowLogin(false)} className="px-6 py-3 text-[13px] font-extrabold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-[4px] transition-all duration-300 tracking-widest shadow-md flex items-center gap-2">
+             <button onClick={() => setShowLogin(false)} className="px-6 py-3 text-[13px] font-extrabold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-[4px] transition-all duration-300 tracking-wider shadow-md flex items-center gap-2">
                <span>&larr;</span> BACK TO HOME
              </button>
           </div>
@@ -165,7 +166,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                 </div>
 
                 {/* Footer tags */}
-                <div className="text-[11px] font-bold text-[#4a6b22] tracking-widest uppercase">
+                <div className="text-[11px] font-bold text-[#4a6b22] tracking-wider uppercase">
                   Secure &bull; Smart &bull; Efficient
                 </div>
 
@@ -175,10 +176,10 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
           <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 xl:gap-32">
             {/* Login Card */}
             <div className="w-full lg:w-[40%] max-w-[500px] bg-white rounded-[24px] p-8 md:p-10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#e1ebd5] relative z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#f4f9ea] text-[#4a6b22] text-[11px] font-extrabold tracking-widest mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#f4f9ea] text-[#4a6b22] text-[11px] font-extrabold tracking-wider mb-6">
                 <Shield size={14} /> SECURE LOGIN
               </div>
-              <h1 className="text-[36px] font-black text-[#2b3a1a] tracking-tight mb-3">Welcome Back</h1>
+              <h1 className="text-[36px] font-bold text-[#2b3a1a] tracking-tight mb-3">Welcome Back</h1>
               <p className="text-[#5c6b4a] text-[14px] leading-relaxed mb-8 font-medium">
                 Securely sign in to access ERP, AI tools, Factory Drawings, Reports, Production Management, and Smart Business Operations.
               </p>
@@ -208,7 +209,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
 
                   {showIdSuggestions && (
                     <div className="absolute z-50 mt-1 w-[90%] left-[5%] bg-white border border-gray-100 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] max-h-[300px] overflow-y-auto overflow-x-hidden p-2 hide-scrollbar">
-                      <div className="text-[10px] font-bold text-gray-400 tracking-widest px-3 py-2 uppercase mb-1">Suggested IDs</div>
+                      <div className="text-[10px] font-bold text-gray-400 tracking-wider px-3 py-2 uppercase mb-1">Suggested IDs</div>
                       {['admin', 'marketing', 'crm', 'sales', 'customer', 'purchase', 'vendor', 'inventory', 'lab', 'dispatch', 'production', 'finance', 'hr', 'costing', 'director']
                         .filter(id => id.includes(loginId.toLowerCase()))
                         .map((id) => (
@@ -261,7 +262,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
 
                 <button 
                   type="submit" 
-                  className="w-full bg-[#ff5a1f] hover:bg-[#e64a14] text-white py-4 rounded-xl text-[14px] font-extrabold tracking-widest transition-all mt-4 shadow-md hover:-translate-y-0.5"
+                  className="w-full bg-[#ff5a1f] hover:bg-[#e64a14] text-white py-4 rounded-xl text-[14px] font-extrabold tracking-wider transition-all mt-4 shadow-md hover:-translate-y-0.5"
                 >
                   LOGIN
                 </button>
@@ -285,7 +286,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
   }
 
   return (
-    <div className="min-h-screen text-gray-900 relative overflow-hidden flex flex-col font-sans bg-transparent">
+    <div className="min-h-screen text-gray-900 relative overflow-hidden flex flex-col font-sans bg-transparent antialiased">
       <style>{`
         html {
           scroll-behavior: smooth;
@@ -293,23 +294,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
       `}</style>
 
       {/* Global Theme Background */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[#f0f5eb]">
-         {/* Top Peach Wave */}
-         <svg className="absolute top-0 left-0 w-full h-[50vh] min-h-[500px]" preserveAspectRatio="none" viewBox="0 0 1440 500">
-           <path d="M0,0 L1440,0 L1440,150 C1100,350 400,0 0,350 Z" fill="#fdf2e8" />
-         </svg>
-         
-         {/* Dot Patterns */}
-         <div className="absolute top-[35%] right-[12%] w-[200px] h-[200px] opacity-80" style={{
-            backgroundImage: 'radial-gradient(#e5ccb3 1.5px, transparent 1.5px)',
-            backgroundSize: '24px 24px'
-         }}></div>
-         
-         <div className="absolute bottom-[15%] left-[8%] w-[160px] h-[160px] opacity-60" style={{
-            backgroundImage: 'radial-gradient(#e5ccb3 1.5px, transparent 1.5px)',
-            backgroundSize: '24px 24px'
-         }}></div>
-
+      <div className="fixed inset-0 pointer-events-none z-0 bg-white">
          {/* Sparkles */}
          <svg className="absolute top-[20%] left-[28%] text-white w-6 h-6 animate-pulse opacity-90" viewBox="0 0 24 24" fill="none">
            <path d="M12 2 C12 8 16 12 22 12 C16 12 12 16 12 22 C12 16 8 12 2 12 C8 12 12 8 12 2 Z" fill="currentColor" />
@@ -348,16 +333,16 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
 
         {/* Navigation Links - Template Style */}
         <nav className="hidden lg:flex items-center gap-8 ml-8">
-          <a href="#home" className={`text-[15px] font-extrabold tracking-widest transition-all duration-300 ${activeSection === 'home' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
+          <a href="#home" className={`text-[15px] font-extrabold tracking-wider transition-all duration-300 ${activeSection === 'home' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
             HOME
           </a>
-          <a href="#about" className={`text-[15px] font-extrabold tracking-widest transition-all duration-300 ${activeSection === 'about' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
+          <a href="#about" className={`text-[15px] font-extrabold tracking-wider transition-all duration-300 ${activeSection === 'about' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
             ABOUT US
           </a>
-          <a href="#services" className={`text-[15px] font-extrabold tracking-widest transition-all duration-300 ${activeSection === 'services' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
+          <a href="#services" className={`text-[15px] font-extrabold tracking-wider transition-all duration-300 ${activeSection === 'services' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
             SERVICES
           </a>
-          <a href="#contact" className={`text-[15px] font-extrabold tracking-widest transition-all duration-300 ${activeSection === 'contact' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
+          <a href="#contact" className={`text-[15px] font-extrabold tracking-wider transition-all duration-300 ${activeSection === 'contact' ? 'text-[#4a6b22]' : 'text-[#334155] hover:text-[#4a6b22]'}`}>
             CONTACT
           </a>
         </nav>
@@ -366,7 +351,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
         <div className="flex items-center">
            <button 
              onClick={() => setShowLogin(true)}
-             className="px-8 py-3.5 text-[13px] font-extrabold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-[4px] transition-all duration-300 cursor-pointer tracking-widest shadow-md hover:-translate-y-0.5"
+             className="px-8 py-3.5 text-[13px] font-extrabold bg-[#ff5a1f] hover:bg-[#e64a14] text-white border-none rounded-[4px] transition-all duration-300 cursor-pointer tracking-wider shadow-md hover:-translate-y-0.5"
            >
              LOGIN
            </button>
@@ -377,14 +362,14 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
       <section id="home" className="min-h-screen relative flex flex-col lg:flex-row items-center pt-24 pb-16 bg-transparent">
         <div className="w-full lg:w-[55%] flex flex-col justify-center px-8 md:px-16 lg:px-24 xl:px-32 relative z-10 pt-10 lg:pt-0">
           <div className="mb-6 animate-fade-in-up stagger-1">
-             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-[#e1ebd5] text-[#517b27] text-xs font-bold tracking-widest mb-6 shadow-sm">
+             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-[#e1ebd5] text-[#517b27] text-xs font-bold tracking-wider mb-6 shadow-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8a9a5b] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#517b27]"></span>
                 </span>
                 NEXT-GEN AUTOMATION PLATFORM
              </div>
-             <h1 className="text-5xl md:text-[68px] font-black tracking-tight text-[#2b3a1a] leading-[1.05] mb-4">
+             <h1 className="text-5xl md:text-[68px] font-bold tracking-tight text-[#2b3a1a] leading-[1.05] mb-4">
                Welcome Back to <br/>
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#517b27] to-[#8a9a5b] drop-shadow-sm">Passary Refractories</span>
              </h1>
@@ -393,16 +378,16 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             <h2 className="text-xl md:text-[22px] font-medium text-[#5c6b4a] leading-relaxed tracking-wide">
               Transform your daily operations with intelligent workflow automation, AI-driven assistance, and centralized business process management.
             </h2>
-            <div className="text-[13px] sm:text-[14px] font-extrabold text-[#4a6b22] tracking-widest leading-relaxed">
+            <div className="text-[13px] sm:text-[14px] font-extrabold text-[#4a6b22] tracking-wider leading-relaxed">
               ERP Automation &bull; AI Assistant &bull; Google Workspace Integration &bull; Smart Business Operations
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-5 animate-fade-in-up stagger-4">
-            <button className="bg-[#4a6b22] hover:bg-[#3b591b] text-white px-9 py-4 rounded-full text-[13px] font-bold tracking-widest transition-all shadow-[0_8px_20px_rgba(74,107,34,0.25)] hover:shadow-[0_8px_25px_rgba(74,107,34,0.4)] hover:-translate-y-1 flex items-center gap-2 group">
+            <button className="bg-[#4a6b22] hover:bg-[#3b591b] text-white px-9 py-4 rounded-full text-[13px] font-bold tracking-wider transition-all shadow-[0_8px_20px_rgba(74,107,34,0.25)] hover:shadow-[0_8px_25px_rgba(74,107,34,0.4)] hover:-translate-y-1 flex items-center gap-2 group">
               LEARN MORE
               <Activity size={18} className="group-hover:rotate-12 transition-transform" />
             </button>
-            <button className="bg-white/70 backdrop-blur-md border border-[#e1ebd5] text-[#4a6b22] hover:bg-white hover:text-[#3b591b] px-9 py-4 rounded-full text-[13px] font-bold tracking-widest transition-all shadow-sm hover:shadow-[0_8px_25px_rgba(0,0,0,0.05)] hover:-translate-y-1">
+            <button className="bg-white/70 backdrop-blur-md border border-[#e1ebd5] text-[#4a6b22] hover:bg-white hover:text-[#3b591b] px-9 py-4 rounded-full text-[13px] font-bold tracking-wider transition-all shadow-sm hover:shadow-[0_8px_25px_rgba(0,0,0,0.05)] hover:-translate-y-1">
               GET STARTED
             </button>
           </div>
@@ -427,11 +412,11 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
           {/* Top Text Block (Centered) */}
           <div className="w-full flex flex-col items-center text-center">
             <div className="mb-6 animate-fade-in-up stagger-1 flex flex-col items-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-widest mb-4 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-wider mb-4 shadow-sm">
                 <Leaf size={12} />
                 OUR MISSION
               </div>
-              <h2 className="text-3xl md:text-[42px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-4 max-w-[1600px]">
+              <h2 className="text-3xl md:text-[42px] font-bold tracking-tight text-[#2b3a1a] leading-[1.1] mb-4 max-w-[1600px]">
                 Smart <span className="text-[#4a6b22]">ERP</span>. Intelligent <span className="text-[#4a6b22]">AI</span>. Seamless <span className="text-[#517b27]">Workflow</span>.
               </h2>
               <p className="text-[#5c6b4a] text-[15px] leading-relaxed font-medium max-w-[1200px]">
@@ -489,7 +474,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
               <LayoutDashboard size={20} />
             </div>
-            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Smart ERP Management</h3>
+            <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Smart ERP Management</h3>
             <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Manage all core business operations in one place.</p>
             <ul className="space-y-2">
               {['Finance & Accounting', 'HR & Payroll', 'Sales & CRM', 'Purchase & Inventory', 'Reports & Analytics'].map((item, i) => (
@@ -506,7 +491,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-4">
               <Bot size={20} />
             </div>
-            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">AI Assistant Workflow</h3>
+            <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">AI Assistant Workflow</h3>
             <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Get answers, automate tasks, and generate reports.</p>
             <ul className="space-y-2">
               {['ChatGPT & Gemini AI', 'Intelligent Query Responses', 'Report Generation', 'Data Analysis & Insights', 'Smart Recommendations'].map((item, i) => (
@@ -523,7 +508,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             <div className="w-10 h-10 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center mb-4">
               <RefreshCw size={20} />
             </div>
-            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Automation & Integration</h3>
+            <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Automation & Integration</h3>
             <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Automate tasks and integrate tools seamlessly.</p>
             <ul className="space-y-2">
               {['Workflow Automation', 'Approval Management', 'Email Response Automation', 'Google Sheets Integration', 'Google Drive Integration'].map((item, i) => (
@@ -540,7 +525,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             <div className="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-4">
               <TrendingUp size={20} />
             </div>
-            <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Performance & Growth</h3>
+            <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Performance & Growth</h3>
             <p className="text-[#647185] text-[12px] leading-relaxed mb-4 font-medium">Track performance and make data-driven decisions.</p>
             <ul className="space-y-2">
               {['Real-Time Dashboards', 'KPI Tracking', 'Business Intelligence', 'Custom Reports', 'Predictive Analytics'].map((item, i) => (
@@ -558,7 +543,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
         <div className="w-full max-w-[1800px] bg-white rounded-2xl border border-[#e1ebd5] flex flex-col md:flex-row items-center divide-y md:divide-y-0 md:divide-x divide-gray-100 shadow-sm z-10 mx-auto">
           <div className="flex items-center gap-2 p-4 xl:px-8 shrink-0">
             <Shield size={20} className="text-[#4a6b22]" />
-            <span className="font-black text-[#2b3a1a] text-base">Our Promise</span>
+            <span className="font-bold text-[#2b3a1a] text-base">Our Promise</span>
           </div>
           
           <div className="flex-1 p-4 xl:px-6">
@@ -588,10 +573,10 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
         <div className="w-full max-w-[1800px] relative z-10 flex flex-col items-center mx-auto">
           
           <div className="mb-10 animate-fade-in-up stagger-1 text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-widest mb-4 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-wider mb-4 shadow-sm">
                <Target size={12}/> CORE CAPABILITIES
             </div>
-            <h2 className="text-3xl md:text-[42px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-4 max-w-[1600px]">
+            <h2 className="text-3xl md:text-[42px] font-bold tracking-tight text-[#2b3a1a] leading-[1.1] mb-4 max-w-[1600px]">
               Smart Automation Solutions<br/> for a <span className="text-[#517b27]">Smarter Tomorrow</span>
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-[#4a6b22] to-transparent mb-4"></div>
@@ -606,7 +591,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
               <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
                 <Activity size={20} />
               </div>
-              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Process Automation</h3>
+              <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Process Automation</h3>
               <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Streamline operations and minimize manual intervention with our advanced automation systems.
               </p>
@@ -625,7 +610,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
               <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
                 <Settings size={20} />
               </div>
-              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Energy Management</h3>
+              <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Energy Management</h3>
               <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Optimize energy usage and reduce consumption with real-time monitoring and smart analytics.
               </p>
@@ -644,7 +629,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
               <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
                 <Shield size={20} />
               </div>
-              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Control Systems</h3>
+              <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Control Systems</h3>
               <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Reliable and scalable control solutions to ensure safety, accuracy, and maximum performance.
               </p>
@@ -663,7 +648,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
               <div className="w-10 h-10 bg-[#f4f9ea] text-[#4a6b22] rounded-xl flex items-center justify-center mb-4">
                 <BarChart2 size={20} />
               </div>
-              <h3 className="font-black text-[#2b3a1a] text-lg mb-2 tracking-tight">Data & Analytics</h3>
+              <h3 className="font-bold text-[#2b3a1a] text-lg mb-2 tracking-tight">Data & Analytics</h3>
               <p className="text-[12px] text-[#647185] leading-relaxed mb-4 font-medium">
                 Harness the power of data to make informed decisions and drive continuous improvement.
               </p>
@@ -733,10 +718,10 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
           {/* Left Column */}
           <div className="w-full lg:w-[45%] flex flex-col justify-center">
             <div className="mb-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-widest mb-3 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#4a6b22]/20 text-[#4a6b22] text-[10px] font-bold tracking-wider mb-3 shadow-sm">
                  <Headset size={12} /> GET IN TOUCH
               </div>
-              <h2 className="text-3xl md:text-[42px] font-black tracking-tight text-[#2b3a1a] leading-[1.1] mb-3">
+              <h2 className="text-3xl md:text-[42px] font-bold tracking-tight text-[#2b3a1a] leading-[1.1] mb-3">
                 Let's <span className="text-[#4a6b22]">Connect</span>
               </h2>
               <h3 className="text-xl md:text-xl font-bold text-[#2b3a1a] mb-2">
@@ -842,7 +827,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                   <MessageSquare size={24} />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black text-[#2b3a1a] tracking-tight mb-1">Send us a Message</h3>
+                  <h3 className="text-2xl font-bold text-[#2b3a1a] tracking-tight mb-1">Send us a Message</h3>
                   <p className="text-[#647185] text-[13px] font-medium">Fill out the form below and we'll get back to you.</p>
                   <div className="w-8 h-0.5 bg-[#d9f0a3] mt-3"></div>
                 </div>
@@ -887,7 +872,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                   </div>
                 </div>
                 
-                <button type="button" className="w-full flex items-center justify-center gap-2 bg-[#2b3a1a] hover:bg-[#3b591b] text-white py-3.5 rounded-xl text-[13px] font-bold tracking-widest transition-all shadow-[0_8px_20px_rgba(43,58,26,0.2)] hover:shadow-[0_8px_25px_rgba(43,58,26,0.3)] hover:-translate-y-1 mt-1">
+                <button type="button" className="w-full flex items-center justify-center gap-2 bg-[#2b3a1a] hover:bg-[#3b591b] text-white py-3.5 rounded-xl text-[13px] font-bold tracking-wider transition-all shadow-[0_8px_20px_rgba(43,58,26,0.2)] hover:shadow-[0_8px_25px_rgba(43,58,26,0.3)] hover:-translate-y-1 mt-1">
                   SEND MESSAGE <Send size={16} />
                 </button>
 

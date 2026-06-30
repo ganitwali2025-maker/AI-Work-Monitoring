@@ -98,6 +98,7 @@ import ExposeEngineDashboard from './components/ExposeEngineDashboard';
 import EliteCeoDashboard from './components/EliteCeoDashboard';
 import LandingPage from './components/LandingPage';
 import SalesAiAgentDashboard from './components/SalesAiAgentDashboard';
+import ThemeToggleButton from './components/ThemeToggleButton';
 import LaboratoryWorkspace from './components/LaboratoryWorkspace';
 import ReportingCenter from './components/ReportingCenter';
 import ApprovalCenter from './components/ApprovalCenter';
@@ -134,10 +135,9 @@ const departments = [
     icon: ShoppingCart, 
     desc: 'Manage customer orders, dispatch, invoices, payments and revenue tracking.', 
     view: 'sales', 
-    variant: 'crm' as const,
+    variant: 'sales' as const,
     badge: 'Open Orders: 52',
-    badgeColorClass: 'bg-emerald-100/70 text-emerald-700 border-emerald-200/60'
-,
+    badgeColorClass: 'bg-emerald-100/70 text-emerald-700 border-emerald-200/60',
     subModules: [
     {
       name: '1. Customer Purchase Orders',
@@ -271,13 +271,12 @@ const departments = [
   },
   { 
     name: 'Customer Master', 
-    icon: UserCheck, 
+    icon: User, 
     desc: 'Manage customer registration, KYC, GST details, documents and credit limits.', 
     view: 'customer-master', 
-    variant: 'crm' as const,
+    variant: 'director' as const,
     badge: 'KYC Pending: 6',
-    badgeColorClass: 'bg-purple-100/70 text-purple-700 border-purple-200/60'
-,
+    badgeColorClass: 'bg-purple-100/70 text-purple-700 border-purple-200/60',
     subModules: [
     { name: 'Customer Registration', icon: UserCheck },
     { name: 'Company Profile', icon: Building2 },
@@ -772,11 +771,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9fbf6] text-gray-950 font-sans flex flex-col overflow-hidden relative">
-      {/* Decorative Brand Colors Background Blobs (Olive Green & Vibrant Orange) */}
-      <div className="absolute top-[-10%] left-[-10%] w-[45rem] h-[45rem] bg-[#7C9C54]/30 rounded-full blur-[140px] pointer-events-none animate-blob z-0"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-[#F2642A]/20 rounded-full blur-[140px] pointer-events-none animate-blob animation-delay-400 z-0"></div>
-      <div className="absolute top-[20%] left-[60%] w-[35rem] h-[35rem] bg-[#7C9C54]/20 rounded-full blur-[120px] pointer-events-none animate-blob animation-delay-800 z-0"></div>
+    <div className="min-h-screen bg-white text-gray-950 font-sans flex flex-col overflow-hidden relative antialiased">
       
       {/* Sticky top horizontal header navigation */}
       <header className="bg-white text-gray-900 border-b border-gray-200/80 shadow-xs sticky top-0 z-30 select-none">
@@ -847,6 +842,8 @@ export default function App() {
                     >
                       <Settings size={16} strokeWidth={2.2} />
                     </button>
+                    
+                    <ThemeToggleButton className="hidden sm:inline-block p-2 bg-white hover:bg-[#f5f8f0] border border-gray-100 rounded-full text-slate-500 hover:text-[#4a6b22] transition-all duration-200 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(74,107,34,0.15)] relative" iconSize={16} />
                   </div>
     
                   <div className="h-6 border-l border-gray-200 mx-0.5 sm:mx-1" />

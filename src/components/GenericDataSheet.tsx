@@ -6,19 +6,35 @@ interface Props {
   variant?: 'crm' | 'procurement' | 'inventory' | 'logistics' | 'production' | 'finance' | 'hr' | 'director' | 'vendor-master' | 'sales' | 'marketing' | 'laboratory';
 }
 
-const themeColors: Record<string, { header: string, tableHead: string, text: string, border: string }> = {
-  crm: { header: 'from-[#A855F7] to-[#7E22CE]', tableHead: 'bg-[#A855F7]', text: 'text-[#A855F7]', border: 'border-t-[#A855F7]' },
-  sales: { header: 'from-[#3B82F6] to-[#2563EB]', tableHead: 'bg-[#3B82F6]', text: 'text-[#3B82F6]', border: 'border-t-[#3B82F6]' },
-  procurement: { header: 'from-[#F59E0B] to-[#D97706]', tableHead: 'bg-[#F59E0B]', text: 'text-[#F59E0B]', border: 'border-t-[#F59E0B]' },
-  inventory: { header: 'from-[#10B981] to-[#047857]', tableHead: 'bg-[#10B981]', text: 'text-[#10B981]', border: 'border-t-[#10B981]' },
-  logistics: { header: 'from-[#6366F1] to-[#4338CA]', tableHead: 'bg-[#6366F1]', text: 'text-[#6366F1]', border: 'border-t-[#6366F1]' },
-  production: { header: 'from-[#0EA5E9] to-[#0369A1]', tableHead: 'bg-[#0EA5E9]', text: 'text-[#0EA5E9]', border: 'border-t-[#0EA5E9]' },
-  finance: { header: 'from-[#14B8A6] to-[#0F766E]', tableHead: 'bg-[#14B8A6]', text: 'text-[#14B8A6]', border: 'border-t-[#14B8A6]' },
-  hr: { header: 'from-[#F43F5E] to-[#BE123C]', tableHead: 'bg-[#F43F5E]', text: 'text-[#F43F5E]', border: 'border-t-[#F43F5E]' },
-  director: { header: 'from-[#D946EF] to-[#A21CAF]', tableHead: 'bg-[#D946EF]', text: 'text-[#D946EF]', border: 'border-t-[#D946EF]' },
-  'vendor-master': { header: 'from-[#5B6FFF] to-[#4055D8]', tableHead: 'bg-[#5B6FFF]', text: 'text-[#5B6FFF]', border: 'border-t-[#5B6FFF]' },
-  marketing: { header: 'from-[#C026D3] to-[#86198F]', tableHead: 'bg-[#C026D3]', text: 'text-[#C026D3]', border: 'border-t-[#C026D3]' },
-  laboratory: { header: 'from-[#06B6D4] to-[#0891B2]', tableHead: 'bg-[#06B6D4]', text: 'text-[#06B6D4]', border: 'border-t-[#06B6D4]' },
+import { useThemeContext } from '../context/ThemeContext';
+
+export const getSheetTheme = (variant: string, themeMode: 'colorful' | 'dual') => {
+  const isGreenTheme = ['marketing', 'procurement', 'inventory', 'production', 'hr', 'laboratory'].includes(variant);
+
+  if (themeMode === 'dual') {
+    if (isGreenTheme) {
+      return { header: 'from-[#8a9e59] to-[#6a7c41]', tableHead: 'bg-[#6a7c41]', text: 'text-[#6a7c41]', border: 'border-t-[#6a7c41]' };
+    } else {
+      return { header: 'from-[#e09163] to-[#c2703f]', tableHead: 'bg-[#c2703f]', text: 'text-[#c2703f]', border: 'border-t-[#c2703f]' };
+    }
+  }
+
+  // Colorful Mode
+  switch (variant) {
+    case 'sales': return { header: 'from-[#3B82F6] to-[#2563EB]', tableHead: 'bg-[#3B82F6]', text: 'text-[#3B82F6]', border: 'border-t-[#3B82F6]' };
+    case 'procurement': return { header: 'from-[#F59E0B] to-[#D97706]', tableHead: 'bg-[#F59E0B]', text: 'text-[#F59E0B]', border: 'border-t-[#F59E0B]' };
+    case 'inventory': return { header: 'from-[#10B981] to-[#047857]', tableHead: 'bg-[#10B981]', text: 'text-[#10B981]', border: 'border-t-[#10B981]' };
+    case 'logistics': return { header: 'from-[#6366F1] to-[#4338CA]', tableHead: 'bg-[#6366F1]', text: 'text-[#6366F1]', border: 'border-t-[#6366F1]' };
+    case 'production': return { header: 'from-[#0EA5E9] to-[#0369A1]', tableHead: 'bg-[#0EA5E9]', text: 'text-[#0EA5E9]', border: 'border-t-[#0EA5E9]' };
+    case 'finance': return { header: 'from-[#14B8A6] to-[#0F766E]', tableHead: 'bg-[#14B8A6]', text: 'text-[#14B8A6]', border: 'border-t-[#14B8A6]' };
+    case 'hr': return { header: 'from-[#F43F5E] to-[#BE123C]', tableHead: 'bg-[#F43F5E]', text: 'text-[#F43F5E]', border: 'border-t-[#F43F5E]' };
+    case 'director': return { header: 'from-[#D946EF] to-[#A21CAF]', tableHead: 'bg-[#D946EF]', text: 'text-[#D946EF]', border: 'border-t-[#D946EF]' };
+    case 'vendor-master': return { header: 'from-[#5B6FFF] to-[#4055D8]', tableHead: 'bg-[#5B6FFF]', text: 'text-[#5B6FFF]', border: 'border-t-[#5B6FFF]' };
+    case 'laboratory': return { header: 'from-[#06B6D4] to-[#0891B2]', tableHead: 'bg-[#06B6D4]', text: 'text-[#06B6D4]', border: 'border-t-[#06B6D4]' };
+    case 'marketing': return { header: 'from-[#EF4444] to-[#B91C1C]', tableHead: 'bg-[#EF4444]', text: 'text-[#EF4444]', border: 'border-t-[#EF4444]' };
+    case 'crm':
+    default: return { header: 'from-[#8B5CF6] to-[#6D28D9]', tableHead: 'bg-[#8B5CF6]', text: 'text-[#8B5CF6]', border: 'border-t-[#8B5CF6]' };
+  }
 };
 
 
@@ -36,7 +52,8 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
   const [selectedRowForApproval, setSelectedRowForApproval] = useState<any[] | null>(null);
   const [approvalRemarks, setApprovalRemarks] = useState('');
 
-  const theme = themeColors[variant] || themeColors.crm;
+  const { themeMode } = useThemeContext();
+  const theme = getSheetTheme(variant, themeMode);
   
   // Clean module name by removing numbering (e.g. "1. Customer Purchase Orders" -> "Customer Purchase Orders")
   const cleanModuleName = moduleName.replace(/^\d+\.\s*/, '');
@@ -687,8 +704,8 @@ export default function GenericDataSheet({ moduleName, variant = 'crm' }: Props)
 
         {/* Dynamic Table Structure */}
         <div className="flex-1 overflow-auto">
-          <table className="w-max min-w-full text-center text-sm whitespace-nowrap border-separate border-spacing-0">
-            <thead className={`text-white font-extrabold text-[13px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
+          <table className="w-max min-w-full text-left text-sm whitespace-nowrap border-separate border-spacing-0">
+            <thead className={`text-white font-bold text-[13px] uppercase tracking-wider sticky top-0 ${theme.tableHead} z-20 shadow-sm h-12`}>
               <tr>
                 {hasSpecificData ? (
                   specificColumns.map((col, i) => (

@@ -36,22 +36,22 @@ export default function ExposeEngineDashboard({ onBack }: { onBack: () => void }
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
             <div className="bg-white rounded-xl p-5 border border-cyan-200 shadow-sm relative overflow-hidden flex flex-col justify-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Potential Recovery</p>
-              <p className="text-2xl font-black text-emerald-600">₹14.2L</p>
+              <p className="text-2xl font-bold text-emerald-600">₹14.2L</p>
               <div className="absolute right-[-10px] bottom-[-10px] opacity-10"><TrendingUp size={64} className="text-emerald-500" /></div>
             </div>
             <div className="bg-white rounded-xl p-5 border border-cyan-200 shadow-sm relative overflow-hidden flex flex-col justify-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Potential Growth</p>
-              <p className="text-2xl font-black text-cyan-600">₹22.5L</p>
+              <p className="text-2xl font-bold text-cyan-600">₹22.5L</p>
               <div className="absolute right-[-10px] bottom-[-10px] opacity-10"><TrendingUp size={64} className="text-cyan-500" /></div>
             </div>
             <div className="bg-white rounded-xl p-5 border border-amber-200 shadow-sm relative overflow-hidden flex flex-col justify-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Customer Churn Risk</p>
-              <p className="text-2xl font-black text-amber-600">18%</p>
+              <p className="text-2xl font-bold text-amber-600">18%</p>
               <div className="absolute right-[-10px] bottom-[-10px] opacity-10"><ShieldAlert size={64} className="text-amber-500" /></div>
             </div>
             <div className="bg-white rounded-xl p-5 border border-red-200 shadow-sm relative overflow-hidden flex flex-col justify-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Business Risk Score</p>
-              <p className="text-2xl font-black text-red-600">65/100</p>
+              <p className="text-2xl font-bold text-red-600">65/100</p>
               <div className="absolute right-[-10px] bottom-[-10px] opacity-10"><AlertTriangle size={64} className="text-red-500" /></div>
             </div>
           </div>
